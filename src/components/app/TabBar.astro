@@ -1,0 +1,45 @@
+---
+// Tab bar flutuante do app (abas do visitante).
+import Icon from '../Icon.astro';
+import type { IconName } from '../../lib/icons';
+interface Props { active: string }
+const { active } = Astro.props;
+const tabs: [string, IconName][] = [['Início', 'house'], ['Anúncios', 'squares-four'], ['Favoritos', 'heart'], ['Conta', 'user']];
+---
+<div class="tabbar" aria-hidden="true">
+  {tabs.map(([label, icon]) => (
+    <span class={label === active ? 'tab active' : 'tab'}><Icon name={icon} size={18} />{label}</span>
+  ))}
+</div>
+
+<style>
+  .tabbar {
+    position: absolute;
+    left: 0.8em;
+    right: 0.8em;
+    bottom: 0.9em;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5em 1em;
+    border-radius: 1.5em;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: 0 6px 16px -8px rgba(11, 43, 42, 0.18);
+  }
+  .tab {
+    display: grid;
+    justify-items: center;
+    gap: 0.15em;
+    font-size: 0.56em;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+  .tab :global(.icon) {
+    width: 2em;
+    height: 2em;
+  }
+  .tab.active {
+    color: var(--primary);
+    font-weight: 600;
+  }
+</style>

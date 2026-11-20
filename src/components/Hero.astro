@@ -1,0 +1,188 @@
+---
+import Phone from './app/Phone.astro';
+import HomeScreen from './app/HomeScreen.astro';
+import DetailScreen from './app/DetailScreen.astro';
+import Icon from './Icon.astro';
+import { HERO, APP_LIVE, STORE_LINKS } from '../lib/content';
+---
+<section class="hero" id="topo" aria-labelledby="hero-title">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <h1 id="hero-title" class="hero-title"><span class="reveal-mask"><span class="reveal-line">{HERO.title}</span></span></h1>
+      <p class="hero-text rise" style="--d:180ms">{HERO.text}</p>
+      <div class="hero-actions rise" style="--d:260ms">
+        {APP_LIVE ? (
+          <>
+            <a class="store" href={STORE_LINKS.appStore}>App Store</a>
+            <a class="store" href={STORE_LINKS.googlePlay}>Google Play</a>
+          </>
+        ) : (
+          <>
+            <a class="btn btn-primary" href="#profissionais">{HERO.secondary}</a>
+            <p class="soon"><Icon name="clock" size={18} />{HERO.soon}</p>
+          </>
+        )}
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <Phone class="phone-back" label="Tela de um anúncio no app Conkat"><DetailScreen /></Phone>
+      <Phone class="phone-front" label="Tela inicial do app Conkat"><HomeScreen /></Phone>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: clip;
+    padding-top: 4.75rem;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('/pattern.svg') 0 0 / 560px auto repeat;
+    opacity: 0.22;
+    -webkit-mask-image: radial-gradient(120% 90% at 70% 40%, #000 30%, transparent 75%);
+    mask-image: radial-gradient(120% 90% at 70% 40%, #000 30%, transparent 75%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 3rem;
+    min-height: min(52rem, calc(100svh - 4.75rem));
+    padding-block: 3rem 0;
+  }
+  .hero-copy {
+    display: grid;
+    gap: 1.75rem;
+    padding-bottom: 4rem;
+  }
+  .hero-title {
+    font-size: var(--step-display);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    max-width: 11.5em;
+  }
+  .reveal-mask {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.08em;
+  }
+  .reveal-line {
+    display: block;
+    animation: line-up 900ms var(--ease-out) 60ms both;
+  }
+  @keyframes line-up {
+    from {
+      transform: translateY(105%);
+    }
+  }
+  .hero-text {
+    max-width: 33rem;
+    font-size: var(--step-lead);
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+  }
+  .soon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  .rise {
+    animation: rise 800ms var(--ease-out) both;
+    animation-delay: var(--d, 0ms);
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+  }
+
+  /* Celulares */
+  .hero-visual {
+    position: relative;
+    align-self: end;
+    height: 38rem;
+  }
+  .hero-visual :global(.phone) {
+    position: absolute;
+  }
+  .hero-visual :global(.phone-front) {
+    --pw: 312px;
+    left: 4%;
+    top: 0;
+    z-index: 2;
+    animation: phone-in 1100ms var(--ease-out) 300ms both;
+  }
+  .hero-visual :global(.phone-back) {
+    --pw: 280px;
+    left: calc(4% + 230px);
+    top: 4.5rem;
+    z-index: 1;
+    animation: phone-in-back 1200ms var(--ease-out) 480ms both;
+  }
+  @keyframes phone-in {
+    from {
+      opacity: 0;
+      transform: translateY(60px);
+    }
+  }
+  @keyframes phone-in-back {
+    from {
+      opacity: 0;
+      transform: translate(-40px, 70px) rotate(-2deg);
+    }
+  }
+  /* Os anúncios entram em sequência, como no app: 40 ms entre itens */
+  .hero-visual :global(.phone-front .stagger) {
+    animation: item-in 400ms var(--ease-out) both;
+    animation-delay: calc(900ms + var(--i) * 40ms);
+  }
+  @keyframes item-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      min-height: 0;
+      gap: 2.5rem;
+      padding-top: 2.5rem;
+    }
+    .hero-copy {
+      padding-bottom: 0;
+    }
+    .hero-visual {
+      height: 27rem;
+      overflow: hidden;
+      margin-inline: calc(var(--gutter) * -1);
+    }
+    .hero-visual :global(.phone-front) {
+      --pw: 270px;
+      left: calc(50% - 175px);
+    }
+    .hero-visual :global(.phone-back) {
+      --pw: 240px;
+      left: calc(50% + 15px);
+      top: 3.5rem;
+    }
+  }
+</style>

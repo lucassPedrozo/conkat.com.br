@@ -1,0 +1,91 @@
+---
+// Folha "Onde você procura?" (seleção de cidade), aberta sobre a Início, como no app.
+import Icon from '../Icon.astro';
+const cities = [['Joinville', true], ['Jaraguá do Sul', false], ['Araquari', false], ['São Francisco do Sul', false], ['Guaramirim', false]] as const;
+---
+<div class="city-screen">
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="sheet">
+    <span class="grab" aria-hidden="true"></span>
+    <p class="sheet-title">Onde você procura?</p>
+    <span class="sheet-field"><Icon name="magnifying-glass" size={14} />Buscar cidade</span>
+    <ul class="city-list">
+      {cities.map(([c, on], i) => (
+        <li class={on ? 'on stagger' : 'stagger'} style={`--i:${i}`}>
+          <Icon name="map-pin" size={15} /><span>{c}, SC</span>{on && <Icon name="check" size={15} />}
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .city-screen {
+    position: absolute;
+    inset: -2.6em 0 0;
+  }
+  .scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(11, 43, 42, 0.32);
+  }
+  .sheet {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    gap: 0.75em;
+    padding: 0.6em 1.1em 1.4em;
+    border-radius: 1.4em 1.4em 0 0;
+    background: var(--surface);
+  }
+  .grab {
+    justify-self: center;
+    width: 2.4em;
+    height: 0.25em;
+    border-radius: 1em;
+    background: var(--border-strong);
+  }
+  .sheet-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.05em;
+    letter-spacing: -0.02em;
+  }
+  .sheet-field {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.6em 0.8em;
+    border-radius: 999px;
+    background: var(--background);
+    color: var(--text-muted);
+    font-size: 0.68em;
+  }
+  .city-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .city-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    padding: 0.7em 0.1em;
+    border-top: 1px solid var(--border);
+    font-size: 0.75em;
+  }
+  .city-list li span {
+    flex: 1;
+  }
+  .city-list li :global(.icon) {
+    color: var(--text-muted);
+  }
+  .city-list li.on {
+    font-weight: 600;
+  }
+  .city-list li.on :global(.icon) {
+    color: var(--primary);
+  }
+</style>

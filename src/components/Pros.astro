@@ -1,0 +1,179 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { PRO, APP_LIVE } from '../lib/content';
+import eletricista from '../assets/photos/eletricista.jpg';
+---
+<section class="pros on-dark" id="profissionais" aria-labelledby="pros-title">
+  <div class="container pros-grid">
+    <div class="pros-copy">
+      <h2 id="pros-title" class="pros-title">{PRO.title}</h2>
+      <p class="pros-text">{PRO.text}</p>
+      <ul class="pros-list">
+        {PRO.items.map((it) => (
+          <li>
+            <Icon name={it.icon} size={22} />
+            <div>
+              <h3>{it.title}</h3>
+              <p>{it.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      {APP_LIVE && <a class="btn btn-accent" href="#">{PRO.cta}</a>}
+    </div>
+    <div class="pros-media" data-chart>
+      <Image src={eletricista} alt="Eletricista instalando uma tomada em um apartamento" widths={[480, 720, 1024]} sizes="(max-width: 1023px) 100vw, 520px" class="pros-photo" />
+      <div class="metrics" aria-hidden="true">
+        <p class="m-label">Últimos 7 dias</p>
+        <div class="m-nums">
+          <p><strong>1.284</strong><span>exibições em buscas</span></p>
+          <p><strong>312</strong><span>visualizações</span></p>
+        </div>
+        <svg class="m-chart" viewBox="0 0 260 56" preserveAspectRatio="none">
+          <path d="M0 55.5H260" stroke="#E5E7EB" fill="none" />
+          <path class="line line-a" pathLength="1" d="M0 42 L37 36 L74 39 L111 27 L148 29 L185 17 L222 13 L260 5" />
+          <path class="line line-b" pathLength="1" d="M0 49 L37 47 L74 48 L111 43 L148 44 L185 40 L222 38 L260 35" />
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pros {
+    padding-block: var(--section-y);
+    background: var(--ink);
+    color: var(--text-on-dark);
+  }
+  .pros-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(3rem, 2rem + 5vw, 7rem);
+    align-items: center;
+  }
+  .pros-copy {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+  }
+  .pros-title {
+    font-size: var(--step-h1);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    max-width: 14em;
+  }
+  .pros-text {
+    max-width: 34rem;
+    font-size: var(--step-lead);
+    color: var(--text-on-dark-muted);
+  }
+  .pros-list {
+    width: 100%;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .pros-list li {
+    display: grid;
+    grid-template-columns: 1.5rem 1fr;
+    gap: 1rem;
+    padding-block: 1.25rem;
+    border-top: 1px solid var(--ink-soft);
+  }
+  .pros-list :global(.icon) {
+    color: var(--accent);
+    margin-top: 0.15rem;
+  }
+  .pros-list h3 {
+    font-size: 1.125rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.3rem;
+  }
+  .pros-list p {
+    color: var(--text-on-dark-muted);
+    font-size: 1rem;
+  }
+  .pros-media {
+    position: relative;
+  }
+  .pros-media :global(.pros-photo) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius-media);
+  }
+  .metrics {
+    position: absolute;
+    left: 1.5rem;
+    bottom: 1.5rem;
+    width: min(19rem, calc(100% - 3rem));
+    padding: 1.1rem 1.15rem;
+    border-radius: 1rem;
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.5);
+  }
+  .m-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .m-nums {
+    display: flex;
+    gap: 1.5rem;
+    margin: 0.5rem 0 0.75rem;
+  }
+  .m-nums p {
+    display: grid;
+  }
+  .m-nums strong {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.65rem;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  .m-nums span {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+  .m-chart {
+    width: 100%;
+    height: 3.25rem;
+    overflow: visible;
+  }
+  .line {
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1400ms var(--ease-in-out);
+  }
+  .line-a {
+    stroke: var(--primary);
+  }
+  .line-b {
+    stroke: var(--accent);
+    stroke-width: 2;
+    transition-delay: 200ms;
+  }
+  .pros-media.is-on .line {
+    stroke-dashoffset: 0;
+  }
+  @media (max-width: 1023px) {
+    .pros-grid {
+      grid-template-columns: 1fr;
+    }
+    .pros-media {
+      order: -1;
+    }
+    .pros-media :global(.pros-photo) {
+      aspect-ratio: 1 / 1;
+    }
+  }
+</style>

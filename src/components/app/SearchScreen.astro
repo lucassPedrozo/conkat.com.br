@@ -1,0 +1,77 @@
+---
+// Busca: campo com o termo, filtros e resultados da cidade.
+import Icon from '../Icon.astro';
+import ListingCard from './ListingCard.astro';
+import encanador from '../../assets/photos/encanador.jpg';
+import pintura from '../../assets/photos/pintura.jpg';
+import cozinha from '../../assets/photos/cozinha.jpg';
+---
+<div class="search">
+  <span class="s-field"><Icon name="magnifying-glass" size={15} /><span class="s-term">eletricista</span><span class="caret" aria-hidden="true"></span></span>
+  <div class="filters">
+    <span class="f on">Todas</span><span class="f">Manutenção</span><span class="f">Preço</span>
+  </div>
+  <p class="s-count">Anúncios em Joinville</p>
+  <div class="s-list">
+    <ListingCard class="stagger" style="--i:0" title="Eletricista residencial" category="Manutenção Residencial" price="A partir de R$ 90" rating="4,8" photo={encanador} />
+    <ListingCard class="stagger" style="--i:1" title="Instalação de chuveiro" category="Manutenção Residencial" price="R$ 120 fixo" rating="5,0" photo={pintura} />
+    <ListingCard class="stagger" style="--i:2" title="Troca de disjuntor e tomadas" category="Manutenção Residencial" price="A combinar" rating="4,6" photo={cozinha} />
+  </div>
+</div>
+
+<style>
+  .search {
+    display: grid;
+    gap: 0.75em;
+    align-content: start;
+  }
+  .s-field {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.7em 0.9em;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1.5px solid var(--primary);
+    font-size: 0.75em;
+    font-weight: 500;
+  }
+  .caret {
+    width: 1px;
+    height: 1.1em;
+    margin-left: -0.35em;
+    background: var(--primary);
+    animation: blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+  .filters {
+    display: flex;
+    gap: 0.4em;
+  }
+  .f {
+    padding: 0.35em 0.75em;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 0.64em;
+    font-weight: 500;
+  }
+  .f.on {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--text-on-dark);
+  }
+  .s-count {
+    font-size: 0.66em;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .s-list {
+    display: grid;
+    gap: 0.6em;
+  }
+</style>

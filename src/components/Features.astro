@@ -1,0 +1,441 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import ListingCard from './app/ListingCard.astro';
+import { FEATURES, FEATURES_TITLE } from '../lib/content';
+import encanador from '../assets/photos/encanador.jpg';
+import pintura from '../assets/photos/pintura.jpg';
+import marina from '../assets/photos/marina.jpg';
+const priceTypes = ['Preço fixo', 'A partir de', 'Por hora', 'Por dia', 'A combinar'];
+const bars = [['5', 86], ['4', 10], ['3', 4], ['2', 0], ['1', 0]] as const;
+---
+<section class="features" aria-labelledby="features-title" data-carousel>
+  <div class="container features-head">
+    <h2 id="features-title" class="section-title">{FEATURES_TITLE}</h2>
+    <div class="arrows">
+      <button type="button" class="arrow" data-prev aria-label="Anterior"><Icon name="arrow-left" size={20} /></button>
+      <button type="button" class="arrow" data-next aria-label="Próximo"><Icon name="arrow-right" size={20} /></button>
+    </div>
+  </div>
+  <ul class="track" data-track role="list">
+    {FEATURES.map((f) => (
+      <li class="card" data-card={f.id}>
+        <div class="preview" aria-hidden="true">
+          {f.id === 'preco' && (
+            <div class="pv pv-price">
+              <div class="price-chips">
+                {priceTypes.map((t, i) => <span class={i === 1 ? 'pchip sel' : 'pchip'} style={`--i:${i}`}>{t}</span>)}
+              </div>
+              <ListingCard class="pv-listing" title="Encanador residencial" category="Manutenção Residencial" price="A partir de R$ 120" rating="4,8" photo={encanador} />
+            </div>
+          )}
+          {f.id === 'avaliacoes' && (
+            <div class="pv pv-card pv-rating">
+              <div class="score">
+                <span class="score-n">4,9</span>
+                <span class="stars">{[0, 1, 2, 3, 4].map(() => <Icon name="star-fill" size={14} />)}</span>
+                <span class="score-t">23 avaliações</span>
+              </div>
+              <div class="bars">
+                {bars.map(([n, v], i) => <span class="bar-row"><span>{n}</span><span class="bar"><span style={`--w:${v}%;--i:${i}`}></span></span></span>)}
+              </div>
+            </div>
+          )}
+          {f.id === 'verificado' && (
+            <div class="pv pv-card pv-verified">
+              <div class="vrow">
+                <Image src={marina} alt="" width={96} height={96} class="vavatar" />
+                <div>
+                  <p class="vname">Marina Souza</p>
+                  <p class="vbadge"><span class="vseal"><Icon name="seal-check" size={15} /></span>Verificado</p>
+                </div>
+              </div>
+              <p class="vbio">Diarista há 12 anos. Limpeza completa de casas e apartamentos na zona norte.</p>
+            </div>
+          )}
+          {f.id === 'revisao' && (
+            <div class="pv pv-review">
+              <ListingCard class="pv-listing" title="Instalação de chuveiro" category="Manutenção Residencial" price="R$ 120 fixo" rating="5,0" photo={pintura} />
+              <div class="status">
+                <span class="st st-review">Em revisão</span>
+                <span class="st st-live">No ar</span>
+              </div>
+            </div>
+          )}
+          {f.id === 'favoritos' && (
+            <div class="pv pv-fav">
+              <div class="fav-card">
+                <ListingCard class="pv-listing" title="Pintura residencial" category="Construção e Reformas" price="R$ 35 por m²" rating="4,7" photo={pintura} />
+                <span class="heart"><Icon name="heart" size={18} class="h-out" /><Icon name="heart-fill" size={18} class="h-in" /></span>
+              </div>
+              <span class="toast"><Icon name="check" size={14} />Salvo nos favoritos</span>
+            </div>
+          )}
+        </div>
+        <div class="card-text">
+          <h3>{f.title}</h3>
+          <p>{f.text}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+  <div class="container">
+    <div class="dots" aria-hidden="true">{FEATURES.map((_, i) => <span class={i === 0 ? 'is-active' : ''}></span>)}</div>
+  </div>
+</section>
+
+<style>
+  .features {
+    padding-block: var(--section-y);
+    background: var(--background);
+    overflow: clip;
+  }
+  .section-title {
+    font-size: var(--step-h1);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .features-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  .arrows {
+    display: flex;
+    gap: 0.75rem;
+  }
+  .arrow {
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    transition:
+      border-color var(--t-base) var(--ease-out),
+      opacity var(--t-base) var(--ease-out),
+      transform var(--t-fast) var(--ease-out);
+  }
+  .arrow:hover:not(:disabled) {
+    border-color: var(--text);
+  }
+  .arrow:active:not(:disabled) {
+    transform: scale(var(--press));
+  }
+  .arrow:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+  .track {
+    --card-w: 24rem;
+    --edge: max(var(--gutter), calc((100vw - var(--max)) / 2));
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0.25rem var(--edge) 0.5rem;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--edge);
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .track::-webkit-scrollbar {
+    display: none;
+  }
+  .card {
+    flex: 0 0 var(--card-w);
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .preview {
+    position: relative;
+    display: grid;
+    place-items: center;
+    height: 15rem;
+    padding: 1.5rem;
+    background: var(--background);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    font-size: 16px;
+  }
+  .card-text {
+    display: grid;
+    gap: 0.5rem;
+    padding: 1.5rem 1.75rem 1.9rem;
+  }
+  .card-text h3 {
+    font-size: var(--step-h3);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  .card-text p {
+    color: var(--text-muted);
+    font-size: 1rem;
+  }
+  .dots {
+    display: flex;
+    gap: 6px;
+    margin-top: 2rem;
+  }
+  .dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--border-strong);
+    transition:
+      width var(--t-slow) var(--ease-out),
+      background-color var(--t-slow) var(--ease-out);
+  }
+  .dots span.is-active {
+    width: 24px;
+    background: var(--ink);
+  }
+
+  /* Prévias */
+  .pv {
+    width: 100%;
+    max-width: 17rem;
+    display: grid;
+    gap: 0.75rem;
+    justify-items: center;
+  }
+  .pv :global(.pv-listing) {
+    width: 100%;
+  }
+  .pv-card {
+    padding: 1rem 1.1rem;
+    border-radius: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+  .price-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+  .pchip {
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition:
+      background-color 350ms var(--ease-out) 500ms,
+      color 350ms var(--ease-out) 500ms,
+      border-color 350ms var(--ease-out) 500ms;
+  }
+  .card.is-on .pchip.sel {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--text-on-dark);
+  }
+  .pv-rating {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    max-width: 18rem;
+  }
+  .score {
+    display: grid;
+    gap: 0.15rem;
+  }
+  .score-n {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 2.6rem;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .stars {
+    display: flex;
+    gap: 1px;
+    color: var(--accent);
+  }
+  .score-t {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+  .bars {
+    flex: 1;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+  .bar {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--primary-soft);
+    overflow: hidden;
+  }
+  .bar span {
+    display: block;
+    height: 100%;
+    width: var(--w);
+    border-radius: 3px;
+    background: var(--primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 900ms var(--ease-out);
+    transition-delay: calc(200ms + var(--i) * 60ms);
+  }
+  .card.is-on .bar span {
+    transform: scaleX(1);
+  }
+  .pv-verified {
+    justify-items: start;
+    max-width: 17.5rem;
+  }
+  .vrow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .pv :global(.vavatar) {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .vname {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .vbadge {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .vseal {
+    display: inline-grid;
+    transform: scale(0.4);
+    opacity: 0;
+    transition:
+      transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1) 400ms,
+      opacity 200ms var(--ease-out) 400ms;
+  }
+  .card.is-on .vseal {
+    transform: none;
+    opacity: 1;
+  }
+  .vbio {
+    font-size: 0.72rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+  .status {
+    position: relative;
+    display: grid;
+    height: 2rem;
+  }
+  .st {
+    grid-area: 1 / 1;
+    justify-self: center;
+    align-self: center;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    transition:
+      opacity 300ms var(--ease-out),
+      transform 300ms var(--ease-out);
+  }
+  .st-review {
+    background: var(--accent-soft);
+    color: var(--accent-text);
+    transition-delay: 1000ms;
+  }
+  .st-live {
+    background: var(--primary-soft);
+    color: var(--primary);
+    opacity: 0;
+    transform: translateY(8px);
+    transition-delay: 1150ms;
+  }
+  .card.is-on .st-review {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  .card.is-on .st-live {
+    opacity: 1;
+    transform: none;
+  }
+  .fav-card {
+    position: relative;
+    width: 100%;
+  }
+  .heart {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.6rem;
+    display: grid;
+    color: var(--primary);
+  }
+  .heart :global(.icon) {
+    grid-area: 1 / 1;
+  }
+  .heart :global(.h-in) {
+    transform: scale(0);
+    transition: transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1) 450ms;
+  }
+  .card.is-on .heart :global(.h-in) {
+    transform: scale(1);
+  }
+  .toast {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--text-on-dark);
+    font-size: 0.75rem;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 350ms var(--ease-out) 800ms,
+      transform 350ms var(--ease-out) 800ms;
+  }
+  .toast :global(.icon) {
+    color: var(--accent);
+  }
+  .card.is-on .toast {
+    opacity: 1;
+    transform: none;
+  }
+  @media (max-width: 760px) {
+    .track {
+      --card-w: min(19rem, 82vw);
+      gap: 1rem;
+    }
+    .features-head {
+      margin-bottom: 2rem;
+    }
+    .arrows {
+      display: none;
+    }
+  }
+</style>

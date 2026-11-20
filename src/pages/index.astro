@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import Features from '../components/Features.astro';
+import Pros from '../components/Pros.astro';
+import Faq from '../components/Faq.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../lib/content';
+---
+<Base title={SITE.title} description={SITE.description}>
+  <Header />
+  <main id="conteudo">
+    <Hero />
+    <HowItWorks />
+    <Features />
+    <Pros />
+    <Faq />
+  </main>
+  <Footer />
+</Base>
+
+<script>
+  import '../scripts/site.ts';
+</script>

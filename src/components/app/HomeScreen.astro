@@ -1,0 +1,135 @@
+---
+// Tela Início do app: marca, cidade, bloco "Qual [serviço] você procura?" com a palavra que gira
+// (as mesmas palavras e o mesmo intervalo do app), anúncios recentes e tab bar flutuante.
+import Logo from '../Logo.astro';
+import Icon from '../Icon.astro';
+import ListingCard from './ListingCard.astro';
+import TabBar from './TabBar.astro';
+import encanador from '../../assets/photos/encanador.jpg';
+import cozinha from '../../assets/photos/cozinha.jpg';
+import pintura from '../../assets/photos/pintura.jpg';
+const words = ['serviço', 'conserto', 'reparo', 'atendimento', 'reforma'];
+---
+<div class="home">
+  <div class="home-top">
+    <Logo class="home-logo" />
+    <span class="city"><Icon name="map-pin" size={12} />Joinville<Icon name="caret-down" size={10} /></span>
+  </div>
+  <div class="search-block">
+    <p class="hero-q">
+      Qual <span class="rotator" data-words={JSON.stringify(words)} aria-hidden="true"><span class="rotator-word">{words[0]}</span></span><span class="visually-hidden">serviço</span>
+      você procura?
+    </p>
+    <span class="field"><Icon name="magnifying-glass" size={15} />Eletricista, diarista, montador…</span>
+  </div>
+  <div class="home-head"><span>Publicados recentemente</span><span class="see">Ver todos</span></div>
+  <div class="home-list">
+    <ListingCard class="stagger" style="--i:0" title="Encanador residencial" category="Manutenção Residencial" price="A partir de R$ 120" rating="4,8" photo={encanador} />
+    <ListingCard class="stagger" style="--i:1" title="Diarista — limpeza completa" category="Limpeza e Conservação" price="R$ 180 por dia" rating="4,9" photo={cozinha} />
+    <ListingCard class="stagger" style="--i:2" title="Pintura de apartamentos" category="Construção e Reformas" price="R$ 35 por m²" rating="4,7" photo={pintura} />
+  </div>
+  <TabBar active="Início" />
+</div>
+
+<style>
+  .home {
+    display: grid;
+    gap: 0.8em;
+    align-content: start;
+    height: 100%;
+  }
+  .home-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.25em;
+  }
+  .home :global(.home-logo) {
+    height: 1.05em;
+    width: auto;
+    color: var(--ink);
+  }
+  .city {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    padding: 0.3em 0.65em 0.3em 0.5em;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-size: 0.64em;
+    font-weight: 600;
+  }
+  .city :global(.icon:first-child) {
+    color: var(--primary);
+  }
+  .city :global(.icon:last-child) {
+    color: var(--text-muted);
+  }
+  .search-block {
+    display: grid;
+    gap: 0.8em;
+    padding: 1em 0.9em 0.9em;
+    border-radius: 1.35em;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+  .hero-q {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.24em;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .rotator {
+    display: inline-block;
+    color: var(--accent-text);
+    overflow: hidden;
+    vertical-align: bottom;
+    height: 1.2em;
+  }
+  .rotator-word {
+    display: inline-block;
+    transition:
+      transform var(--t-base) var(--ease-out),
+      opacity var(--t-base) var(--ease-out);
+  }
+  .rotator-word.out {
+    transform: translateY(-0.5em);
+    opacity: 0;
+    transition-duration: var(--t-fast);
+  }
+  .rotator-word.in-start {
+    transform: translateY(0.5em);
+    opacity: 0;
+    transition: none;
+  }
+  .field {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.65em 0.8em;
+    border-radius: 999px;
+    background: var(--background);
+    color: var(--text-muted);
+    font-size: 0.7em;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .home-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0 0.25em;
+    font-size: 0.76em;
+    font-weight: 600;
+  }
+  .see {
+    color: var(--primary);
+    font-size: 0.85em;
+  }
+  .home-list {
+    display: grid;
+    gap: 0.6em;
+  }
+</style>

@@ -1,0 +1,148 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { NAV } from '../lib/content';
+---
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a href="#topo" class="brand" aria-label="Conkat, início da página"><Logo class="header-logo" /></a>
+    <nav class="nav" aria-label="Principal">
+      <ul>
+        {NAV.map((item) => <li><a href={item.href} class="nav-link">{item.label}</a></li>)}
+      </ul>
+    </nav>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-mobile" data-menu-btn>
+      <span class="visually-hidden">Abrir menu</span>
+      <Icon name="list" size={22} class="i-open" />
+      <Icon name="x" size={22} class="i-close" />
+    </button>
+  </div>
+  <div class="menu-mobile" id="menu-mobile" data-menu hidden>
+    <ul class="container">
+      {NAV.map((item, i) => <li style={`--i:${i}`}><a href={item.href} data-menu-link>{item.label}</a></li>)}
+    </ul>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 50;
+    transition:
+      transform 400ms var(--ease-out),
+      background-color var(--t-slow) var(--ease-out),
+      box-shadow var(--t-slow) var(--ease-out);
+  }
+  .site-header.is-scrolled {
+    background: rgba(248, 249, 250, 0.96);
+    box-shadow: 0 1px 0 var(--border);
+  }
+  .site-header.is-hidden {
+    transform: translateY(-100%);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4.75rem;
+  }
+  .brand {
+    display: block;
+    color: var(--ink);
+    border-radius: 8px;
+  }
+  .brand :global(.header-logo) {
+    height: 1.9rem;
+    width: auto;
+  }
+  .nav ul {
+    display: flex;
+    gap: 2.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .nav-link {
+    position: relative;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.4rem 0;
+  }
+  /* O sublinhado de hover é o cursor da logo */
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--t-slow) var(--ease-out);
+  }
+  .nav-link:hover::after,
+  .nav-link.is-current::after {
+    transform: scaleX(1);
+  }
+  .menu-btn {
+    display: none;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+  }
+  .menu-btn :global(.i-close) {
+    display: none;
+  }
+  .menu-btn[aria-expanded='true'] :global(.i-open) {
+    display: none;
+  }
+  .menu-btn[aria-expanded='true'] :global(.i-close) {
+    display: block;
+  }
+  .menu-mobile {
+    background: var(--background);
+    border-bottom: 1px solid var(--border);
+  }
+  .menu-mobile ul {
+    margin: 0;
+    padding-block: 0.5rem 1.5rem;
+    list-style: none;
+  }
+  .menu-mobile li {
+    border-top: 1px solid var(--border);
+    animation: menu-in var(--t-slow) var(--ease-out) both;
+    animation-delay: calc(var(--i) * 40ms);
+  }
+  .menu-mobile a {
+    display: block;
+    padding: 1rem 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.35rem;
+  }
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+  @media (max-width: 760px) {
+    .nav {
+      display: none;
+    }
+    .menu-btn {
+      display: grid;
+    }
+    .brand :global(.header-logo) {
+      height: 1.6rem;
+    }
+    .header-inner {
+      height: 4.25rem;
+    }
+  }
+</style>

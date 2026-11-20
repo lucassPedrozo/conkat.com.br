@@ -1,0 +1,71 @@
+---
+// Moldura de celular com a tela do app. O conteúdo da tela vem pelo slot.
+interface Props { class?: string; label: string }
+const { class: className = '', label } = Astro.props;
+---
+<figure class={`phone ${className}`} aria-label={label}>
+  <div class="phone-screen">
+    <div class="phone-pattern" aria-hidden="true"></div>
+    <div class="phone-status" aria-hidden="true">
+      <span>9:41</span>
+      <span class="phone-island"></span>
+      <svg width="38" height="10" viewBox="0 0 38 10"><rect x="0" y="5" width="3" height="5" rx="1" fill="currentColor"/><rect x="4.5" y="3.5" width="3" height="6.5" rx="1" fill="currentColor"/><rect x="9" y="2" width="3" height="8" rx="1" fill="currentColor"/><rect x="13.5" y="0" width="3" height="10" rx="1" fill="currentColor"/><rect x="20" y=".5" width="16" height="9" rx="2.5" stroke="currentColor" fill="none"/><rect x="21.5" y="2" width="11" height="6" rx="1.2" fill="currentColor"/><rect x="36.6" y="3.5" width="1.4" height="3" rx=".7" fill="currentColor"/></svg>
+    </div>
+    <div class="phone-content">
+      <slot />
+    </div>
+  </div>
+</figure>
+
+<style>
+  .phone {
+    --pw: 300px;
+    position: relative;
+    margin: 0;
+    width: var(--pw);
+    aspect-ratio: 300 / 632;
+    padding: calc(var(--pw) * 0.034);
+    border-radius: calc(var(--pw) * 0.17);
+    background: #121414;
+    box-shadow:
+      0 0 0 1.5px #3c4645,
+      0 50px 90px -30px rgba(11, 43, 42, 0.45),
+      0 18px 36px -18px rgba(11, 43, 42, 0.35);
+    font-size: calc(var(--pw) / 300 * 16px);
+  }
+  .phone-screen {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border-radius: calc(var(--pw) * 0.14);
+    background: var(--background);
+    color: var(--text);
+    isolation: isolate;
+  }
+  .phone-pattern {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: url('/pattern.svg') 0 0 / 420px auto repeat;
+    opacity: 0.35;
+  }
+  .phone-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85em 1.4em 0.4em;
+    font-size: 0.72em;
+    font-weight: 600;
+  }
+  .phone-island {
+    width: 5.6em;
+    height: 1.6em;
+    border-radius: 1em;
+    background: #000;
+  }
+  .phone-content {
+    position: relative;
+    height: calc(100% - 2.6em);
+    padding: 0.55em 0.8em 0;
+  }
+</style>
