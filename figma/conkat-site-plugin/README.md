@@ -1,4 +1,4 @@
-# Conkat — Site v2 (script do Figma)
+# Conkat — Site v3 (script do Figma)
 
 Monta as versões **desktop** e **mobile** do site no arquivo
 [Conkat — Site (esboço)](https://www.figma.com/design/Dq3vg5N0d8Ob2knQvZ3LCJ).
@@ -12,7 +12,7 @@ mais de uma vez: apaga e recria só as partes que ele mesmo cria.
 1. Abra o arquivo no Figma pelo computador.
 2. Menu **Plugins › Find more plugins**, procure **Scripter** e abra.
 3. Apague o exemplo que aparece, cole o conteúdo inteiro de [`code.js`](code.js) e clique em **▶ Run**.
-4. Em alguns segundos aparece "Conkat: site atualizado (desktop + mobile)" no rodapé do Figma.
+4. Em alguns segundos aparece "Conkat: site v3 montado (desktop e mobile)" no rodapé do Figma.
 
 ## Opção 2 — Plugin de desenvolvimento (Figma desktop)
 
