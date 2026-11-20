@@ -69,6 +69,8 @@ function header() {
     }
   });
   desktop.addEventListener('change', () => setMenu(false));
+  // Quem navega pelo teclado nunca fica com o cabeçalho escondido
+  el.addEventListener('focusin', () => el.classList.remove('is-hidden'));
 
   // Link da seção visível
   const links = [...el.querySelectorAll<HTMLAnchorElement>('.nav-link')];
@@ -101,17 +103,14 @@ function rotators() {
     let i = 0;
     let visible = false;
     new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; }).observe(el);
-    window.setInterval(() => {
+    const ease = 'cubic-bezier(0.2, 0, 0, 1)';
+    window.setInterval(async () => {
       if (!visible || document.hidden) return;
-      word.classList.add('out');
-      window.setTimeout(() => {
-        i = (i + 1) % words.length;
-        word.textContent = words[i];
-        word.classList.remove('out');
-        word.classList.add('in-start');
-        void word.offsetWidth;
-        word.classList.remove('in-start');
-      }, 150);
+      // Sai para cima (150 ms) e a próxima entra de baixo (200 ms), como no app
+      await word.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-0.5em)' }], { duration: 150, easing: ease, fill: 'forwards' }).finished;
+      i = (i + 1) % words.length;
+      word.textContent = words[i];
+      word.animate([{ opacity: 0, transform: 'translateY(0.5em)' }, { opacity: 1, transform: 'none' }], { duration: 200, easing: ease, fill: 'forwards' });
     }, 2800);
   });
 }
@@ -203,7 +202,29 @@ function chart() {
   document.querySelectorAll<HTMLElement>('[data-chart]').forEach((el) => once(el, () => el.classList.add('is-on'), 0.45));
 }
 
+// ---------------------------------------------------------------------------
+// Hero: profundidade ao rolar. Cada celular sobe numa velocidade (data-depth)
+// ---------------------------------------------------------------------------
+function heroDepth() {
+  const panel = document.querySelector<HTMLElement>('[data-hero-panel]');
+  if (!panel || reduceMotion) return;
+  const slots = [...panel.querySelectorAll<HTMLElement>('[data-depth]')];
+  let ticking = false;
+  const update = () => {
+    const y = Math.min(window.scrollY, panel.offsetTop + panel.offsetHeight);
+    for (const s of slots) s.style.transform = `translate3d(0, ${(-y * Number(s.dataset.depth)).toFixed(1)}px, 0)`;
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }, { passive: true });
+}
+
 header();
+heroDepth();
 rotators();
 howItWorks();
 carousel();

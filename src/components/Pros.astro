@@ -20,7 +20,7 @@ import eletricista from '../assets/photos/eletricista.jpg';
           </li>
         ))}
       </ul>
-      {APP_LIVE && <a class="btn btn-accent" href="#">{PRO.cta}</a>}
+      {APP_LIVE ? <a class="btn btn-accent" href="#">{PRO.cta}</a> : <p class="pros-soon"><Icon name="clock" size={18} />{PRO.soon}</p>}
     </div>
     <div class="pros-media" data-chart>
       <Image src={eletricista} alt="Eletricista instalando uma tomada em um apartamento" widths={[480, 720, 1024]} sizes="(max-width: 1023px) 100vw, 520px" class="pros-photo" />
@@ -93,6 +93,18 @@ import eletricista from '../assets/photos/eletricista.jpg';
   .pros-list p {
     color: var(--text-on-dark-muted);
     font-size: 1rem;
+  }
+  .pros-soon {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+    color: var(--text-on-dark-muted);
+    font-size: 0.95rem;
+  }
+  .pros-soon :global(.icon) {
+    flex: none;
+    color: var(--accent);
   }
   .pros-media {
     position: relative;

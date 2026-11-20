@@ -249,3 +249,23 @@ a:hover > .logo .logo-cursor {
     opacity: 0;
   }
 }
+
+/* Sem JavaScript: as prévias mostram o estado final em vez de ficar "vazias" */
+html:not(.js) .card .bar span,
+html:not(.js) .vseal,
+html:not(.js) .st-live,
+html:not(.js) .toast,
+html:not(.js) .heart .h-in,
+html:not(.js) .line {
+  opacity: 1 !important;
+  transform: none !important;
+  stroke-dashoffset: 0 !important;
+}
+html:not(.js) .st-review {
+  opacity: 0 !important;
+}
+html:not(.js) .pchip.sel {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--text-on-dark);
+}

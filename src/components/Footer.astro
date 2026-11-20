@@ -1,6 +1,7 @@
 ---
 import Logo from './Logo.astro';
-import { FOOTER, APP_LIVE, DOWNLOAD, STORE_LINKS } from '../lib/content';
+import StoreBadges from './StoreBadges.astro';
+import { FOOTER, APP_LIVE, DOWNLOAD } from '../lib/content';
 const links = FOOTER.links.filter((l) => l.href);
 ---
 {APP_LIVE && (
@@ -10,10 +11,7 @@ const links = FOOTER.links.filter((l) => l.href);
         <h2 id="download-title">{DOWNLOAD.title}</h2>
         <p>{DOWNLOAD.text}</p>
       </div>
-      <div class="stores">
-        <a href={STORE_LINKS.appStore}>App Store</a>
-        <a href={STORE_LINKS.googlePlay}>Google Play</a>
-      </div>
+      <StoreBadges />
     </div>
   </section>
 )}

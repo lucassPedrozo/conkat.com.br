@@ -31,7 +31,8 @@ const { class: className = '', label } = Astro.props;
       0 0 0 1.5px #3c4645,
       0 50px 90px -30px rgba(11, 43, 42, 0.45),
       0 18px 36px -18px rgba(11, 43, 42, 0.35);
-    font-size: calc(var(--pw) / 300 * 16px);
+    /* O texto da tela acompanha o tamanho do aparelho (16px numa tela de 300px) */
+    font-size: calc(var(--pw) * 0.05334);
   }
   .phone-screen {
     position: relative;

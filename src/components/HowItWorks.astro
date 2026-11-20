@@ -74,13 +74,8 @@ import { STEPS } from '../lib/content';
     display: grid;
     grid-template-columns: 3rem 1fr;
     gap: 1.25rem;
-    min-height: 78vh;
+    min-height: 72vh;
     align-content: center;
-    opacity: 0.32;
-    transition: opacity 500ms var(--ease-out);
-  }
-  .step.is-active {
-    opacity: 1;
   }
   .step-n {
     display: grid;
@@ -112,11 +107,21 @@ import { STEPS } from '../lib/content';
     font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.1rem);
     line-height: 1.15;
     letter-spacing: -0.025em;
-    color: var(--ink);
+    color: var(--text-muted);
+    transition: color 400ms var(--ease-out);
   }
   .step p {
     font-size: var(--step-lead);
     color: var(--text-muted);
+    transition: color 400ms var(--ease-out);
+  }
+  .step.is-active h3,
+  :global(html:not(.js)) .step h3 {
+    color: var(--ink);
+  }
+  .step.is-active p,
+  :global(html:not(.js)) .step p {
+    color: var(--text);
   }
   .how-stage {
     position: relative;
@@ -219,6 +224,12 @@ import { STEPS } from '../lib/content';
     }
     .steps {
       padding-bottom: 0;
+    }
+    .step h3 {
+      color: var(--ink);
+    }
+    .step p {
+      color: var(--text);
     }
     .step {
       min-height: 0;

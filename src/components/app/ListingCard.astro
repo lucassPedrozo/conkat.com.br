@@ -3,11 +3,11 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Icon from '../Icon.astro';
-interface Props { title: string; category: string; price: string; rating: string; photo: ImageMetadata; class?: string; style?: string }
-const { title, category, price, rating, photo, class: className = '', style } = Astro.props;
+interface Props { title: string; category: string; price: string; rating: string; photo: ImageMetadata; class?: string; style?: string; eager?: boolean }
+const { title, category, price, rating, photo, class: className = '', style, eager = false } = Astro.props;
 ---
 <div class={`lc ${className}`} style={style}>
-  <Image src={photo} alt="" width={128} height={128} class="lc-photo" />
+  <Image src={photo} alt="" width={128} height={128} class="lc-photo" loading={eager ? "eager" : "lazy"} />
   <div class="lc-info">
     <p class="lc-title">{title}</p>
     <p class="lc-cat">{category}</p>

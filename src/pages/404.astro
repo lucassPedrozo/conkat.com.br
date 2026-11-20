@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
+---
+<Base title="Página não encontrada — Conkat" description="Esta página não existe." noindex>
+  <main id="conteudo" class="nf">
+    <a href="/" class="nf-logo" aria-label="Conkat, página inicial"><Logo /></a>
+    <h1>Esta página não existe.</h1>
+    <p>O endereço pode ter mudado ou estar com um erro de digitação.</p>
+    <a class="btn btn-primary" href="/">Ir para a página inicial</a>
+  </main>
+</Base>
+
+<style>
+  .nf {
+    min-height: 100svh;
+    display: grid;
+    align-content: center;
+    justify-items: start;
+    gap: 1.25rem;
+    max-width: 36rem;
+    margin-inline: auto;
+    padding: 2rem var(--gutter);
+  }
+  .nf-logo {
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .nf-logo :global(.logo) {
+    height: 2rem;
+    width: auto;
+  }
+  h1 {
+    font-size: var(--step-h1);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  p {
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+</style>

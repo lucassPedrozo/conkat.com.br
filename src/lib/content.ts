@@ -63,6 +63,7 @@ export const PRO = {
     { icon: 'chart-line-up', title: 'Desempenho do anúncio', text: 'Veja quantas vezes o anúncio apareceu em listas e buscas e quantas vezes foi aberto.' },
   ],
   cta: 'Começar a anunciar',
+  soon: 'O cadastro é feito pelo app, que chega em breve à App Store e ao Google Play.',
 } as const;
 
 export const FAQ_TITLE = 'Dúvidas frequentes';

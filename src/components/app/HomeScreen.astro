@@ -8,6 +8,7 @@ import TabBar from './TabBar.astro';
 import encanador from '../../assets/photos/encanador.jpg';
 import cozinha from '../../assets/photos/cozinha.jpg';
 import pintura from '../../assets/photos/pintura.jpg';
+const { eager = false } = Astro.props as { eager?: boolean };
 const words = ['serviço', 'conserto', 'reparo', 'atendimento', 'reforma'];
 ---
 <div class="home">
@@ -24,9 +25,9 @@ const words = ['serviço', 'conserto', 'reparo', 'atendimento', 'reforma'];
   </div>
   <div class="home-head"><span>Publicados recentemente</span><span class="see">Ver todos</span></div>
   <div class="home-list">
-    <ListingCard class="stagger" style="--i:0" title="Encanador residencial" category="Manutenção Residencial" price="A partir de R$ 120" rating="4,8" photo={encanador} />
-    <ListingCard class="stagger" style="--i:1" title="Diarista — limpeza completa" category="Limpeza e Conservação" price="R$ 180 por dia" rating="4,9" photo={cozinha} />
-    <ListingCard class="stagger" style="--i:2" title="Pintura de apartamentos" category="Construção e Reformas" price="R$ 35 por m²" rating="4,7" photo={pintura} />
+    <ListingCard class="stagger" style="--i:0" title="Encanador residencial" category="Manutenção Residencial" price="A partir de R$ 120" rating="4,8" photo={encanador} eager={eager} />
+    <ListingCard class="stagger" style="--i:1" title="Diarista — limpeza completa" category="Limpeza e Conservação" price="R$ 180 por dia" rating="4,9" photo={cozinha} eager={eager} />
+    <ListingCard class="stagger" style="--i:2" title="Pintura de apartamentos" category="Construção e Reformas" price="R$ 35 por m²" rating="4,7" photo={pintura} eager={eager} />
   </div>
   <TabBar active="Início" />
 </div>
@@ -90,19 +91,6 @@ const words = ['serviço', 'conserto', 'reparo', 'atendimento', 'reforma'];
   }
   .rotator-word {
     display: inline-block;
-    transition:
-      transform var(--t-base) var(--ease-out),
-      opacity var(--t-base) var(--ease-out);
-  }
-  .rotator-word.out {
-    transform: translateY(-0.5em);
-    opacity: 0;
-    transition-duration: var(--t-fast);
-  }
-  .rotator-word.in-start {
-    transform: translateY(0.5em);
-    opacity: 0;
-    transition: none;
   }
   .field {
     display: flex;

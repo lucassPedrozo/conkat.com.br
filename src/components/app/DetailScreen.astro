@@ -4,14 +4,16 @@ import { Image } from 'astro:assets';
 import Icon from '../Icon.astro';
 import cozinha from '../../assets/photos/cozinha.jpg';
 import marina from '../../assets/photos/marina.jpg';
+const { eager = false } = Astro.props as { eager?: boolean };
+const loading = eager ? 'eager' : 'lazy';
 ---
 <div class="detail">
-  <Image src={cozinha} alt="" width={480} height={320} class="gallery" />
+  <Image src={cozinha} alt="" widths={[300, 540]} sizes="270px" class="gallery" loading={loading} />
   <div class="chips"><span class="chip chip-accent">Destaque</span><span class="chip">Limpeza e Conservação</span></div>
   <p class="d-title">Diarista — limpeza completa</p>
   <p class="d-price">R$ 180 por dia</p>
   <div class="pro">
-    <Image src={marina} alt="" width={80} height={80} class="avatar" />
+    <Image src={marina} alt="" width={80} height={80} class="avatar" loading={loading} />
     <div class="pro-info">
       <p class="pro-name">Marina Souza</p>
       <p class="pro-ver"><Icon name="seal-check" size={11} />Verificado</p>
