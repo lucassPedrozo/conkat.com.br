@@ -116,14 +116,25 @@ async function main() {
   // Títulos em Unageo, a mesma fonte do "kat_" da logo (licença SIL OFL 1.1).
   // Se a Unageo não estiver instalada, os títulos ficam em Schibsted Grotesk e o script avisa.
   const available = await figma.listAvailableFontsAsync();
-  const hasUnageo = ["SemiBold", "Bold"].every((st) => available.some((f) => f.fontName.family === "Unageo" && f.fontName.style === st));
+  const unageoFonts = available.filter((f) => /unageo/i.test(f.fontName.family));
+  const norm = (x) => x.toLowerCase().replace(/[\s_-]/g, "");
+  const pickStyle = (wanted) => {
+    const exact = unageoFonts.find((f) => norm(f.fontName.style) === wanted);
+    return exact ? exact.fontName : null;
+  };
+  const unageoTitle = pickStyle("semibold") || pickStyle("bold") || pickStyle("medium");
+  const hasUnageo = !!unageoTitle;
   if (hasUnageo) {
-    await figma.loadFontAsync({ family: "Unageo", style: "SemiBold" }); await figma.loadFontAsync({ family: "Unageo", style: "Bold" });
-    for (const [name, style, ls] of [["Display/XL", "SemiBold", -2.5], ["Display/L", "SemiBold", -2], ["Título/1", "SemiBold", -1.5], ["Título/2", "SemiBold", -1], ["Título/3", "SemiBold", -0.5], ["Título/4", "SemiBold", 0], ["Mobile/Display", "SemiBold", -2], ["Mobile/Título", "SemiBold", -1.5]]) {
-      if (STY[name]) { STY[name].fontName = { family: "Unageo", style }; STY[name].letterSpacing = { unit: "PERCENT", value: ls }; }
+    await figma.loadFontAsync(unageoTitle);
+    for (const [name, ls] of [["Display/XL", -2.5], ["Display/L", -2], ["Título/1", -1.5], ["Título/2", -1], ["Título/3", -0.5], ["Título/4", 0], ["Mobile/Display", -2], ["Mobile/Título", -1.5]]) {
+      if (STY[name]) { STY[name].fontName = unageoTitle; STY[name].letterSpacing = { unit: "PERCENT", value: ls }; }
     }
+    log("Títulos em " + unageoTitle.family + " " + unageoTitle.style);
   } else {
-    figma.notify("Conkat: fonte Unageo não instalada. Os títulos ficaram em Schibsted Grotesk. Instale a Unageo e rode de novo.", { timeout: 12000 });
+    const seen = unageoFonts.map((f) => f.fontName.family + " " + f.fontName.style).join(", ");
+    figma.notify(seen
+      ? "Conkat: a Unageo apareceu só como: " + seen + ". Os títulos ficaram em Schibsted Grotesk."
+      : "Conkat: o Figma não está vendo a fonte Unageo. Instale o Figma Agent (figma.com/downloads), recarregue a aba e rode de novo.", { timeout: 15000 });
     log("Unageo não encontrada: títulos mantidos em Schibsted Grotesk.");
   }
 
