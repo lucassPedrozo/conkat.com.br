@@ -45,6 +45,7 @@ async function main() {
     ["text", "#1A1A1A", "Texto principal"],
     ["textMuted", "#6B7280", "Texto de apoio"],
     ["brand", "#0F928C", "Marca e ícones grandes"],
+    ["brandOnDark", "#5FD3CC", "Teal da marca sobre o fundo escuro"],
     ["primary", "#0B7A75", "Ação: botões, links, aba ativa"],
     ["primarySoft", "#E6F4F3", "Fundo suave da cor de ação"],
     ["accent", "#FDA333", "Destaque pontual, sempre com texto escuro"],
@@ -89,7 +90,7 @@ async function main() {
   };
   // Cores das logos -> variáveis (claro) e versão para fundo escuro
   const LIGHT = { "0B2B2A": "ink", "0B7A75": "primary", "FDA333": "accent" };
-  const DARK = { "0B2B2A": "surface", "0B7A75": "brand", "FDA333": "accent" };
+  const DARK = { "0B2B2A": "surface", "0B7A75": "brandOnDark", "FDA333": "accent" };
 
   // Páginas
   const pageNamed = (name, index) => {
