@@ -5,6 +5,8 @@ interface no cliente: as animações usam CSS e um script pequeno (`src/scripts/
 
 ## Rodar localmente
 
+Precisa do **Node.js 22.23.4 ou mais novo** (exigência do Astro). Confira com `node -v`.
+
 ```bash
 npm install
 npm run dev
