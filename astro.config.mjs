@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://conkat.com.br',
+  site: 'https://conkat.pedrozo.dev.br',
   compressHTML: true,
   build: { inlineStylesheets: 'auto' },
 });
