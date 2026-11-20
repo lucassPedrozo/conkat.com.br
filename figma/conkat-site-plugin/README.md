@@ -1,6 +1,6 @@
 # Conkat — Site v2 (script do Figma)
 
-Termina a versão **desktop** e cria a versão **mobile** do site no arquivo
+Monta as versões **desktop** e **mobile** do site no arquivo
 [Conkat — Site (esboço)](https://www.figma.com/design/Dq3vg5N0d8Ob2knQvZ3LCJ).
 
 O script usa o que já está no arquivo: as cores (`cor/*`), os estilos de texto, os
@@ -20,19 +20,23 @@ mais de uma vez: apaga e recria só as partes que ele mesmo cria.
 2. No app desktop do Figma: **Plugins › Development › Import plugin from manifest…** e escolha `manifest.json`.
 3. Rode em **Plugins › Development › Conkat — Site v2**.
 
-## O que o script faz
+## O que o script faz (v3)
 
-- **Desktop, correções:** título do hero em duas linhas, card flutuante reposicionado,
-  visual do Passo 2, categorias numa linha.
-- **Desktop, seções novas:** carrossel "Para quem procura", faixa de revisão de anúncios,
-  "Para profissionais" (foto + métricas + oferta de 14 dias), dúvidas em duas colunas,
-  chamada final com QR code e rodapé.
-- **Mobile (390 px):** versão completa, com carrossel horizontal em "Como funciona" e
-  "Para quem procura" e rolagem lateral nas categorias.
+Refaz do zero as versões desktop e mobile, com texto e visual revisados:
+
+- **Seções:** hero, como funciona (3 passos), o que você vê antes de chamar (carrossel
+  com 5 cards), para profissionais, dúvidas, download e rodapé.
+- **Texto:** só informação que o app realmente oferece, sem frases de efeito, sem
+  etiquetas acima dos títulos e sem setas nos botões. Todo o texto fica no objeto
+  `COPY`, no começo do `code.js`, para facilitar a revisão.
+- **Visual:** hero claro com o padrão de ícones do app; bordas em vez de sombras
+  (sombra só nos celulares); numeração apenas nos passos.
+- **Componente novo:** `Prévia/Revisão`, criado na seção "Componentes" se ainda não existir.
 
 ## Ainda provisório
 
 - Nomes, preços, notas e números dentro das telas são exemplos.
-- QR code, CNPJ e links do rodapé.
+- CNPJ e links do rodapé (Termos de uso e Política de privacidade).
+- Confirmar com o negócio: "O Conkat cobra alguma taxa do serviço? Não."
 - Selos das lojas: trocar pelas artes oficiais da Apple e do Google antes de publicar.
 - Fotos geradas por IA no Figma: substituir por fotos reais quando houver.
