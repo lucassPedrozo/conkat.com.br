@@ -1,4 +1,4 @@
-# Conkat — Site v3 (script do Figma)
+# Conkat — Site v4 (script do Figma)
 
 Monta as versões **desktop** e **mobile** do site no arquivo
 [Conkat — Site (esboço)](https://www.figma.com/design/Dq3vg5N0d8Ob2knQvZ3LCJ).
@@ -12,7 +12,7 @@ mais de uma vez: apaga e recria só as partes que ele mesmo cria.
 1. Abra o arquivo no Figma pelo computador.
 2. Menu **Plugins › Find more plugins**, procure **Scripter** e abra.
 3. Apague o exemplo que aparece, cole o conteúdo inteiro de [`code.js`](code.js) e clique em **▶ Run**.
-4. Em alguns segundos aparece "Conkat: site v3 montado (desktop e mobile)" no rodapé do Figma.
+4. Em alguns segundos aparece "Conkat: site v4 montado (desktop e mobile)" no rodapé do Figma.
 
 ## Opção 2 — Plugin de desenvolvimento (Figma desktop)
 
@@ -20,23 +20,22 @@ mais de uma vez: apaga e recria só as partes que ele mesmo cria.
 2. No app desktop do Figma: **Plugins › Development › Import plugin from manifest…** e escolha `manifest.json`.
 3. Rode em **Plugins › Development › Conkat — Site v2**.
 
-## O que o script faz (v3)
+## O que o script faz (v4)
 
-Refaz do zero as versões desktop e mobile, com texto e visual revisados:
+Refaz do zero as versões desktop e mobile com o texto validado contra o app, a API e o
+Obsidian. O relatório completo está em [`../AUDITORIA-COPY.md`](../AUDITORIA-COPY.md).
 
-- **Seções:** hero, como funciona (3 passos), o que você vê antes de chamar (carrossel
-  com 5 cards), para profissionais, dúvidas, download e rodapé.
-- **Texto:** só informação que o app realmente oferece, sem frases de efeito, sem
-  etiquetas acima dos títulos e sem setas nos botões. Todo o texto fica no objeto
-  `COPY`, no começo do `code.js`, para facilitar a revisão.
-- **Visual:** hero claro com o padrão de ícones do app; bordas em vez de sombras
-  (sombra só nos celulares); numeração apenas nos passos.
-- **Componente novo:** `Prévia/Revisão`, criado na seção "Componentes" se ainda não existir.
+- **`APP_LIVE`** (primeira linha de configuração do `code.js`): enquanto for `false`, o site
+  mostra "Em breve na App Store e no Google Play" no lugar dos selos e de "Baixar o app".
+  Troque para `true` quando o app estiver publicado e rode de novo.
+- **Texto:** todo o conteúdo fica no objeto `COPY`, no começo do arquivo.
+- **Componentes:** o script também corrige categorias e rótulos dentro dos componentes de
+  prévia, para ficarem iguais aos do app.
 
 ## Ainda provisório
 
 - Nomes, preços, notas e números dentro das telas são exemplos.
 - CNPJ e links do rodapé (Termos de uso e Política de privacidade).
-- Confirmar com o negócio: "O Conkat cobra alguma taxa do serviço? Não."
+- Termos de uso e Política de privacidade ainda não existem (o app tem `termsUrl: null`).
 - Selos das lojas: trocar pelas artes oficiais da Apple e do Google antes de publicar.
 - Fotos geradas por IA no Figma: substituir por fotos reais quando houver.

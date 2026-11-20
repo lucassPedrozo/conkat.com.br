@@ -1,10 +1,15 @@
-// Conkat — Site v3
+// Conkat — Site v4
 // Refaz as versões desktop e mobile do site no arquivo "Conkat — Site (esboço)",
-// com texto e visual revisados. Usa as cores, estilos, componentes e fotos que já
+// com o texto validado contra o app, a API e as notas do projeto
+// (ver figma/AUDITORIA-COPY.md). Usa as cores, estilos, componentes e fotos que já
 // estão no arquivo.
 //
 // Como rodar: abra o arquivo no Figma, rode o plugin "Scripter", cole este arquivo
 // inteiro e clique em Run. Pode ser rodado mais de uma vez.
+
+// Troque para true quando o app estiver publicado na App Store e no Google Play.
+// Enquanto for false, o site não mostra os selos das lojas nem "Baixar o app".
+const APP_LIVE = false;
 
 const IS_SCRIPTER = typeof print === "function";
 const log = (m) => { if (IS_SCRIPTER) print(m); };
@@ -12,7 +17,7 @@ const log = (m) => { if (IS_SCRIPTER) print(m); };
 (async () => {
   try {
     await main();
-    figma.notify("Conkat: site v3 montado (desktop e mobile).");
+    figma.notify("Conkat: site v4 montado (desktop e mobile).");
   } catch (e) {
     figma.notify("Conkat: erro — " + (e && e.message ? e.message : e), { error: true, timeout: 10000 });
     log(e && e.stack ? e.stack : String(e));
@@ -26,45 +31,51 @@ async function main() {
   // ---------------------------------------------------------------------------
   // Texto do site (revisado). Tudo o que aparece fora dos celulares está aqui.
   // ---------------------------------------------------------------------------
+  // Cada frase foi conferida contra o app, a API e o Obsidian (figma/AUDITORIA-COPY.md).
   const COPY = {
-    nav: ["Como funciona", "Para profissionais", "Dúvidas"],
-    navCta: "Baixar o app",
-    heroTitle: "Encontre um profissional na sua cidade e chame no WhatsApp.",
-    heroText: "Eletricistas, diaristas, encanadores, pintores e outros serviços. Quem procura não precisa criar conta.",
+    nav: APP_LIVE ? ["Como funciona", "Para profissionais", "Dúvidas"] : ["Como funciona", "Dúvidas"],
+    navCta: APP_LIVE ? "Baixar o app" : "Para profissionais",
+    heroTitle: "Profissionais verificados de Joinville e região, direto no seu WhatsApp.",
+    heroText: "Manutenção, limpeza, reformas, beleza, aulas, mudanças e outros serviços. Veja preço e avaliações antes de chamar, sem criar conta.",
+    soon: "Em breve na App Store e no Google Play",
+    heroSecondary: "Sou profissional",
     stepsTitle: "Como funciona",
     steps: [
-      ["Escolha a cidade", "O app mostra as cidades que já têm profissionais anunciando."],
-      ["Busque o serviço", "Pesquise pelo nome do serviço ou navegue pelas categorias. Dá para filtrar por tipo de preço."],
-      ["Chame no WhatsApp", "A conversa é direto com o profissional. Preço, data e horário vocês combinam ali."],
+      ["Escolha a cidade", "O Conkat começa por Joinville e região. O app mostra só as cidades que já têm profissionais anunciando."],
+      ["Busque o serviço", "Pesquise pelo que precisa ou navegue pelas categorias. Dá para filtrar por tipo de preço e ordenar por preço ou pelos mais recentes."],
+      ["Chame no WhatsApp", "Todo anúncio tem WhatsApp. A conversa é direto com o profissional: preço, data e horário vocês combinam ali."],
     ],
     featuresTitle: "O que você vê antes de chamar",
     features: [
       ["Como o profissional cobra", "Valor fixo, a partir de, por hora, por dia ou a combinar.", "Preço"],
-      ["Avaliações de clientes", "Nota de 1 a 5 estrelas, com a média e o total de avaliações. Anúncio sem avaliação não mostra nota.", "Avaliações"],
-      ["Documento verificado", "O selo aparece quando a equipe do Conkat confere o documento do profissional.", "Verificado"],
+      ["Avaliações", "Nota de 1 a 5 estrelas, com a média e o total. Anúncio sem nota aparece como ainda não avaliado.", "Avaliações"],
+      ["Profissionais verificados", "Todo profissional tem o CPF ou CNPJ conferido pela equipe do Conkat antes de publicar.", "Verificado"],
       ["Anúncios revisados", "Nenhum anúncio vai ao ar sem passar pela revisão da equipe.", "Revisão"],
       ["Favoritos no celular", "Salve anúncios sem criar conta. Eles ficam no aparelho e abrem sem internet.", "Favoritos"],
     ],
     proTitle: "Você presta serviço? Anuncie no Conkat.",
-    proText: "Crie o anúncio pelo app. A primeira publicação fica 14 dias no ar sem custo, a contar da aprovação.",
+    proText: "Seu primeiro anúncio fica 14 dias no ar sem custo, contados a partir da aprovação. Sem cobrança por contato: quem procura chama direto no seu WhatsApp.",
     pro: [
+      ["selo", "Cadastro com CPF ou CNPJ", "Confirme seu e-mail e envie o documento. A equipe confere antes do seu primeiro anúncio."],
       ["megafone", "Anúncio em cinco etapas", "Categoria, descrição, preço e área de atendimento, fotos e revisão final."],
       ["escudo", "Revisão antes de publicar", "Se algo precisar de ajuste, você recebe o motivo no app e reenvia."],
-      ["raio", "Destaque nas buscas", "Anúncios impulsionados aparecem antes dos outros na sua cidade."],
-      ["grafico", "Desempenho do anúncio", "Acompanhe quantas vezes o anúncio apareceu nas buscas e quantas pessoas o abriram."],
+      ["raio", "Destaque nas buscas", "Anúncios impulsionados aparecem antes dos outros na sua cidade, com o selo Destaque."],
+      ["grafico", "Desempenho do anúncio", "Veja quantas vezes o anúncio apareceu em listas e buscas e quantas vezes foi aberto."],
     ],
     proCta: "Começar a anunciar",
     faqTitle: "Dúvidas frequentes",
     faq: [
       ["Preciso de conta para contratar?", "Não. Buscar, salvar e avaliar anúncios não exige cadastro. Só profissionais que anunciam têm conta."],
-      ["O Conkat cobra alguma taxa do serviço?", "Não. O pagamento é combinado direto entre você e o profissional."],
-      ["Quanto custa anunciar?", "A primeira publicação é grátis por 14 dias, a contar da aprovação. Depois, os planos e valores aparecem no app, na hora de publicar."],
+      ["O pagamento do serviço passa pelo Conkat?", "Não. O Conkat não intermedeia pagamentos. Preço e forma de pagamento são combinados direto com o profissional."],
+      ["Quem pode avaliar um anúncio?", "Qualquer pessoa com o app, uma vez por aparelho. A avaliação é só a nota, de 1 a 5 estrelas."],
+      ["Quanto custa anunciar?", "O primeiro anúncio fica 14 dias no ar sem custo, contados a partir da aprovação. Depois, a publicação é paga com o saldo da conta, e os planos aparecem no app. Por enquanto, o saldo é recarregado pela equipe do Conkat."],
       ["Por que meu anúncio foi recusado?", "O motivo aparece no app, junto do anúncio. Corrija o que foi apontado e envie de novo."],
-      ["Em quais cidades o Conkat funciona?", "O app lista as cidades que já têm anúncios publicados. Se a sua não aparece, ainda não há profissionais anunciando nela."],
+      ["Em quais cidades o Conkat funciona?", "Em Joinville e região: Jaraguá do Sul, Araquari, São Francisco do Sul e outras cidades do Norte de Santa Catarina. O app mostra as que já têm anúncios publicados."],
     ],
-    ctaTitle: "Baixe o Conkat",
-    ctaText: "Disponível para iPhone e Android.",
+    ctaTitle: APP_LIVE ? "Baixe o Conkat" : "O Conkat chega em breve",
+    ctaText: APP_LIVE ? "Disponível para iPhone e Android." : "Para iPhone e Android, começando por Joinville e região.",
     footerLinks: ["Termos de uso", "Política de privacidade"],
+    footerRegion: "Joinville e região, SC",
     footerLegal: "© 2026 Conkat. CNPJ 00.000.000/0001-00",
   };
 
@@ -158,6 +169,17 @@ async function main() {
   const btn = (tipo, label) => setP(variant(comp("Botão"), "Tipo=" + tipo).createInstance(), { "Rótulo": label, "Seta": false });
   const badge = (s) => variant(comp("Selo da loja"), "Loja=" + s).createInstance();
   const badges = (dir = "HORIZONTAL") => { const b = AL(dir, { name: "Lojas", itemSpacing: 12 }); b.appendChild(badge("App Store")); b.appendChild(badge("Google Play")); return b; };
+  const soonPill = () => {
+    const p = AL("HORIZONTAL", { name: "Em breve nas lojas", itemSpacing: 8 }); p.fills = [pv("surface")]; border(p); p.cornerRadius = 100;
+    pad(p, 12, 18, 12, 14); p.counterAxisAlignItems = "CENTER";
+    p.appendChild(icon("relogio", "primary", 18)); p.appendChild(mk(COPY.soon, 14, 20, "Medium", "text")); return p;
+  };
+  const storeBlock = () => (APP_LIVE ? badges() : soonPill());
+  const heroActions = (dir) => {
+    if (APP_LIVE) return badges();
+    const r = AL(dir, { name: "Ações", itemSpacing: 12 }); if (dir === "HORIZONTAL") r.counterAxisAlignItems = "CENTER";
+    r.appendChild(soonPill()); r.appendChild(btn("Contorno", COPY.heroSecondary)); return r;
+  };
   const listing = (o, photo) => { const l = setP(comp("App/Card de anúncio").createInstance(), o); if (photo) img(l.findOne((n) => n.name === "foto"), photo); return l; };
   const arrow = (d) => variant(comp("Seta do carrossel"), "Direção=" + d).createInstance();
   const faq = (q, a, open) => setP(variant(comp("Item de dúvida"), "Estado=" + (open ? "Aberto" : "Fechado")).createInstance(), { "Pergunta": q, "Resposta": a });
@@ -173,7 +195,7 @@ async function main() {
   if (!COMP["Prévia/Revisão"]) {
     const c = figma.createComponent(); c.name = "Prévia/Revisão"; c.resize(384, 232); c.fills = [pv("background")]; c.clipsContent = true;
     c.layoutMode = "VERTICAL"; c.primaryAxisSizingMode = "FIXED"; c.counterAxisSizingMode = "FIXED"; c.primaryAxisAlignItems = "CENTER"; c.counterAxisAlignItems = "CENTER"; c.itemSpacing = 14;
-    const l = listing({ "Título": "Instalação de chuveiro", "Categoria": "Elétrica", "Preço": "R$ 120 fixo", "Nota": "5,0" }, "pintura"); c.appendChild(l); l.resize(260, l.height);
+    const l = listing({ "Título": "Instalação de chuveiro", "Categoria": "Manutenção Residencial", "Preço": "R$ 120 fixo", "Nota": "5,0" }, "pintura"); c.appendChild(l); l.resize(260, l.height);
     const row = AL("HORIZONTAL", { itemSpacing: 10 }); row.counterAxisAlignItems = "CENTER"; c.appendChild(row);
     const chip = (t, bg, fg) => { const ch = AL("HORIZONTAL"); ch.fills = [pv(bg)]; ch.cornerRadius = 100; pad(ch, 6, 12, 6, 12); ch.appendChild(mk(t, 12, 16, "Semi Bold", fg)); return ch; };
     row.appendChild(chip("Em revisão", "accentSoft", "accentText")); row.appendChild(icon("seta", "textMuted", 16)); row.appendChild(chip("No ar", "primarySoft", "primary"));
@@ -181,6 +203,21 @@ async function main() {
     const holder = page.findOne((n) => n.name === "Prévias" && n.type === "FRAME");
     if (holder) holder.appendChild(c); else { c.x = -2400; c.y = 2800; }
     COMP["Prévia/Revisão"] = c;
+  }
+  // Ajustes nos componentes existentes: categorias e rótulos iguais aos do app
+  {
+    const lc = comp("App/Card de anúncio");
+    const catKey = Object.keys(lc.componentPropertyDefinitions).find((k) => k.startsWith("Categoria"));
+    if (catKey) lc.editComponentProperty(catKey, { defaultValue: "Manutenção Residencial, há 2 dias" });
+    const fav = COMP["Prévia/Favoritos"];
+    const favCard = fav && fav.findOne((n) => n.type === "INSTANCE");
+    if (favCard) setP(favCard, { "Categoria": "Construção e Reformas, há 1 dia" });
+    const rev = COMP["Prévia/Revisão"];
+    const revCard = rev && rev.findOne((n) => n.type === "INSTANCE" && n.name.indexOf("Card") >= 0);
+    if (revCard) setP(revCard, { "Categoria": "Manutenção Residencial" });
+    const ver = COMP["Prévia/Verificado"];
+    const verText = ver && ver.findOne((n) => n.type === "TEXT" && n.characters === "Documento verificado");
+    if (verText) verText.characters = "Verificado";
   }
   const featureCard = (title, desc, preview) => setP(comp("Card de recurso").createInstance(), { "Título": title, "Descrição": desc, "Prévia": comp("Prévia/" + preview).id });
 
@@ -221,17 +258,17 @@ async function main() {
     const card = AL("VERTICAL", { name: "Bloco de busca", itemSpacing: 12 }); fill(s, card); card.fills = [pv("surface")]; card.cornerRadius = 22; pad(card, 16, 14, 14, 14); border(card);
     const q = disp("Qual eletricista você procura?", 20, 24, "text"); q.setRangeFills(5, 16, [pv("accentText")]); fill(card, q);
     const sf = AL("HORIZONTAL", { name: "Campo de busca", itemSpacing: 8 }); fill(card, sf); sf.fills = [pv("background")]; sf.cornerRadius = 100; pad(sf, 10, 12, 10, 12); sf.counterAxisAlignItems = "CENTER";
-    sf.appendChild(icon("busca", "textMuted", 15)); sf.appendChild(mk("Buscar serviço", 11, 14, "Regular", "textMuted"));
+    sf.appendChild(icon("busca", "textMuted", 15)); sf.appendChild(mk("Eletricista, diarista, montador…", 11, 14, "Regular", "textMuted"));
     const sec = AL("HORIZONTAL"); fill(s, sec); sec.primaryAxisAlignItems = "SPACE_BETWEEN"; sec.paddingLeft = sec.paddingRight = 4;
-    sec.appendChild(mk("Publicados agora", 12, 16, "Semi Bold", "text")); sec.appendChild(mk("Ver todos", 10, 16, "Semi Bold", "primary"));
-    fill(s, listing({ "Título": "Encanador residencial", "Categoria": "Hidráulica, há 2 horas", "Preço": "A partir de R$ 120", "Nota": "4,8" }, "encanador"));
-    fill(s, listing({ "Título": "Diarista — limpeza completa", "Categoria": "Limpeza, há 5 horas", "Preço": "R$ 180 por dia", "Nota": "4,9" }, "cozinha"));
-    fill(s, listing({ "Título": "Pintura de apartamentos", "Categoria": "Pintura, há 1 dia", "Preço": "R$ 35 por m²", "Nota": "4,7" }, "pintura"));
+    sec.appendChild(mk("Publicados recentemente", 12, 16, "Semi Bold", "text")); sec.appendChild(mk("Ver todos", 10, 16, "Semi Bold", "primary"));
+    fill(s, listing({ "Título": "Encanador residencial", "Categoria": "Manutenção Residencial, há 2 h", "Preço": "A partir de R$ 120", "Nota": "4,8" }, "encanador"));
+    fill(s, listing({ "Título": "Diarista — limpeza completa", "Categoria": "Limpeza e Conservação, há 5 h", "Preço": "R$ 180 por dia", "Nota": "4,9" }, "cozinha"));
+    fill(s, listing({ "Título": "Pintura de apartamentos", "Categoria": "Construção e Reformas, há 1 dia", "Preço": "R$ 35 por m²", "Nota": "4,7" }, "pintura"));
   };
   const scrDetalhe = (s) => {
     const g = figma.createRectangle(); g.name = "galeria"; g.resize(228, 160); g.cornerRadius = 18; img(g, "cozinha"); s.appendChild(g);
     const row = AL("HORIZONTAL", { itemSpacing: 6 }); s.appendChild(row);
-    for (const [t, bg] of [["Destaque", "accent"], ["Limpeza", "surface"]]) {
+    for (const [t, bg] of [["Destaque", "accent"], ["Limpeza e Conservação", "surface"]]) {
       const c = AL("HORIZONTAL"); c.fills = [pv(bg)]; c.cornerRadius = 100; pad(c, 4, 9, 4, 9); if (bg === "surface") border(c);
       c.appendChild(mk(t, 10, 13, "Semi Bold", "text")); row.appendChild(c);
     }
@@ -240,7 +277,7 @@ async function main() {
     const rb = AL("HORIZONTAL", { itemSpacing: 10 }); fill(s, rb); rb.counterAxisAlignItems = "CENTER"; rb.fills = [pv("surface")]; rb.cornerRadius = 16; pad(rb, 10, 12, 10, 12); border(rb);
     const av = figma.createEllipse(); av.resize(34, 34); img(av, "marina"); rb.appendChild(av);
     const ac = AL("VERTICAL", { itemSpacing: 1 }); ac.appendChild(mk("Marina Souza", 12, 16, "Semi Bold", "text"));
-    const vr = AL("HORIZONTAL", { itemSpacing: 3 }); vr.counterAxisAlignItems = "CENTER"; vr.appendChild(icon("selo", "primary", 11)); vr.appendChild(mk("Verificada", 10, 13, "Medium", "primary")); ac.appendChild(vr); fill(rb, ac);
+    const vr = AL("HORIZONTAL", { itemSpacing: 3 }); vr.counterAxisAlignItems = "CENTER"; vr.appendChild(icon("selo", "primary", 11)); vr.appendChild(mk("Verificado", 10, 13, "Medium", "primary")); ac.appendChild(vr); fill(rb, ac);
     const sr = AL("HORIZONTAL", { itemSpacing: 2 }); sr.counterAxisAlignItems = "CENTER"; sr.appendChild(icon("estrela-fill", "accent", 12)); sr.appendChild(mk("4,9", 12, 16, "Semi Bold", "text")); rb.appendChild(sr);
     fill(s, mk("Limpeza completa de casas e apartamentos, com produtos inclusos. Atendo toda a zona norte.", 11, 16, "Regular", "textMuted"));
     const sp = AL("VERTICAL"); fill(s, sp); sp.layoutSizingVertical = "FILL";
@@ -263,8 +300,8 @@ async function main() {
       const col = fixedW(AL("VERTICAL", { name: "Busca", itemSpacing: 10 }), w);
       const sf = AL("HORIZONTAL", { itemSpacing: 8 }); fill(col, sf); sf.fills = [pv("surface")]; sf.cornerRadius = 100; pad(sf, 12, 14, 12, 14); sf.counterAxisAlignItems = "CENTER"; sf.strokes = [pv("primary")]; sf.strokeWeight = 1.5;
       sf.appendChild(icon("busca", "text", 16)); sf.appendChild(mk("eletricista", 13, 18, "Medium", "text"));
-      fill(col, listing({ "Título": "Eletricista residencial", "Categoria": "Elétrica, há 3 horas", "Preço": "A partir de R$ 90", "Nota": "4,8" }, "encanador"));
-      fill(col, listing({ "Título": "Instalação de chuveiro", "Categoria": "Elétrica, há 1 dia", "Preço": "R$ 120 fixo", "Nota": "5,0" }, "pintura"));
+      fill(col, listing({ "Título": "Eletricista residencial", "Categoria": "Manutenção Residencial, há 3 h", "Preço": "A partir de R$ 90", "Nota": "4,8" }, "encanador"));
+      fill(col, listing({ "Título": "Instalação de chuveiro", "Categoria": "Manutenção Residencial, há 1 dia", "Preço": "R$ 120 fixo", "Nota": "5,0" }, "pintura"));
       return col;
     },
     (w) => {
@@ -290,7 +327,7 @@ async function main() {
     const m = fixedW(AL("VERTICAL", { name: "Card de desempenho", itemSpacing: 14 }), w); m.fills = [pv("surface")]; m.cornerRadius = 16; pad(m, 18, 18, 18, 18);
     m.appendChild(mk("Últimos 7 dias", 12, 16, "Medium", "textMuted"));
     const r = AL("HORIZONTAL", { itemSpacing: 24 }); fill(m, r);
-    for (const [n, l] of [["1.284", "exibições em buscas"], ["312", "visitas ao anúncio"]]) { const c = AL("VERTICAL", { itemSpacing: 2 }); c.appendChild(disp(n, 26, 30, "text")); c.appendChild(mk(l, 11, 15, "Regular", "textMuted")); r.appendChild(c); }
+    for (const [n, l] of [["1.284", "exibições em buscas"], ["312", "visualizações"]]) { const c = AL("VERTICAL", { itemSpacing: 2 }); c.appendChild(disp(n, 26, 30, "text")); c.appendChild(mk(l, 11, 15, "Regular", "textMuted")); r.appendChild(c); }
     const ch = figma.createNodeFromSvg(`<svg width="${w - 36}" height="52" viewBox="0 0 260 52" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 51.5H260" stroke="#E5E7EB"/><path d="M0 40 L37 34 L74 37 L111 26 L148 28 L185 16 L222 12 L260 5" stroke="#0B7A75" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M0 46 L37 44 L74 45 L111 40 L148 41 L185 37 L222 35 L260 32" stroke="#FDA333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`);
     ch.name = "gráfico"; fill(m, ch); return m;
   };
@@ -326,8 +363,8 @@ async function main() {
     nav.appendChild(btn("Primário", COPY.navCta));
     const tx = AL("VERTICAL", { name: "Texto", itemSpacing: 28 }); hero.appendChild(tx); tx.x = 120; tx.y = 212;
     tx.appendChild(await T(COPY.heroTitle, "Display/XL", "text", 620));
-    tx.appendChild(await T(COPY.heroText, "Texto/L", "textMuted", 500));
-    tx.appendChild(badges());
+    tx.appendChild(await T(COPY.heroText, "Texto/L", "textMuted", 540));
+    tx.appendChild(heroActions("HORIZONTAL"));
     const pB = phone("Anúncio", scrDetalhe, null); hero.appendChild(pB); pB.rescale(1.08); pB.x = 1110; pB.y = 236;
     const pA = phone("Início", scrInicio, "Início"); hero.appendChild(pA); pA.rescale(1.2); pA.x = 800; pA.y = 132;
   }
@@ -357,7 +394,7 @@ async function main() {
     fill(hd, await T(COPY.proTitle, "Título/1", "textOnDark"));
     fill(hd, await T(COPY.proText, "Texto/L", "textOnDarkMuted"));
     fill(c, await proList());
-    c.appendChild(btn("Destaque", COPY.proCta));
+    c.appendChild(APP_LIVE ? btn("Destaque", COPY.proCta) : soonPill());
     const photo = figma.createFrame(); photo.name = "Foto"; photo.resize(500, 640); photo.cornerRadius = 28; img(photo, "eletricista"); photo.clipsContent = true; row.appendChild(photo);
     const mc = metricsCard(290); photo.appendChild(mc); mc.x = 24; mc.y = 640 - 24 - mc.height;
   }
@@ -375,13 +412,14 @@ async function main() {
     const row = AL("HORIZONTAL", { name: "Conteúdo" }); fill(s, row); row.primaryAxisAlignItems = "SPACE_BETWEEN"; row.counterAxisAlignItems = "CENTER";
     const l = AL("VERTICAL", { itemSpacing: 10 }); row.appendChild(l);
     l.appendChild(await T(COPY.ctaTitle, "Título/1", "textOnDark")); l.appendChild(await T(COPY.ctaText, "Texto/L", "textOnDark"));
-    row.appendChild(badges());
+    row.appendChild(storeBlock());
   }
   // Rodapé
   {
     const s = section("Rodapé", "ink", 40, 120, 40, 120);
     const row = AL("HORIZONTAL", { name: "Conteúdo" }); fill(s, row); row.primaryAxisAlignItems = "SPACE_BETWEEN"; row.counterAxisAlignItems = "CENTER";
-    row.appendChild(await T("Conkat", "Marca", "textOnDark"));
+    const brand = AL("HORIZONTAL", { itemSpacing: 16 }); brand.counterAxisAlignItems = "CENTER"; row.appendChild(brand);
+    brand.appendChild(await T("Conkat", "Marca", "textOnDark")); brand.appendChild(await T(COPY.footerRegion, "Texto/S", "textOnDarkMuted"));
     const links = AL("HORIZONTAL", { itemSpacing: 32 }); for (const l of COPY.footerLinks) links.appendChild(await T(l, "Texto/S", "textOnDarkMuted")); row.appendChild(links);
     row.appendChild(await T(COPY.footerLegal, "Texto/S", "textOnDarkMuted"));
   }
@@ -404,7 +442,7 @@ async function main() {
     const tx = AL("VERTICAL", { name: "Texto", itemSpacing: 20 }); fill(h, tx); pad(tx, 36, 24, 32, 24);
     fill(tx, await T(COPY.heroTitle, "Mobile/Display"));
     fill(tx, await T(COPY.heroText, "Texto/M", "textMuted"));
-    tx.appendChild(badges());
+    tx.appendChild(heroActions("VERTICAL"));
     const stage = figma.createFrame(); stage.name = "Celulares"; stage.fills = []; stage.clipsContent = true; fill(h, stage); stage.resize(390, 440);
     const pB = phone("Anúncio", scrDetalhe, null); stage.appendChild(pB); pB.rescale(0.9); pB.x = 222; pB.y = 80;
     const pA = phone("Início", scrInicio, "Início"); stage.appendChild(pA); pA.x = 40; pA.y = 20;
@@ -431,7 +469,7 @@ async function main() {
     const photo = figma.createFrame(); photo.name = "Foto"; fill(s, photo); photo.resize(342, 400); photo.cornerRadius = 24; img(photo, "eletricista"); photo.clipsContent = true;
     const mc = metricsCard(250); photo.appendChild(mc); mc.x = 16; mc.y = 400 - 16 - mc.height;
     fill(s, await proList());
-    fill(s, btn("Destaque", COPY.proCta));
+    if (APP_LIVE) fill(s, btn("Destaque", COPY.proCta)); else s.appendChild(soonPill());
   }
   // Dúvidas
   {
@@ -445,12 +483,13 @@ async function main() {
     const s = msec("Download", "primary", 56, 24, 56, 24, 20);
     fill(s, await T(COPY.ctaTitle, "Mobile/Título", "textOnDark"));
     fill(s, await T(COPY.ctaText, "Texto/M", "textOnDark"));
-    s.appendChild(badges());
+    s.appendChild(storeBlock());
   }
   // Rodapé
   {
     const s = msec("Rodapé", "ink", 40, 24, 40, 24, 16);
     s.appendChild(await T("Conkat", "Marca", "textOnDark"));
+    s.appendChild(await T(COPY.footerRegion, "Texto/S", "textOnDarkMuted"));
     const links = AL("HORIZONTAL", { itemSpacing: 24 }); for (const l of COPY.footerLinks) links.appendChild(await T(l, "Texto/S", "textOnDarkMuted")); s.appendChild(links);
     fill(s, await T(COPY.footerLegal, "Texto/S", "textOnDarkMuted"));
   }
