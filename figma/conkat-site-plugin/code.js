@@ -17,7 +17,7 @@ const log = (m) => { if (IS_SCRIPTER) print(m); };
 (async () => {
   try {
     await main();
-    figma.notify("Conkat: site v4 montado (desktop e mobile).");
+    figma.notify("Conkat: site v4.1 montado (desktop e mobile).");
   } catch (e) {
     figma.notify("Conkat: erro — " + (e && e.message ? e.message : e), { error: true, timeout: 10000 });
     log(e && e.stack ? e.stack : String(e));
@@ -35,8 +35,8 @@ async function main() {
   const COPY = {
     nav: APP_LIVE ? ["Como funciona", "Para profissionais", "Dúvidas"] : ["Como funciona", "Dúvidas"],
     navCta: APP_LIVE ? "Baixar o app" : "Para profissionais",
-    heroTitle: "Profissionais verificados de Joinville e região, direto no seu WhatsApp.",
-    heroText: "Manutenção, limpeza, reformas, beleza, aulas, mudanças e outros serviços. Veja preço e avaliações antes de chamar, sem criar conta.",
+    heroTitle: "Profissionais verificados de Joinville e região.",
+    heroText: "Manutenção, limpeza, reformas, beleza, aulas, mudanças e outros serviços. Veja preço e avaliações e chame direto no WhatsApp, sem criar conta.",
     soon: "Em breve na App Store e no Google Play",
     heroSecondary: "Sou profissional",
     stepsTitle: "Como funciona",
@@ -170,15 +170,14 @@ async function main() {
   const badge = (s) => variant(comp("Selo da loja"), "Loja=" + s).createInstance();
   const badges = (dir = "HORIZONTAL") => { const b = AL(dir, { name: "Lojas", itemSpacing: 12 }); b.appendChild(badge("App Store")); b.appendChild(badge("Google Play")); return b; };
   const soonPill = () => {
-    const p = AL("HORIZONTAL", { name: "Em breve nas lojas", itemSpacing: 8 }); p.fills = [pv("surface")]; border(p); p.cornerRadius = 100;
-    pad(p, 12, 18, 12, 14); p.counterAxisAlignItems = "CENTER";
-    p.appendChild(icon("relogio", "primary", 18)); p.appendChild(mk(COPY.soon, 14, 20, "Medium", "text")); return p;
+    const p = AL("HORIZONTAL", { name: "Em breve nas lojas", itemSpacing: 8 }); p.counterAxisAlignItems = "CENTER";
+    p.appendChild(icon("relogio", "textMuted", 18)); p.appendChild(mk(COPY.soon, 14, 20, "Medium", "textMuted")); return p;
   };
   const storeBlock = () => (APP_LIVE ? badges() : soonPill());
   const heroActions = (dir) => {
     if (APP_LIVE) return badges();
     const r = AL(dir, { name: "Ações", itemSpacing: 12 }); if (dir === "HORIZONTAL") r.counterAxisAlignItems = "CENTER";
-    r.appendChild(soonPill()); r.appendChild(btn("Contorno", COPY.heroSecondary)); return r;
+    r.itemSpacing = 20; r.appendChild(btn("Primário", COPY.heroSecondary)); r.appendChild(soonPill()); return r;
   };
   const listing = (o, photo) => { const l = setP(comp("App/Card de anúncio").createInstance(), o); if (photo) img(l.findOne((n) => n.name === "foto"), photo); return l; };
   const arrow = (d) => variant(comp("Seta do carrossel"), "Direção=" + d).createInstance();
@@ -208,10 +207,10 @@ async function main() {
   {
     const lc = comp("App/Card de anúncio");
     const catKey = Object.keys(lc.componentPropertyDefinitions).find((k) => k.startsWith("Categoria"));
-    if (catKey) lc.editComponentProperty(catKey, { defaultValue: "Manutenção Residencial, há 2 dias" });
+    if (catKey) lc.editComponentProperty(catKey, { defaultValue: "Manutenção Residencial" });
     const fav = COMP["Prévia/Favoritos"];
     const favCard = fav && fav.findOne((n) => n.type === "INSTANCE");
-    if (favCard) setP(favCard, { "Categoria": "Construção e Reformas, há 1 dia" });
+    if (favCard) setP(favCard, { "Categoria": "Construção e Reformas" });
     const rev = COMP["Prévia/Revisão"];
     const revCard = rev && rev.findOne((n) => n.type === "INSTANCE" && n.name.indexOf("Card") >= 0);
     if (revCard) setP(revCard, { "Categoria": "Manutenção Residencial" });
@@ -261,9 +260,9 @@ async function main() {
     sf.appendChild(icon("busca", "textMuted", 15)); sf.appendChild(mk("Eletricista, diarista, montador…", 11, 14, "Regular", "textMuted"));
     const sec = AL("HORIZONTAL"); fill(s, sec); sec.primaryAxisAlignItems = "SPACE_BETWEEN"; sec.paddingLeft = sec.paddingRight = 4;
     sec.appendChild(mk("Publicados recentemente", 12, 16, "Semi Bold", "text")); sec.appendChild(mk("Ver todos", 10, 16, "Semi Bold", "primary"));
-    fill(s, listing({ "Título": "Encanador residencial", "Categoria": "Manutenção Residencial, há 2 h", "Preço": "A partir de R$ 120", "Nota": "4,8" }, "encanador"));
-    fill(s, listing({ "Título": "Diarista — limpeza completa", "Categoria": "Limpeza e Conservação, há 5 h", "Preço": "R$ 180 por dia", "Nota": "4,9" }, "cozinha"));
-    fill(s, listing({ "Título": "Pintura de apartamentos", "Categoria": "Construção e Reformas, há 1 dia", "Preço": "R$ 35 por m²", "Nota": "4,7" }, "pintura"));
+    fill(s, listing({ "Título": "Encanador residencial", "Categoria": "Manutenção Residencial", "Preço": "A partir de R$ 120", "Nota": "4,8" }, "encanador"));
+    fill(s, listing({ "Título": "Diarista — limpeza completa", "Categoria": "Limpeza e Conservação", "Preço": "R$ 180 por dia", "Nota": "4,9" }, "cozinha"));
+    fill(s, listing({ "Título": "Pintura de apartamentos", "Categoria": "Construção e Reformas", "Preço": "R$ 35 por m²", "Nota": "4,7" }, "pintura"));
   };
   const scrDetalhe = (s) => {
     const g = figma.createRectangle(); g.name = "galeria"; g.resize(228, 160); g.cornerRadius = 18; img(g, "cozinha"); s.appendChild(g);
@@ -300,8 +299,8 @@ async function main() {
       const col = fixedW(AL("VERTICAL", { name: "Busca", itemSpacing: 10 }), w);
       const sf = AL("HORIZONTAL", { itemSpacing: 8 }); fill(col, sf); sf.fills = [pv("surface")]; sf.cornerRadius = 100; pad(sf, 12, 14, 12, 14); sf.counterAxisAlignItems = "CENTER"; sf.strokes = [pv("primary")]; sf.strokeWeight = 1.5;
       sf.appendChild(icon("busca", "text", 16)); sf.appendChild(mk("eletricista", 13, 18, "Medium", "text"));
-      fill(col, listing({ "Título": "Eletricista residencial", "Categoria": "Manutenção Residencial, há 3 h", "Preço": "A partir de R$ 90", "Nota": "4,8" }, "encanador"));
-      fill(col, listing({ "Título": "Instalação de chuveiro", "Categoria": "Manutenção Residencial, há 1 dia", "Preço": "R$ 120 fixo", "Nota": "5,0" }, "pintura"));
+      fill(col, listing({ "Título": "Eletricista residencial", "Categoria": "Manutenção Residencial", "Preço": "A partir de R$ 90", "Nota": "4,8" }, "encanador"));
+      fill(col, listing({ "Título": "Instalação de chuveiro", "Categoria": "Manutenção Residencial", "Preço": "R$ 120 fixo", "Nota": "5,0" }, "pintura"));
       return col;
     },
     (w) => {
@@ -394,7 +393,7 @@ async function main() {
     fill(hd, await T(COPY.proTitle, "Título/1", "textOnDark"));
     fill(hd, await T(COPY.proText, "Texto/L", "textOnDarkMuted"));
     fill(c, await proList());
-    c.appendChild(APP_LIVE ? btn("Destaque", COPY.proCta) : soonPill());
+    if (APP_LIVE) c.appendChild(btn("Destaque", COPY.proCta));
     const photo = figma.createFrame(); photo.name = "Foto"; photo.resize(500, 640); photo.cornerRadius = 28; img(photo, "eletricista"); photo.clipsContent = true; row.appendChild(photo);
     const mc = metricsCard(290); photo.appendChild(mc); mc.x = 24; mc.y = 640 - 24 - mc.height;
   }
@@ -406,8 +405,8 @@ async function main() {
     const list = fixedW(AL("VERTICAL", { name: "Lista" }), 700); borderTop(list, "border"); row.appendChild(list);
     COPY.faq.forEach(([q, a], i) => fill(list, faq(q, a, i === 0)));
   }
-  // Download
-  {
+  // Download (só depois do lançamento)
+  if (APP_LIVE) {
     const s = section("Download", "primary", 88, 120, 88, 120);
     const row = AL("HORIZONTAL", { name: "Conteúdo" }); fill(s, row); row.primaryAxisAlignItems = "SPACE_BETWEEN"; row.counterAxisAlignItems = "CENTER";
     const l = AL("VERTICAL", { itemSpacing: 10 }); row.appendChild(l);
@@ -469,7 +468,7 @@ async function main() {
     const photo = figma.createFrame(); photo.name = "Foto"; fill(s, photo); photo.resize(342, 400); photo.cornerRadius = 24; img(photo, "eletricista"); photo.clipsContent = true;
     const mc = metricsCard(250); photo.appendChild(mc); mc.x = 16; mc.y = 400 - 16 - mc.height;
     fill(s, await proList());
-    if (APP_LIVE) fill(s, btn("Destaque", COPY.proCta)); else s.appendChild(soonPill());
+    if (APP_LIVE) fill(s, btn("Destaque", COPY.proCta));
   }
   // Dúvidas
   {
@@ -478,8 +477,8 @@ async function main() {
     const list = AL("VERTICAL", { name: "Lista" }); fill(s, list); borderTop(list, "border");
     COPY.faq.forEach(([q, a], i) => fill(list, faq(q, a, i === 0)));
   }
-  // Download
-  {
+  // Download (só depois do lançamento)
+  if (APP_LIVE) {
     const s = msec("Download", "primary", 56, 24, 56, 24, 20);
     fill(s, await T(COPY.ctaTitle, "Mobile/Título", "textOnDark"));
     fill(s, await T(COPY.ctaText, "Texto/M", "textOnDark"));
