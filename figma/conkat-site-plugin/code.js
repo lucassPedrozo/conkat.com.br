@@ -1,4 +1,4 @@
-// Conkat — Site v4
+// Conkat — Site v5 (logo 2B aplicada)
 // Refaz as versões desktop e mobile do site no arquivo "Conkat — Site (esboço)",
 // com o texto validado contra o app, a API e as notas do projeto
 // (ver figma/AUDITORIA-COPY.md). Usa as cores, estilos, componentes e fotos que já
@@ -11,13 +11,17 @@
 // Enquanto for false, o site não mostra os selos das lojas nem "Baixar o app".
 const APP_LIVE = false;
 
+// Logo escolhida: variação 2B (Con em Ahellya itálica + kat_ em Unageo Bold, cursor laranja).
+// Em contornos: cores #0B2B2A (letras) e #FDA333 (cursor).
+const LOGO_2B = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"509\" height=\"120\" viewBox=\"-4.5 -164.7 736.4 173.5\"><path d=\"M116.3 -136Q111.7 -143.4 103.1 -147.3Q94.5 -151.2 81.7 -151.2Q61.2 -151.2 45.2 -136.4Q29.1 -121.6 23.6 -84.3Q22.7 -75.8 22.3 -68.5Q22.2 -67.5 22.2 -66.4Q22.2 -59.3 24.6 -46.3Q27.2 -31.5 39 -18.5Q50.8 -5.5 70.8 -5.5Q98.6 -7.1 114.3 -24L119.7 -19.1Q99.3 1.6 68.3 1.6Q38.9 1.6 21.3 -15.5Q3.6 -32.6 2 -61.3Q2.1 -68.2 2.7 -74.8Q3.4 -81.7 4.7 -88.3Q12 -117.1 33.4 -137.7Q54.8 -158.3 84.2 -158.3Q104.4 -158.3 116.7 -153Q129 -147.8 133.7 -143.6L123.7 -111.9H113.9Z\" fill=\"#0B2B2A\"/><path d=\"M183.8 -4.3Q199.6 -4.3 209.2 -19.8Q216.4 -31.4 218 -47.7Q218.3 -50.8 218.4 -54.2V-56.2Q218.4 -69.2 212.8 -79.5Q205.5 -93.6 190.9 -93.6Q175.1 -93.6 165.5 -78.2Q158.4 -66.5 156.7 -50.2Q156.4 -47.1 156.3 -43.8V-41.7Q156.3 -28.7 161.9 -18.4Q169.2 -4.3 183.8 -4.3ZM192.5 -99.5Q209.7 -99.5 221.3 -91.7Q237.1 -81 237.1 -57.7Q237.1 -54 236.7 -50Q234.8 -29.9 219.9 -14.7Q203.9 1.6 182.3 1.6Q165 1.6 153.5 -6.3Q137.6 -16.9 137.6 -40.3Q137.6 -44 138 -48Q140.1 -68.1 154.8 -83.3Q170.8 -99.5 192.5 -99.5Z\" fill=\"#0B2B2A\"/><path d=\"M335.6 -58.1 332 -22.9Q331.2 -14.8 331.2 -11.8V-11.2Q331.4 -6.8 333.6 -6.3H334Q336 -6.3 339.6 -10.9Q342.6 -14.9 345.2 -20H349.6Q344.6 -10.3 341.3 -6.2Q335.1 1.6 326.9 1.6Q320.7 1.6 318.1 -4.3Q316.2 -8.7 316.2 -14.4Q316.2 -16.2 316.4 -18L320.4 -58.1H320.3Q321.5 -66.4 321.5 -72.7Q321.5 -81.2 319.2 -86Q316.2 -92.3 307.1 -92.3Q304.4 -92.3 301.1 -91.7Q280.6 -87 268.5 -39.3L264.5 0H250.3L258.4 -80.1Q258.6 -82.3 258.6 -83.9Q258.6 -88.6 257 -90.4Q255.8 -91.6 251.9 -91.6Q248.5 -91.6 243 -90.7L243.5 -95.6L274.5 -99.5L271.5 -69Q283.9 -99.4 310.2 -99.5Q324.7 -99.5 331.9 -91.8Q336.7 -86.5 336.7 -73.2Q336.7 -66.6 335.6 -58.1Z\" fill=\"#0B2B2A\"/><path d=\"M374.5 0H401.1V-24.4L412.5 -36.8L438.5 0H471.5L430.9 -56.8L470.3 -100H434.5L401.1 -64V-140H374.5Z\" fill=\"#0B2B2A\"/><path d=\"M557.9 -100V-89.2Q557.3 -90 556.7 -90.7Q556.1 -91.4 555.5 -92Q544.7 -102.4 528.3 -102.4Q506.9 -102.4 492.7 -87.2Q478.5 -72 478.5 -50Q478.5 -28 492.7 -12.8Q506.9 2.4 528.3 2.4Q544.9 2.4 555.3 -7.4Q556.1 -8 556.6 -8.7Q557.1 -9.4 557.9 -10V0H581.5V-100ZM530.5 -76Q541.1 -76 548.1 -68.6Q551.3 -64.8 553.1 -60.2Q554.9 -55.6 554.9 -50Q554.9 -44.6 553.1 -39.9Q551.3 -35.2 548.1 -31.6Q541.1 -24 530.5 -24Q519.7 -24 512.7 -31.6Q505.7 -39.2 505.7 -50Q505.7 -61 512.7 -68.6Q519.7 -76 530.5 -76Z\" fill=\"#0B2B2A\"/><path d=\"M611.1 -131.2V-100H595.1V-73.4H611.1V-44.6Q611.1 -26.2 624.1 -13.2Q637.3 0 655.7 0H663.5V-26.6H655.7Q648.3 -26.6 642.9 -32Q637.7 -37.2 637.7 -44.6V-73.4H663.5V-100H637.7V-131.2Z\" fill=\"#0B2B2A\"/><rect x=\"663\" y=\"-26.6\" width=\"62.5\" height=\"26.6\" fill=\"#FDA333\"/></svg>";
+
 const IS_SCRIPTER = typeof print === "function";
 const log = (m) => { if (IS_SCRIPTER) print(m); };
 
 (async () => {
   try {
     await main();
-    figma.notify("Conkat: site v4.1 montado (desktop e mobile).");
+    figma.notify("Conkat: site v5 montado com a logo 2B.");
   } catch (e) {
     figma.notify("Conkat: erro — " + (e && e.message ? e.message : e), { error: true, timeout: 10000 });
     log(e && e.stack ? e.stack : String(e));
@@ -91,6 +95,13 @@ async function main() {
 
   const V = {};
   for (const v of await figma.variables.getLocalVariablesAsync("COLOR")) if (v.name.startsWith("cor/")) V[v.name.slice(4)] = v;
+  // Mesma paleta do arquivo de marca: garante a cor de teal sobre fundo escuro
+  if (!V.brandOnDark && V.ink) {
+    const colBrand = await figma.variables.getVariableCollectionByIdAsync(V.ink.variableCollectionId);
+    const v = figma.variables.createVariable("cor/brandOnDark", colBrand, "COLOR");
+    v.setValueForMode(colBrand.modes[0].modeId, { r: 0x5f / 255, g: 0xd3 / 255, b: 0xcc / 255 });
+    v.scopes = ["FRAME_FILL", "SHAPE_FILL", "STROKE_COLOR", "TEXT_FILL"]; V.brandOnDark = v;
+  }
   const pv = (k) => {
     if (!V[k]) throw new Error("Variável de cor não encontrada: cor/" + k);
     return figma.variables.setBoundVariableForPaint({ type: "SOLID", color: { r: 0, g: 0, b: 0 } }, "color", V[k]);
@@ -101,6 +112,20 @@ async function main() {
   const setStyle = (name, size, lh) => { if (STY[name]) { STY[name].fontSize = size; STY[name].lineHeight = { unit: "PIXELS", value: lh }; } };
   setStyle("Display/XL", 64, 68);
   setStyle("Mobile/Display", 36, 40);
+
+  // Títulos em Unageo, a mesma fonte do "kat_" da logo (licença SIL OFL 1.1).
+  // Se a Unageo não estiver instalada, os títulos ficam em Schibsted Grotesk e o script avisa.
+  const available = await figma.listAvailableFontsAsync();
+  const hasUnageo = ["SemiBold", "Bold"].every((st) => available.some((f) => f.fontName.family === "Unageo" && f.fontName.style === st));
+  if (hasUnageo) {
+    await figma.loadFontAsync({ family: "Unageo", style: "SemiBold" }); await figma.loadFontAsync({ family: "Unageo", style: "Bold" });
+    for (const [name, style, ls] of [["Display/XL", "SemiBold", -2.5], ["Display/L", "SemiBold", -2], ["Título/1", "SemiBold", -1.5], ["Título/2", "SemiBold", -1], ["Título/3", "SemiBold", -0.5], ["Título/4", "SemiBold", 0], ["Mobile/Display", "SemiBold", -2], ["Mobile/Título", "SemiBold", -1.5]]) {
+      if (STY[name]) { STY[name].fontName = { family: "Unageo", style }; STY[name].letterSpacing = { unit: "PERCENT", value: ls }; }
+    }
+  } else {
+    figma.notify("Conkat: fonte Unageo não instalada. Os títulos ficaram em Schibsted Grotesk. Instale a Unageo e rode de novo.", { timeout: 12000 });
+    log("Unageo não encontrada: títulos mantidos em Schibsted Grotesk.");
+  }
 
   const COMP = {};
   for (const n of page.findAllWithCriteria({ types: ["COMPONENT", "COMPONENT_SET"] })) {
@@ -159,6 +184,15 @@ async function main() {
     const i = comp("Ícone/" + k).createInstance(); if (size !== 24) i.resize(size, size);
     if (color) for (const n of i.findAll((n) => "fills" in n && Array.isArray(n.fills) && n.fills.length)) n.fills = [pv(color)];
     return i;
+  };
+  // Logo 2B como vetor, com as cores ligadas às variáveis (letras: ink ou branco; cursor: accent)
+  const logo = (h, onDark) => {
+    const n = figma.createNodeFromSvg(LOGO_2B); n.name = onDark ? "Logo Conkat (negativo)" : "Logo Conkat"; n.rescale(h / n.height);
+    for (const p of n.findAll((x) => "fills" in x && Array.isArray(x.fills) && x.fills.length)) {
+      const c = p.fills[0].color; const isAccent = c && c.r > 0.9 && c.g > 0.5;
+      p.fills = [pv(isAccent ? "accent" : onDark ? "surface" : "ink")];
+    }
+    return n;
   };
   const setP = (inst, obj) => {
     const props = inst.componentProperties; const out = {};
@@ -251,7 +285,7 @@ async function main() {
   };
   const scrInicio = (s) => {
     const h = AL("HORIZONTAL"); fill(s, h); h.primaryAxisAlignItems = "SPACE_BETWEEN"; h.counterAxisAlignItems = "CENTER"; h.paddingLeft = h.paddingRight = 4;
-    const brand = figma.createText(); brand.fontName = { family: "Schibsted Grotesk", style: "Bold" }; brand.characters = "Conkat"; brand.fontSize = 18; brand.letterSpacing = { unit: "PERCENT", value: -3 }; brand.fills = [pv("brand")]; h.appendChild(brand);
+    h.appendChild(logo(18, false));
     const city = AL("HORIZONTAL", { itemSpacing: 4 }); city.fills = [pv("surface")]; border(city); city.cornerRadius = 100; pad(city, 5, 10, 5, 8); city.counterAxisAlignItems = "CENTER";
     city.appendChild(icon("pin", "primary", 12)); city.appendChild(mk("Joinville", 10, 14, "Semi Bold", "text")); city.appendChild(icon("caret", "textMuted", 10)); h.appendChild(city);
     const card = AL("VERTICAL", { name: "Bloco de busca", itemSpacing: 12 }); fill(s, card); card.fills = [pv("surface")]; card.cornerRadius = 22; pad(card, 16, 14, 14, 14); border(card);
@@ -357,7 +391,7 @@ async function main() {
     const hero = figma.createFrame(); hero.name = "Hero"; fill(W, hero); hero.resize(1440, 800); hero.fills = [pv("background")]; hero.clipsContent = true;
     hero.appendChild(patternRect(1440, 800, 0.22, 0.5));
     const nav = AL("HORIZONTAL", { name: "Menu" }); hero.appendChild(nav); nav.primaryAxisSizingMode = "FIXED"; nav.resize(1200, 52); nav.x = 120; nav.y = 28; nav.primaryAxisAlignItems = "SPACE_BETWEEN"; nav.counterAxisAlignItems = "CENTER";
-    nav.appendChild(await T("Conkat", "Marca", "text"));
+    nav.appendChild(logo(34, false));
     const links = AL("HORIZONTAL", { name: "Links", itemSpacing: 40 }); for (const l of COPY.nav) links.appendChild(await T(l, "Rótulo/M", "text")); nav.appendChild(links);
     nav.appendChild(btn("Primário", COPY.navCta));
     const tx = AL("VERTICAL", { name: "Texto", itemSpacing: 28 }); hero.appendChild(tx); tx.x = 120; tx.y = 212;
@@ -418,7 +452,7 @@ async function main() {
     const s = section("Rodapé", "ink", 40, 120, 40, 120);
     const row = AL("HORIZONTAL", { name: "Conteúdo" }); fill(s, row); row.primaryAxisAlignItems = "SPACE_BETWEEN"; row.counterAxisAlignItems = "CENTER";
     const brand = AL("HORIZONTAL", { itemSpacing: 16 }); brand.counterAxisAlignItems = "CENTER"; row.appendChild(brand);
-    brand.appendChild(await T("Conkat", "Marca", "textOnDark")); brand.appendChild(await T(COPY.footerRegion, "Texto/S", "textOnDarkMuted"));
+    brand.appendChild(logo(28, true)); brand.appendChild(await T(COPY.footerRegion, "Texto/S", "textOnDarkMuted"));
     const links = AL("HORIZONTAL", { itemSpacing: 32 }); for (const l of COPY.footerLinks) links.appendChild(await T(l, "Texto/S", "textOnDarkMuted")); row.appendChild(links);
     row.appendChild(await T(COPY.footerLegal, "Texto/S", "textOnDarkMuted"));
   }
@@ -436,7 +470,7 @@ async function main() {
     const h = AL("VERTICAL", { name: "Hero" }); fill(M, h); h.fills = [pv("background")]; h.clipsContent = true;
     absolute(h, patternRect(390, 1100, 0.22, 0.5), 0, 0);
     const nav = AL("HORIZONTAL", { name: "Menu" }); fill(h, nav); pad(nav, 16, 24, 8, 24); nav.primaryAxisAlignItems = "SPACE_BETWEEN"; nav.counterAxisAlignItems = "CENTER";
-    nav.appendChild(await T("Conkat", "Marca", "text"));
+    nav.appendChild(logo(28, false));
     const mb = AL("HORIZONTAL", { name: "Abrir menu" }); mb.primaryAxisSizingMode = "FIXED"; mb.counterAxisSizingMode = "FIXED"; mb.resize(44, 44); mb.cornerRadius = 100; mb.fills = [pv("surface")]; border(mb); mb.primaryAxisAlignItems = "CENTER"; mb.counterAxisAlignItems = "CENTER"; mb.appendChild(icon("menu", "text", 20)); nav.appendChild(mb);
     const tx = AL("VERTICAL", { name: "Texto", itemSpacing: 20 }); fill(h, tx); pad(tx, 36, 24, 32, 24);
     fill(tx, await T(COPY.heroTitle, "Mobile/Display"));
@@ -487,7 +521,7 @@ async function main() {
   // Rodapé
   {
     const s = msec("Rodapé", "ink", 40, 24, 40, 24, 16);
-    s.appendChild(await T("Conkat", "Marca", "textOnDark"));
+    s.appendChild(logo(28, true));
     s.appendChild(await T(COPY.footerRegion, "Texto/S", "textOnDarkMuted"));
     const links = AL("HORIZONTAL", { itemSpacing: 24 }); for (const l of COPY.footerLinks) links.appendChild(await T(l, "Texto/S", "textOnDarkMuted")); s.appendChild(links);
     fill(s, await T(COPY.footerLegal, "Texto/S", "textOnDarkMuted"));
