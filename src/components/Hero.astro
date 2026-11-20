@@ -1,7 +1,11 @@
 ---
-// Hero: o texto aparece pronto (quem chega lê na hora). O movimento fica só nos celulares,
-// dentro de um painel: entram uma vez, de baixo, e ao rolar se afastam em velocidades
-// diferentes, dando profundidade. Dentro do app, os anúncios entram como no app.
+// Hero: o texto aparece pronto (quem chega lê na hora). O movimento fica só nos celulares:
+// entram uma vez, de baixo, e ao rolar se afastam em velocidades diferentes, dando
+// profundidade. Dentro do app, os anúncios entram como no app.
+//
+// O fade é aplicado ao GRUPO dos dois celulares, nunca a cada um. Com fade individual, o
+// celular da frente fica semitransparente durante a entrada e o de trás aparece através
+// dele, como se passasse por cima. Cada celular só se move (transform), sem opacidade.
 import Phone from './app/Phone.astro';
 import HomeScreen from './app/HomeScreen.astro';
 import DetailScreen from './app/DetailScreen.astro';
@@ -10,6 +14,7 @@ import Icon from './Icon.astro';
 import { HERO, APP_LIVE } from '../lib/content';
 ---
 <section class="hero" id="topo" aria-labelledby="hero-title">
+  <div class="hero-bg" aria-hidden="true"></div>
   <div class="container hero-grid">
     <div class="hero-copy">
       <h1 id="hero-title" class="hero-title">{HERO.title}</h1>
@@ -26,12 +31,13 @@ import { HERO, APP_LIVE } from '../lib/content';
       </div>
     </div>
     <div class="hero-panel" aria-hidden="true" data-hero-panel>
-      <div class="panel-pattern"></div>
-      <div class="phone-slot slot-back" data-depth="0.05">
-        <Phone class="phone-back" label=""><DetailScreen eager /></Phone>
-      </div>
-      <div class="phone-slot slot-front" data-depth="0.11">
-        <Phone class="phone-front" label=""><HomeScreen eager /></Phone>
+      <div class="phones">
+        <div class="phone-slot slot-back" data-depth="0.05">
+          <Phone class="phone-back" label=""><DetailScreen eager /></Phone>
+        </div>
+        <div class="phone-slot slot-front" data-depth="0.11">
+          <Phone class="phone-front" label=""><HomeScreen eager /></Phone>
+        </div>
       </div>
     </div>
   </div>
@@ -39,7 +45,21 @@ import { HERO, APP_LIVE } from '../lib/content';
 
 <style>
   .hero {
+    position: relative;
+    overflow: clip;
     padding-top: 4.75rem;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('/pattern.svg') 0 0 / 560px auto repeat;
+    opacity: 0.22;
+    -webkit-mask-image: radial-gradient(120% 90% at 70% 40%, #000 30%, transparent 75%);
+    mask-image: radial-gradient(120% 90% at 70% 40%, #000 30%, transparent 75%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: relative;
   }
   .hero-grid {
     display: grid;
@@ -81,54 +101,54 @@ import { HERO, APP_LIVE } from '../lib/content';
     font-weight: 500;
   }
 
-  /* Painel com os celulares */
+  /* Celulares: o grupo faz o fade; cada celular só sobe */
   .hero-panel {
     position: relative;
+    align-self: end;
     height: clamp(30rem, 24rem + 14vw, 37rem);
-    border-radius: var(--radius-media);
-    background: var(--primary-soft);
-    overflow: hidden;
-    isolation: isolate;
+    margin-bottom: calc(clamp(3rem, 2rem + 3vw, 4.5rem) * -1);
   }
-  .panel-pattern {
+  .phones {
     position: absolute;
     inset: 0;
-    z-index: -1;
-    background: url('/pattern.svg') 0 0 / 520px auto repeat;
-    opacity: 0.45;
+    animation: group-in 700ms var(--ease-out) 120ms both;
+  }
+  @keyframes group-in {
+    from {
+      opacity: 0;
+    }
   }
   .phone-slot {
     position: absolute;
     will-change: transform;
   }
   .slot-front {
-    left: 12%;
-    top: 9%;
+    left: 6%;
+    top: 12%;
     z-index: 2;
   }
   .slot-back {
-    left: calc(12% + 14.5rem);
-    top: 17%;
+    left: calc(6% + 14.5rem);
+    top: 21%;
     z-index: 1;
   }
   .hero-panel :global(.phone-front) {
     --pw: clamp(15.5rem, 12rem + 5vw, 19rem);
-    animation: phone-enter 1200ms var(--ease-out) 150ms both;
+    animation: phone-rise 1100ms var(--ease-out) 120ms both;
   }
   .hero-panel :global(.phone-back) {
     --pw: clamp(14rem, 11rem + 4.4vw, 17rem);
-    animation: phone-enter 1200ms var(--ease-out) 320ms both;
+    animation: phone-rise 1100ms var(--ease-out) 220ms both;
   }
-  @keyframes phone-enter {
+  @keyframes phone-rise {
     from {
-      opacity: 0;
-      transform: translateY(48px);
+      transform: translateY(56px);
     }
   }
   /* Dentro do app, os anúncios entram como no app: 40 ms entre itens */
   .hero-panel :global(.phone-front .stagger) {
     animation: item-in var(--t-slow) var(--ease-out) both;
-    animation-delay: calc(950ms + var(--i) * 40ms);
+    animation-delay: calc(480ms + var(--i) * 40ms);
   }
   @keyframes item-in {
     from {
@@ -144,14 +164,15 @@ import { HERO, APP_LIVE } from '../lib/content';
     }
     .hero-panel {
       height: 27rem;
+      margin-inline: calc(var(--gutter) * -1);
     }
     .slot-front {
       left: calc(50% - 10.5rem);
-      top: 2rem;
+      top: 0.5rem;
     }
     .slot-back {
       left: calc(50% + 1.25rem);
-      top: 4.5rem;
+      top: 3rem;
     }
     .hero-panel :global(.phone-front) {
       --pw: 15.5rem;
