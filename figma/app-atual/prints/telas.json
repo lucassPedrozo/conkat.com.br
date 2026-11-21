@@ -1,0 +1,340 @@
+[
+  {
+    "id": "V01",
+    "grupo": "Visitante",
+    "nome": "Início",
+    "rota": "/",
+    "arquivo": "V01 — Início.png",
+    "largura": 390,
+    "altura": 844,
+    "completa": {
+      "arquivo": "V01 — Início (completa).png",
+      "altura": 1009
+    }
+  },
+  {
+    "id": "V02",
+    "grupo": "Visitante",
+    "nome": "Início · escolher cidade",
+    "rota": "/ (folha)",
+    "arquivo": "V02 — Início · escolher cidade.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "V03",
+    "grupo": "Visitante",
+    "nome": "Busca",
+    "rota": "/search",
+    "arquivo": "V03 — Busca.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "V04",
+    "grupo": "Visitante",
+    "nome": "Busca · sugestões",
+    "rota": "/search",
+    "arquivo": "V04 — Busca · sugestões.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "V05",
+    "grupo": "Visitante",
+    "nome": "Busca · resultados",
+    "rota": "/search",
+    "arquivo": "V05 — Busca · resultados.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "V06",
+    "grupo": "Visitante",
+    "nome": "Anúncios",
+    "rota": "/explore",
+    "arquivo": "V06 — Anúncios.png",
+    "largura": 390,
+    "altura": 844,
+    "completa": {
+      "arquivo": "V06 — Anúncios (completa).png",
+      "altura": 3225
+    }
+  },
+  {
+    "id": "V07",
+    "grupo": "Visitante",
+    "nome": "Anúncios · filtros",
+    "rota": "/explore (folha)",
+    "arquivo": "V07 — Anúncios · filtros.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "V08",
+    "grupo": "Visitante",
+    "nome": "Anúncios · ordenar",
+    "rota": "/explore (folha)",
+    "arquivo": "V08 — Anúncios · ordenar.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "V09",
+    "grupo": "Visitante",
+    "nome": "Anúncio",
+    "rota": "/service/[id]",
+    "arquivo": "V09 — Anúncio.png",
+    "largura": 390,
+    "altura": 844,
+    "completa": {
+      "arquivo": "V09 — Anúncio (completa).png",
+      "altura": 980
+    }
+  },
+  {
+    "id": "V10",
+    "grupo": "Visitante",
+    "nome": "Favoritos · vazio",
+    "rota": "/favorites",
+    "arquivo": "V10 — Favoritos · vazio.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "V11",
+    "grupo": "Visitante",
+    "nome": "Favoritos · com anúncios",
+    "rota": "/favorites",
+    "arquivo": "V11 — Favoritos · com anúncios.png",
+    "largura": 390,
+    "altura": 844,
+    "completa": {
+      "arquivo": "V11 — Favoritos · com anúncios (completa).png",
+      "altura": 1009
+    }
+  },
+  {
+    "id": "V12",
+    "grupo": "Visitante",
+    "nome": "Conta",
+    "rota": "/settings",
+    "arquivo": "V12 — Conta.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "V13",
+    "grupo": "Visitante",
+    "nome": "Entrar",
+    "rota": "/settings (folha)",
+    "arquivo": "V13 — Entrar.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "V14",
+    "grupo": "Visitante",
+    "nome": "Meus anúncios · sem conta",
+    "rota": "/my-ads",
+    "arquivo": "V14 — Meus anúncios · sem conta.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "V15",
+    "grupo": "Cadastro",
+    "nome": "Criar conta · seus dados",
+    "rota": "/register",
+    "arquivo": "V15 — Criar conta · seus dados.png",
+    "largura": 390,
+    "altura": 844,
+    "completa": {
+      "arquivo": "V15 — Criar conta · seus dados (completa).png",
+      "altura": 1262
+    }
+  },
+  {
+    "id": "V16",
+    "grupo": "Cadastro",
+    "nome": "Criar conta · confirmar e-mail",
+    "rota": "/account/verify-email",
+    "arquivo": "V16 — Criar conta · confirmar e-mail.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "V17",
+    "grupo": "Cadastro",
+    "nome": "Esqueci a senha · e-mail",
+    "rota": "/forgot-password",
+    "arquivo": "V17 — Esqueci a senha · e-mail.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "V18",
+    "grupo": "Cadastro",
+    "nome": "Esqueci a senha · código e senha nova",
+    "rota": "/forgot-password",
+    "arquivo": "V18 — Esqueci a senha · código e senha nova.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "V19",
+    "grupo": "Cadastro",
+    "nome": "Completar cadastro (login social)",
+    "rota": "/complete-signup",
+    "arquivo": "V19 — Completar cadastro (login social).png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "P01",
+    "grupo": "Profissional",
+    "nome": "Meus anúncios",
+    "rota": "/my-ads",
+    "arquivo": "P01 — Meus anúncios.png",
+    "largura": 390,
+    "altura": 844,
+    "completa": {
+      "arquivo": "P01 — Meus anúncios (completa).png",
+      "altura": 1628
+    }
+  },
+  {
+    "id": "P02",
+    "grupo": "Profissional",
+    "nome": "Conta",
+    "rota": "/settings",
+    "arquivo": "P02 — Conta.png",
+    "largura": 390,
+    "altura": 844,
+    "completa": {
+      "arquivo": "P02 — Conta (completa).png",
+      "altura": 965
+    }
+  },
+  {
+    "id": "P03",
+    "grupo": "Profissional",
+    "nome": "Perfil",
+    "rota": "/account/profile",
+    "arquivo": "P03 — Perfil.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "P04",
+    "grupo": "Profissional",
+    "nome": "Saldo",
+    "rota": "/account/balance",
+    "arquivo": "P04 — Saldo.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "P05",
+    "grupo": "Profissional",
+    "nome": "Desempenho do anúncio",
+    "rota": "/ads/dashboard",
+    "arquivo": "P05 — Desempenho do anúncio.png",
+    "largura": 390,
+    "altura": 844,
+    "completa": {
+      "arquivo": "P05 — Desempenho do anúncio (completa).png",
+      "altura": 1346
+    }
+  },
+  {
+    "id": "P06",
+    "grupo": "Profissional",
+    "nome": "Impulsionar anúncio",
+    "rota": "/ads/boost",
+    "arquivo": "P06 — Impulsionar anúncio.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "P07",
+    "grupo": "Profissional",
+    "nome": "Publicar anúncio",
+    "rota": "/ads/publish",
+    "arquivo": "P07 — Publicar anúncio.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "P08",
+    "grupo": "Profissional",
+    "nome": "Verificar e-mail",
+    "rota": "/account/verify-email",
+    "arquivo": "P08 — Verificar e-mail.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "A01",
+    "grupo": "Novo anúncio",
+    "nome": "Novo anúncio · 1 de 5 · categoria",
+    "rota": "/ads/new",
+    "arquivo": "A01 — Novo anúncio · 1 de 5 · categoria.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "A02",
+    "grupo": "Novo anúncio",
+    "nome": "Novo anúncio · 2 de 5 · descrição",
+    "rota": "/ads/new",
+    "arquivo": "A02 — Novo anúncio · 2 de 5 · descrição.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "A03",
+    "grupo": "Novo anúncio",
+    "nome": "Novo anúncio · 3 de 5 · preço e área",
+    "rota": "/ads/new",
+    "arquivo": "A03 — Novo anúncio · 3 de 5 · preço e área.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "A04",
+    "grupo": "Novo anúncio",
+    "nome": "Novo anúncio · 4 de 5 · fotos",
+    "rota": "/ads/new",
+    "arquivo": "A04 — Novo anúncio · 4 de 5 · fotos.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "A05",
+    "grupo": "Novo anúncio",
+    "nome": "Novo anúncio · 5 de 5 · revisão",
+    "rota": "/ads/new",
+    "arquivo": "A05 — Novo anúncio · 5 de 5 · revisão.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "A06",
+    "grupo": "Novo anúncio",
+    "nome": "Editar anúncio · rascunho",
+    "rota": "/ads/new?id=…",
+    "arquivo": "A06 — Editar anúncio · rascunho.png",
+    "largura": 390,
+    "altura": 844
+  },
+  {
+    "id": "A07",
+    "grupo": "Novo anúncio",
+    "nome": "Editar anúncio · ativo (bloqueado)",
+    "rota": "/ads/new?id=…",
+    "arquivo": "A07 — Editar anúncio · ativo (bloqueado).png",
+    "largura": 390,
+    "altura": 844
+  }
+]
