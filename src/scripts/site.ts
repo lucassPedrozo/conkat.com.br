@@ -141,58 +141,26 @@ function howItWorks() {
 }
 
 // ---------------------------------------------------------------------------
-// Carrossel: setas, pontos e ativação de cada prévia
+// "Antes de chamar": cada item da lista acende a parte do anúncio com o mesmo número
 // ---------------------------------------------------------------------------
-function carousel() {
-  const root = document.querySelector<HTMLElement>('[data-carousel]');
+function anatomy() {
+  const root = document.querySelector<HTMLElement>('[data-anatomy]');
   if (!root) return;
-  const track = root.querySelector<HTMLElement>('[data-track]')!;
-  const cards = [...track.querySelectorAll<HTMLElement>('.card')];
-  const prev = root.querySelector<HTMLButtonElement>('[data-prev]');
-  const next = root.querySelector<HTMLButtonElement>('[data-next]');
-  const dots = [...root.querySelectorAll<HTMLElement>('.dots span')];
-
-  const step = () => cards[0].getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || '24');
-  const go = (dir: number) => track.scrollBy({ left: dir * step(), behavior: reduceMotion ? 'auto' : 'smooth' });
-  prev?.addEventListener('click', () => go(-1));
-  next?.addEventListener('click', () => go(1));
-
-  const sync = () => {
-    const max = track.scrollWidth - track.clientWidth - 2;
-    if (prev) prev.disabled = track.scrollLeft <= 2;
-    if (next) next.disabled = track.scrollLeft >= max;
-    const index = track.scrollLeft >= max ? cards.length - 1 : Math.round(track.scrollLeft / step());
-    dots.forEach((d, i) => d.classList.toggle('is-active', i === index));
+  const points = [...root.querySelectorAll<HTMLElement>('[data-point]')];
+  const parts = [...root.querySelectorAll<HTMLElement>('[data-part]')];
+  const set = (n: string | null) => {
+    points.forEach((p) => p.classList.toggle('is-active', p.dataset.point === n));
+    parts.forEach((p) => p.classList.toggle('is-active', p.dataset.part === n));
   };
-  track.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
-  window.addEventListener('resize', sync);
-  sync();
-
-  // Setas do teclado quando o foco está no carrossel
-  track.tabIndex = 0;
-  track.setAttribute('aria-label', 'Recursos do app, role para o lado');
-  track.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+  points.forEach((p) => {
+    p.addEventListener('pointerenter', () => set(p.dataset.point!));
+    p.addEventListener('pointerleave', () => set(null));
   });
-
-  // Cada prévia ganha vida uma vez, quando aparece por inteiro
-  if (reduceMotion || !('IntersectionObserver' in window)) {
-    cards.forEach((c) => c.classList.add('is-on'));
-    return;
-  }
-  const io = new IntersectionObserver(
-    (entries) => {
-      for (const e of entries) {
-        if (e.isIntersecting) {
-          e.target.classList.add('is-on');
-          io.unobserve(e.target);
-        }
-      }
-    },
-    { threshold: 0.7 },
-  );
-  cards.forEach((c) => io.observe(c));
+  parts.forEach((p) => {
+    p.addEventListener('pointerenter', () => set(p.dataset.part!));
+    p.addEventListener('pointerleave', () => set(null));
+  });
+  once(root, () => root.classList.add('is-on'), 0.35);
 }
 
 // ---------------------------------------------------------------------------
@@ -227,5 +195,5 @@ header();
 heroDepth();
 rotators();
 howItWorks();
-carousel();
+anatomy();
 chart();

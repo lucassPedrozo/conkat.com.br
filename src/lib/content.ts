@@ -43,24 +43,32 @@ export const STEPS = [
   },
 ];
 
-export const FEATURES_TITLE = 'O que você vê antes de chamar';
-export const FEATURES = [
-  { id: 'preco', title: 'Como o profissional cobra', text: 'Valor fixo, a partir de, por hora, por dia ou a combinar.' },
-  { id: 'avaliacoes', title: 'Avaliações', text: 'Nota de 1 a 5 estrelas, com a média e o total. Anúncio sem nota aparece como ainda não avaliado.' },
-  { id: 'verificado', title: 'Profissionais verificados', text: 'Todo profissional tem o CPF ou CNPJ conferido pela equipe do Conkat antes de publicar.' },
-  { id: 'revisao', title: 'Anúncios revisados', text: 'Nenhum anúncio vai ao ar sem passar pela revisão da equipe.' },
-  { id: 'favoritos', title: 'Favoritos no celular', text: 'Salve anúncios sem criar conta. Eles ficam no aparelho e abrem sem internet.' },
-] as const;
+// "O que você vê antes de chamar": um anúncio do app com marcadores numerados.
+export const FEATURES = {
+  title: 'Antes de chamar, você já sabe.',
+  text: 'Todo anúncio mostra como o profissional cobra, o que outras pessoas acharam do serviço e se o documento dele foi conferido.',
+  points: [
+    { title: 'Como o profissional cobra', text: 'Valor fixo, a partir de, por hora, por dia ou a combinar.' },
+    { title: 'Avaliações', text: 'Nota de 1 a 5 estrelas, com a média e o total. Anúncio sem nota aparece como ainda não avaliado.' },
+    { title: 'Selo Verificado', text: 'Todo profissional tem o CPF ou CNPJ conferido pela equipe do Conkat antes de publicar.' },
+  ],
+  review: { title: 'Revisado pela equipe', text: 'Nenhum anúncio vai ao ar sem passar pela revisão da equipe do Conkat.' },
+} as const;
 
 export const PRO = {
-  title: 'Você presta serviço? Anuncie no Conkat.',
-  text: 'Seu primeiro anúncio fica 14 dias no ar sem custo, contados a partir da aprovação. Sem cobrança por contato: quem procura chama direto no seu WhatsApp.',
-  items: [
-    { icon: 'seal-check', title: 'Cadastro com CPF ou CNPJ', text: 'Confirme seu e-mail e envie o documento. A equipe confere antes do seu primeiro anúncio.' },
-    { icon: 'megaphone', title: 'Anúncio em cinco etapas', text: 'Categoria, descrição, preço e área de atendimento, fotos e revisão final.' },
-    { icon: 'shield-check', title: 'Revisão antes de publicar', text: 'Se algo precisar de ajuste, você recebe o motivo no app e reenvia.' },
-    { icon: 'lightning', title: 'Destaque nas buscas', text: 'Anúncios impulsionados aparecem antes dos outros na sua cidade, com o selo Destaque.' },
-    { icon: 'chart-line-up', title: 'Desempenho do anúncio', text: 'Veja quantas vezes o anúncio apareceu em listas e buscas e quantas vezes foi aberto.' },
+  kicker: 'Para quem presta serviço',
+  title: 'Anuncie no Conkat. O cliente chama no seu WhatsApp.',
+  text: 'Apareça para quem procura o seu serviço em Joinville e região. A conversa é direto com você, sem intermediário.',
+  offer: [
+    { value: '14 dias', text: 'no ar sem custo no primeiro anúncio, contados a partir da aprovação' },
+    { value: 'R$ 0', text: 'por contato. Quem procura chama direto no seu WhatsApp' },
+  ],
+  stepsTitle: 'Do cadastro ao anúncio no ar',
+  steps: [
+    { title: 'Cadastro com CPF ou CNPJ', text: 'Confirme seu e-mail e envie o documento. A equipe confere antes do seu primeiro anúncio.' },
+    { title: 'Anúncio em cinco etapas', text: 'Categoria, descrição, preço e área de atendimento, fotos e revisão final.' },
+    { title: 'Revisão da equipe', text: 'Se algo precisar de ajuste, você recebe o motivo no app e reenvia.' },
+    { title: 'No ar e crescendo', text: 'Acompanhe quantas vezes o anúncio apareceu e foi aberto. Impulsione para sair antes dos outros, com o selo Destaque.' },
   ],
   cta: 'Começar a anunciar',
   soon: 'O cadastro é feito pelo app, que chega em breve à App Store e ao Google Play.',
