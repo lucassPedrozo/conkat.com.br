@@ -42,6 +42,21 @@ Gerados por [`gerar-assets.mjs`](gerar-assets.mjs) (`npm ci` e depois `node bran
 Regras do Instagram: no post, mantenha texto e logo a 96 px das bordas (o perfil corta em 3:4); no story,
 deixe livres 250 px no topo e 340 px embaixo. Para novos posts, duplique um modelo na página Instagram do Figma.
 
+## Calendário do Instagram
+
+A pauta fica em [`instagram/calendario.mjs`](instagram/calendario.mjs): um post por dia, com slides, legenda e
+hashtags. Para gerar as imagens dos próximos 15 dias:
+
+```bash
+npm ci
+node brand/gerar-calendario.mjs --inicio 2026-11-23 --dias 15
+```
+
+Sem `--inicio`, começa amanhã. O resultado vai para [`instagram/calendario/`](instagram/calendario/): uma pasta
+por dia com os slides (1080 × 1350), um story avisando do post e a legenda, mais a agenda (`README.md`) e uma
+prévia de tudo. Os posts usam as telas reais do app, recortadas do site (ficam em `instagram/telas-app/`).
+Modelos de slide: `capa`, `tela`, `foto`, `lista`, `duvida`, `numeros`, `peca` e `final`.
+
 ## Logo — exploração
 
 Prévia: [`logo-exploracao/previa-variacoes.png`](logo-exploracao/previa-variacoes.png).
