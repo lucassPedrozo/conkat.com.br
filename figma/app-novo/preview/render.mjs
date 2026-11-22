@@ -24,7 +24,7 @@ const targets = await b.eval(`(() => {
 const seen = new Set();
 for (const t of targets) {
   if (seen.has(t.name)) continue; seen.add(t.name);
-  const scale = t.w > 1000 ? 0.75 : 1.5;
+  const scale = t.w > 1000 ? (+process.env.BOARD_SCALE || 0.75) : (+process.env.SCALE || 1.5);
   const { data } = await b.send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: { x: t.x, y: t.y, width: t.w, height: Math.min(t.h, 12000), scale } });
   const file = t.name.replace(/[\/:*?"<>|]/g, '-') + '.png';
   writeFileSync(join(out, file), Buffer.from(data, 'base64'));
