@@ -1,5 +1,6 @@
 // Conkat — Identidade de marca (arquivo de marca no Figma)
-// Monta o arquivo de marca: exploração da logo, cores, tipografia, padrão e ícones.
+// Monta o arquivo de marca: logo padrão (2B), favicon e app, Instagram, cores, tipografia,
+// padrão e ícones, e a exploração da logo.
 //
 // Como rodar: abra o arquivo de marca no Figma, rode o plugin "Scripter", cole este
 // arquivo inteiro e clique em Run. Pode ser rodado mais de uma vez: ele recria só o que
@@ -113,7 +114,7 @@ async function main() {
     const b = board(pages[0], "Logo — exploração", 1640);
     const hd = AL("VERTICAL", { itemSpacing: 12 }); fill(b, hd);
     fill(hd, title("Logo — exploração"));
-    fill(hd, txt("Doze variações das duas ideias para validação. Cada uma aparece em fundo claro e em fundo escuro. As letras estão em contornos.", 16, "Regular", "textMuted"));
+    fill(hd, txt("Doze variações das duas ideias. A escolhida é a 2B (contorno laranja), que virou a logo padrão: veja a página Logo. Cada uma aparece em fundo claro e em fundo escuro. As letras estão em contornos.", 16, "Regular", "textMuted"));
     for (const idea of [1, 2]) {
       const sec = AL("VERTICAL", { name: "Ideia " + idea, itemSpacing: 20 }); fill(b, sec);
       fill(sec, txt(idea === 1 ? "Ideia 1 — Conkat_ em Unageo" : "Ideia 2 — Con em Ahellya + kat_ em Unageo", 22, "Semi Bold"));
@@ -128,6 +129,7 @@ async function main() {
         card.fills = [pv("surface")]; card.cornerRadius = 20; pad(card, 20, 20, 20, 20); card.strokes = [pv("border")]; card.strokeWeight = 1; card.strokeAlign = "INSIDE";
         const lab = AL("HORIZONTAL", { itemSpacing: 10 }); lab.counterAxisAlignItems = "CENTER"; fill(card, lab);
         lab.appendChild(txt(l.id, 15, "Bold")); fill(lab, txt(l.name, 14, "Regular", "textMuted"));
+        if (l.id === "2B") { lab.appendChild(txt("LOGO PADRÃO", 12, "Bold", "accentText")); card.strokes = [pv("accent")]; card.strokeWeight = 3; }
         const row = AL("HORIZONTAL", { itemSpacing: 12 }); fill(card, row);
         for (const dark of [false, true]) {
           const box = AL("HORIZONTAL", { name: dark ? "Fundo escuro" : "Fundo claro" }); box.primaryAxisSizingMode = "FIXED"; box.counterAxisSizingMode = "FIXED";
@@ -200,7 +202,269 @@ async function main() {
     }
   }
 
-  await figma.setCurrentPageAsync(pages[0]);
-  figma.viewport.scrollAndZoomIntoView(pages[0].children);
-  log("Arquivo de marca montado: " + pages.map((p) => p.name).join(", "));
+
+  // =========================================================================
+  // Logo padrão (2B), favicon e app, Instagram
+  // =========================================================================
+  let DISPLAY = { family: "Schibsted Grotesk", style: "SemiBold" };
+  try { await figma.loadFontAsync({ family: "Unageo", style: "SemiBold" }); DISPLAY = { family: "Unageo", style: "SemiBold" }; } catch (e) { log("Unageo não instalada: títulos em Schibsted Grotesk."); }
+  const solid = (h, opacity = 1) => ({ type: "SOLID", color: hex(h), opacity });
+  const paint = (c) => (c[0] === "#" ? solid(c) : pv(c));
+  const ON_DARK_MUTED = "#A7C4C2";
+  const LOGO2B = DATA.logos.find((l) => l.id === "2B").svg;
+  const C_PATH = LOGO2B.match(/<path d="([^"]+)"/)[1];
+  const QUESTION = '<path d="M140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180ZM128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/>';
+  const ICON = (k) => (k === "duvida" ? QUESTION : DATA.icons[k]);
+
+  /** Logo 2B em contornos. `letters` e `cursor` são nomes de variável (cor/...). */
+  const wordmark = (h, letters = "ink", cursor = "accent") => { const n = svgNode(LOGO2B, h, "Logo Conkat"); recolor(n, { "0B2B2A": letters, "FDA333": cursor }); return n; };
+  /** Símbolo "C_": o C da logo + o cursor. */
+  const symbol = (h, letter = "ink", cursor = "accent") => {
+    const n = figma.createNodeFromSvg(`<svg xmlns="http://www.w3.org/2000/svg" width="210.5" height="168" viewBox="-2 -162.3 210.5 168"><path d="${C_PATH}" fill="#0B2B2A"/><rect x="142" y="-26.6" width="62.5" height="26.6" fill="#FDA333"/></svg>`);
+    n.name = "Símbolo C_"; n.fills = []; n.rescale(h / n.height); recolor(n, { "0B2B2A": letter, "FDA333": cursor }); return n;
+  };
+  /** Ícone de app: quadrado ink com o símbolo ocupando 56% da largura. */
+  const appIcon = (size, radius = 0, name = "Ícone de app") => {
+    const f = figma.createFrame(); f.name = name; f.resize(size, size); f.fills = [pv("ink")]; f.cornerRadius = size * radius; f.clipsContent = true;
+    const s = symbol(size * 0.56 * 168 / 210.5, "surface"); f.appendChild(s); s.x = (size - s.width) / 2; s.y = (size - s.height) / 2; return f;
+  };
+  const icon = (k, color, size) => {
+    const n = figma.createNodeFromSvg(`<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 256 256">${ICON(k)}</svg>`);
+    n.name = "ícone/" + k; n.fills = []; for (const p of n.findAll((x) => "fills" in x && Array.isArray(x.fills) && x.fills.length)) p.fills = [paint(color)]; return n;
+  };
+  const T = (s, size, color, { font = { family: "Inter", style: "Regular" }, lh = 140, ls = 0, width } = {}) => {
+    const t = figma.createText(); t.fontName = font; t.characters = s; t.fontSize = size;
+    t.lineHeight = { unit: "PERCENT", value: lh }; t.letterSpacing = { unit: "PERCENT", value: ls }; t.fills = [paint(color)];
+    if (width) { t.resize(width, t.height); t.textAutoResize = "HEIGHT"; } return t;
+  };
+  const D = (s, size, color, width) => T(s, size, color, { font: DISPLAY, lh: 102, ls: -2.5, width });
+  const I = (s, size, color, style = "Regular", width) => T(s, size, color, { font: { family: "Inter", style }, width });
+  const K = (s, size, color) => T(s.toUpperCase(), size, color, { font: { family: "Inter", style: "Bold" }, ls: 8 }); // chapéu
+  /** Título com o cursor da logo no fim. Cada item de `lines` é uma linha (quebra fixa). */
+  const cursorTitle = (lines, size, color) => {
+    const s = AL("VERTICAL", { name: "Título com cursor", itemSpacing: 0 });
+    if (lines.length > 1) s.appendChild(D(lines.slice(0, -1).join("\n"), size, color));
+    const row = AL("HORIZONTAL", { itemSpacing: Math.round(size * 0.06) }); row.counterAxisAlignItems = "BASELINE";
+    row.appendChild(D(lines[lines.length - 1], size, color));
+    const c = figma.createRectangle(); c.name = "Cursor"; c.resize(Math.round(size * 0.5), Math.round(size * 0.17)); c.fills = [pv("accent")]; row.appendChild(c);
+    s.appendChild(row); return s;
+  };
+  const pill = (label, { icon: ik, after = false, bg = "ink", fg = "surface", iconColor, h = 84, fs = 30 } = {}) => {
+    const p = AL("HORIZONTAL", { name: "Pílula", itemSpacing: 16 }); p.counterAxisAlignItems = "CENTER"; p.counterAxisSizingMode = "FIXED"; p.resize(10, h); p.primaryAxisSizingMode = "AUTO";
+    pad(p, 0, 40, 0, ik && !after ? 30 : 40); p.cornerRadius = h / 2; p.fills = [paint(bg)];
+    const ic = ik ? icon(ik, iconColor || fg, Math.round(fs * 1.2)) : null;
+    if (ic && !after) p.appendChild(ic); p.appendChild(I(label, fs, fg, "Semi Bold")); if (ic && after) p.appendChild(ic); return p;
+  };
+  const stack = (gap, kids, width) => {
+    const s = AL("VERTICAL", { itemSpacing: gap }); s.counterAxisSizingMode = "FIXED"; s.resize(width, 10); s.primaryAxisSizingMode = "AUTO";
+    for (const c of kids) { s.appendChild(c); if (c.type === "TEXT") { c.layoutSizingHorizontal = "FILL"; c.textAutoResize = "HEIGHT"; } } return s;
+  };
+  const artboard = (name, w, h, bg) => { const f = figma.createFrame(); f.name = name; f.resize(w, h); f.fills = [paint(bg)]; f.clipsContent = true; return f; };
+  const put = (p, n, x, y) => { p.appendChild(n); n.x = x; n.y = y; return n; };
+  const putB = (p, n, x, bottom) => { p.appendChild(n); n.x = x; n.y = p.height - bottom - n.height; return n; };
+  const putR = (p, n, right, y) => { p.appendChild(n); n.x = p.width - right - n.width; n.y = y; return n; };
+  const rect = (name, w, h, color) => { const r = figma.createRectangle(); r.name = name; r.resize(w, h); r.fills = [paint(color)]; return r; };
+  /** Padrão de ícones com degradê para a cor de fundo (`dir`: "diag" ou "down"). */
+  const pattern = (art, color, opacity, bg, dir = "diag") => {
+    const B = DATA.patternBodies; let g = ""; const w = art.width, h = art.height;
+    for (let row = 0; row * 84 < h + 84; row++) for (let col = -1; col * 84 < w + 84; col++) { const x = (row % 2 ? 48 : 6) + col * 84, y = 27 + row * 84; g += `<g transform="translate(${x} ${y}) scale(1.25)">${B[(((col + row) % 14) + 14) % 14]}</g>`; }
+    const n = figma.createNodeFromSvg(`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><g fill="none" stroke="${color}" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">${g}</g></svg>`);
+    n.name = "Padrão"; n.fills = []; n.opacity = opacity; put(art, n, 0, 0);
+    const c = hex(bg); const fade = rect("Degradê do padrão", w, h, bg);
+    fade.fills = [{ type: "GRADIENT_LINEAR", gradientTransform: dir === "down" ? [[0, 1, 0], [-1, 0, 1]] : [[-0.5, 0.5, 0.5], [0.5, 0.5, 0]],
+      gradientStops: [{ position: 0, color: { ...c, a: 0 } }, { position: 0.45, color: { ...c, a: 0.65 } }, { position: 0.75, color: { ...c, a: 1 } }] }];
+    put(art, fade, 0, 0);
+  };
+  const photo = (w, h, label) => {
+    const f = figma.createFrame(); f.name = "Foto (troque a imagem)"; f.resize(w, h); f.fills = [pv("inkSoft")];
+    const t = I(label, 28, ON_DARK_MUTED, "Medium"); f.appendChild(t); t.x = (w - t.width) / 2; t.y = (h - t.height) / 2; return f;
+  };
+  const section = (b, head, note) => { const s = AL("VERTICAL", { name: head, itemSpacing: 20 }); fill(b, s); fill(s, txt(head, 22, "Semi Bold")); if (note) fill(s, txt(note, 14, "Regular", "textMuted")); return s; };
+  const wrapGrid = (parent, gap, name = "Grade") => { const g = figma.createFrame(); g.name = name; g.fills = []; g.layoutMode = "HORIZONTAL"; g.layoutWrap = "WRAP"; g.itemSpacing = gap; g.counterAxisSpacing = gap; fill(parent, g); g.primaryAxisSizingMode = "FIXED"; g.counterAxisSizingMode = "AUTO"; return g; };
+  const center = (box, n) => { box.appendChild(n); n.x = (box.width - n.width) / 2; n.y = (box.height - n.height) / 2; return n; };
+  const card = (label, note, bg, w, h, art) => {
+    const c = AL("VERTICAL", { name: label, itemSpacing: 12 }); c.counterAxisSizingMode = "FIXED"; c.resize(w, 10); c.primaryAxisSizingMode = "AUTO";
+    const box = figma.createFrame(); box.name = "Fundo"; box.resize(w, h); box.cornerRadius = 16; box.fills = [paint(bg)]; box.clipsContent = true;
+    if (bg === "background" || bg === "surface") { box.strokes = [pv("border")]; box.strokeWeight = 1; box.strokeAlign = "INSIDE"; }
+    c.appendChild(box); if (art) center(box, art);
+    fill(c, txt(label, 15, "Semi Bold")); if (note) fill(c, txt(note, 13, "Regular", "textMuted")); return { c, box };
+  };
+
+  const extraPages = ["Logo", "Favicon e app", "Instagram"].map((n) => pageNamed(n, 99));
+
+  // -------------------------------------------------------------------------
+  // 5. Logo (padrão: 2B)
+  // -------------------------------------------------------------------------
+  {
+    const b = board(extraPages[0], "Logo", 1640);
+    const hd = AL("VERTICAL", { itemSpacing: 12 }); fill(b, hd);
+    fill(hd, title("Logo"));
+    fill(hd, txt("A logo padrão é a 2B: \"Con\" em Ahellya itálica + \"kat\" em Unageo Bold, com o cursor laranja acoplado à perna do t. As letras estão em contornos: use sempre os arquivos de brand/logo, nunca redigite a logo.", 16, "Regular", "textMuted"));
+    fill(hd, txt("Ahellya: o arquivo da fonte diz \"All Rights Reserved\". Confirme a licença por escrito com o autor (Dmitry Barsukov) antes de registrar a marca.", 14, "Semi Bold", "accentText"));
+
+    const hero = AL("HORIZONTAL", { name: "Logo padrão", itemSpacing: 24 }); fill(b, hero);
+    for (const dark of [false, true]) {
+      const box = figma.createFrame(); box.name = dark ? "Fundo escuro" : "Fundo claro"; box.resize(736, 380); box.cornerRadius = 24;
+      box.fills = [pv(dark ? "ink" : "surface")]; if (!dark) { box.strokes = [pv("border")]; box.strokeWeight = 1; box.strokeAlign = "INSIDE"; }
+      center(box, wordmark(120, dark ? "surface" : "ink")); hero.appendChild(box);
+    }
+
+    const v = section(b, "Versões", "Use a positiva em fundos claros e a negativa no ink. As versões de uma cor só quando não der para imprimir duas cores. O símbolo C_ vale para espaços pequenos e quadrados: foto de perfil, favicon e ícone do app.");
+    const g = wrapGrid(v, 24, "Versões");
+    const W = 362, H = 200;
+    g.appendChild(card("Positiva", "Letras ink #0B2B2A, cursor laranja #FDA333", "background", W, H, wordmark(56)).c);
+    g.appendChild(card("Negativa", "Letras brancas, cursor laranja", "ink", W, H, wordmark(56, "surface")).c);
+    g.appendChild(card("Uma cor — ink", "Para carimbo, gravação e impressão em uma cor", "background", W, H, wordmark(56, "ink", "ink")).c);
+    g.appendChild(card("Uma cor — branca", "Sobre teal, ink ou foto escura", "primary", W, H, wordmark(56, "surface", "surface")).c);
+    g.appendChild(card("Símbolo positivo", "C_ — o C da logo e o cursor", "background", W, H, symbol(110)).c);
+    g.appendChild(card("Símbolo negativo", "Sobre o ink", "ink", W, H, symbol(110, "surface")).c);
+    g.appendChild(card("Ícone de app", "Ink, símbolo branco com 56% da largura", "background", W, H, appIcon(150, 0.22)).c);
+    g.appendChild(card("Foto de perfil", "O círculo corta os cantos: o símbolo tem 50% da largura", "background", W, H, (() => { const a = appIcon(150, 0.5, "Perfil (círculo)"); a.children[0].rescale(0.5 / 0.56); center(a, a.children[0]); return a; })()).c);
+
+    const pr = section(b, "Área de proteção e tamanho mínimo", "Deixe livre em volta da logo, no mínimo, a altura do \"a\" (x). Tamanho mínimo na tela: logo com 24 px de altura e símbolo com 16 px. Impresso: logo com 8 mm de largura.");
+    const row = AL("HORIZONTAL", { itemSpacing: 24 }); row.counterAxisAlignItems = "CENTER"; fill(pr, row);
+    {
+      const box = figma.createFrame(); box.name = "Área de proteção"; box.resize(900, 360); box.cornerRadius = 20; box.fills = [pv("surface")]; box.strokes = [pv("border")]; box.strokeWeight = 1; box.strokeAlign = "INSIDE";
+      const lh = 120, x = lh * 100 / 173.5; const lg = wordmark(lh);
+      const zone = figma.createRectangle(); zone.name = "Área livre (x)"; zone.resize(lg.width + 2 * x, lh + 2 * x); zone.fills = [solid("#FDA333", 0.08)];
+      zone.strokes = [pv("accent")]; zone.strokeWeight = 2; zone.dashPattern = [10, 8]; zone.strokeAlign = "INSIDE";
+      center(box, zone); put(box, lg, zone.x + x, zone.y + x);
+      const xr = rect("x", x, x, "#FDA333"); xr.opacity = 0.35; put(box, xr, zone.x, zone.y);
+      const xl = I("x", 18, "accentText", "Bold"); put(box, xl, zone.x + x / 2 - 5, zone.y + x / 2 - 12);
+      row.appendChild(box);
+      const mins = AL("VERTICAL", { name: "Tamanhos mínimos", itemSpacing: 24 }); pad(mins, 32, 32, 32, 32); mins.fills = [pv("surface")]; mins.cornerRadius = 20; mins.strokes = [pv("border")]; mins.strokeWeight = 1; mins.strokeAlign = "INSIDE";
+      for (const [n, lab] of [[wordmark(24), "Logo: 24 px de altura"], [symbol(16), "Símbolo: 16 px"]]) { const r2 = AL("VERTICAL", { itemSpacing: 10 }); r2.appendChild(n); r2.appendChild(txt(lab, 13, "Medium", "textMuted")); mins.appendChild(r2); }
+      row.appendChild(mins);
+    }
+
+    const nf = section(b, "Não fazer", null);
+    const ng = wrapGrid(nf, 24, "Não fazer");
+    const bad = [
+      ["Não esticar nem achatar", "background", () => { const n = wordmark(56); for (const c of n.children) c.constraints = { horizontal: "SCALE", vertical: "SCALE" }; n.resize(n.width * 1.25, n.height * 0.7); return n; }],
+      ["Não trocar a cor do cursor", "background", () => wordmark(56, "ink", "primary")],
+      ["Não usar sem contraste", "inkSoft", () => wordmark(56, "ink")],
+      ["Não separar o cursor", "background", () => { const n = wordmark(56); const c = n.children[n.children.length - 1]; c.x += 26; c.y -= 18; return n; }],
+    ];
+    for (const [lab, bg, mk] of bad) { const { c } = card("✕  " + lab, null, bg, 362, 180, mk()); c.children[1].fills = [pv("danger")]; ng.appendChild(c); }
+  }
+
+  // -------------------------------------------------------------------------
+  // 6. Favicon e app
+  // -------------------------------------------------------------------------
+  {
+    const b = board(extraPages[1], "Favicon e app", 1640);
+    fill(b, title("Favicon e ícones do app"));
+    fill(b, txt("Todos saem do símbolo C_ sobre o ink. Os arquivos estão em public/ e são gerados por brand/gerar-assets.mjs. Em 16 e 32 px o símbolo ocupa 78% da largura para continuar legível.", 16, "Regular", "textMuted"));
+    const s1 = section(b, "Tamanhos reais", null);
+    const row = AL("HORIZONTAL", { itemSpacing: 40 }); row.counterAxisAlignItems = "MAX"; fill(s1, row);
+    for (const [size, file, radius] of [[16, "favicon.ico (16)", 0.2], [32, "favicon.ico (32)", 0.2], [48, "favicon.ico (48)", 0.2], [64, "favicon.svg", 0.22], [180, "apple-touch-icon.png", 0], [192, "icon-192.png", 0], [512, "icon-512.png", 0]]) {
+      const c = AL("VERTICAL", { itemSpacing: 10 }); const a = size <= 48 ? (() => { const f = appIcon(size, radius); const s = f.children[0]; s.rescale(0.78 / 0.56); s.x = (size - s.width) / 2; s.y = (size - s.height) / 2; return f; })() : appIcon(size, radius);
+      a.name = file; c.appendChild(a); c.appendChild(txt(file, 12, "Medium", "textMuted")); c.appendChild(txt(size + " × " + size, 12, "Regular", "textMuted")); row.appendChild(c);
+    }
+    const s2 = section(b, "Na aba do navegador", null);
+    const tab = AL("HORIZONTAL", { name: "Aba", itemSpacing: 10 }); tab.counterAxisAlignItems = "CENTER"; pad(tab, 10, 18, 10, 14); tab.cornerRadius = 10; tab.fills = [pv("surface")]; tab.strokes = [pv("border")]; tab.strokeWeight = 1;
+    const fav = appIcon(16, 0.2); const fs = fav.children[0]; fs.rescale(0.78 / 0.56); fs.x = (16 - fs.width) / 2; fs.y = (16 - fs.height) / 2; tab.appendChild(fav);
+    tab.appendChild(txt("Conkat — profissionais verificados de Joinville e região", 13, "Regular")); s2.appendChild(tab);
+  }
+
+  // -------------------------------------------------------------------------
+  // 7. Instagram
+  // -------------------------------------------------------------------------
+  {
+    const PW = 1080, PH = 1350, SH = 1920, M = 96, GAP = 48;
+    const b = board(extraPages[2], "Instagram", 4 * PW + 3 * GAP + 144);
+    fill(b, title("Instagram"));
+    fill(b, txt("Modelos editáveis, no tamanho real. Títulos em Unageo SemiBold (−2,5%), texto em Inter. Troque o texto e a foto; mantenha margens de 96 px, a logo ou o símbolo e o endereço do site. PNGs prontos em brand/instagram.", 16, "Regular", "textMuted"));
+
+    // Perfil
+    const sp = section(b, "Foto de perfil — 1080 × 1080", "O Instagram mostra a foto em círculo: o símbolo ocupa 50% da largura para não encostar na borda.");
+    const gp = wrapGrid(sp, GAP, "Perfil");
+    { const a = appIcon(PW, 0, "Perfil — escuro"); a.children[0].rescale(0.5 / 0.56); center(a, a.children[0]); gp.appendChild(a); }
+    { const a = artboard("Perfil — claro", PW, PW, "background"); center(a, symbol(PW * 0.5 * 168 / 210.5)); gp.appendChild(a); }
+
+    // Posts
+    const spo = section(b, "Posts — 1080 × 1350 (4:5)", "No perfil, o post aparece cortado em 3:4 (some ~34 px de cada lado): mantenha texto e logo dentro das margens de 96 px. Carrossel: numere as páginas no canto superior direito.");
+    const gpo = wrapGrid(spo, GAP, "Posts");
+    const footer = (a, left, dark) => { if (left) putB(a, left, M, M + (left.type === "FRAME" && left.name.startsWith("Logo") ? 4 : 0)); const s = I("conkat.com.br", 28, dark ? ON_DARK_MUTED : "textMuted", "Medium"); putB(a, s, a.width - M - s.width, M); };
+    const counter = (a, t, dark) => { const n = I(t, 26, dark ? ON_DARK_MUTED : "textMuted", "Semi Bold"); n.letterSpacing = { unit: "PERCENT", value: 4 }; putR(a, n, M, M); };
+
+    { // 01 Apresentação
+      const a = artboard("Post 01 — Apresentação", PW, PH, "background"); pattern(a, "#FDA333", 0.35, "#F8F9FA");
+      put(a, wordmark(78), M, M + 8);
+      putB(a, stack(40, [D("Profissionais verificados de Joinville e região.", 112, "ink"), I("Preço, avaliações e contato direto no WhatsApp.", 38, "textMuted")], PW - 2 * M), M, M + 140);
+      footer(a, null, false); putB(a, rect("Faixa", PW, 20, "primary"), 0, 0); gpo.appendChild(a);
+    }
+    { // 02 Chamada escura
+      const a = artboard("Post 02 — Chamada (escuro)", PW, PH, "ink"); pattern(a, "#FDA333", 0.16, "#0B2B2A");
+      const s = stack(48, [cursorTitle(["Chame direto", "no WhatsApp"], 136, "surface"), I("Sem criar conta. Sem intermediário.", 40, "brandOnDark")], PW - 2 * M);
+      put(a, s, M, (PH - s.height) / 2 - 40); footer(a, wordmark(56, "surface"), true); gpo.appendChild(a);
+    }
+    { // 03 Categoria com foto
+      const a = artboard("Post 03 — Categoria com foto", PW, PH, "surface");
+      put(a, photo(PW, 760, "Foto do serviço (1080 × 760)"), 0, 0);
+      const p = pill("Eletricista", { icon: "raio", iconColor: "accent", h: 88, fs: 34 }); put(a, p, M, 760 - 44);
+      put(a, stack(28, [D("Eletricistas verificados em Joinville e região.", 84, "ink"), I("Veja o preço e as avaliações antes de chamar.", 34, "textMuted")], PW - 2 * M), M, 860);
+      footer(a, symbol(52), false); gpo.appendChild(a);
+    }
+    { // 04 Carrossel capa
+      const a = artboard("Post 04 — Carrossel, capa", PW, PH, "accentSoft"); pattern(a, "#FDA333", 0.5, "#FFF3E0");
+      counter(a, "1/4", false); put(a, symbol(58), M, M + 8);
+      putB(a, stack(28, [K("Como funciona", 30, "accentText"), D("Três passos até quem resolve.", 124, "ink")], PW - 2 * M), M, M + 140);
+      putB(a, pill("Arraste", { icon: "seta", after: true, iconColor: "accent" }), M, M); gpo.appendChild(a);
+    }
+    { // 05 Carrossel passo
+      const a = artboard("Post 05 — Carrossel, página", PW, PH, "background");
+      counter(a, "2/4", false); const n = T("01", 260, "brand", { font: DISPLAY, lh: 100, ls: -4 }); put(a, n, M, M - 10);
+      put(a, stack(44, [D("Escolha a cidade", 104, "ink"), I("O Conkat começa por Joinville e região. O app mostra só as cidades que já têm profissionais anunciando.", 42, "textMuted")], PW - 2 * M), M, 520);
+      footer(a, symbol(52), false); gpo.appendChild(a);
+    }
+    { // 06 Para profissionais
+      const a = artboard("Post 06 — Para profissionais", PW, PH, "primary"); pattern(a, "#FFFFFF", 0.12, "#0B7A75");
+      put(a, stack(32, [K("Para quem presta serviço", 30, "accent"), D("Anuncie no Conkat. O cliente chama no seu WhatsApp.", 104, "surface")], PW - 2 * M), M, M + 8);
+      const offers = AL("HORIZONTAL", { name: "Oferta", itemSpacing: 28 }); offers.resize(PW - 2 * M, 10); offers.primaryAxisSizingMode = "FIXED"; offers.counterAxisSizingMode = "AUTO";
+      for (const [vv, t] of [["14 dias", "no ar sem custo no primeiro anúncio"], ["R$ 0", "por contato recebido"]]) {
+        const c = AL("VERTICAL", { itemSpacing: 14 }); pad(c, 40, 40, 44, 40); c.cornerRadius = 32; c.fills = [pv("ink")]; offers.appendChild(c); c.layoutSizingHorizontal = "FILL";
+        fill(c, D(vv, 84, "accent")); fill(c, I(t, 30, ON_DARK_MUTED));
+      }
+      offers.counterAxisAlignItems = "MIN"; putB(a, offers, M, M + 116); footer(a, wordmark(52, "surface"), true); gpo.appendChild(a);
+    }
+    { // 07 Dúvida
+      const a = artboard("Post 07 — Dúvida frequente", PW, PH, "surface");
+      const q = figma.createFrame(); q.name = "Ícone"; q.resize(120, 120); q.cornerRadius = 32; q.fills = [pv("primarySoft")]; center(q, icon("duvida", "primary", 72)); put(a, q, M, M);
+      const ans = I("Não. Buscar, salvar e avaliar anúncios não exige cadastro. Só profissionais que anunciam têm conta.", 42, "text"); ans.lineHeight = { unit: "PERCENT", value: 145 }; ans.setRangeFontName(0, 4, { family: "Inter", style: "Bold" });
+      put(a, stack(48, [D("Preciso de conta para contratar?", 100, "ink"), ans], PW - 2 * M), M, 330);
+      footer(a, symbol(52), false); putB(a, rect("Faixa", PW, 20, "accent"), 0, 0); gpo.appendChild(a);
+    }
+
+    // Stories
+    const ss = section(b, "Stories — 1080 × 1920 (9:16)", "Deixe livres 250 px no topo (barra do perfil) e 340 px embaixo (campo de resposta e botões). As faixas laranja-claras marcam essas áreas e ficam ocultas: mostre-as para conferir.");
+    const gs = wrapGrid(ss, GAP, "Stories");
+    const safe = (a) => { for (const [y, h] of [[0, 250], [SH - 340, 340]]) { const z = rect("Área ocupada pelo Instagram", PW, h, "#FDA333"); z.opacity = 0.18; z.visible = false; put(a, z, 0, y); } };
+    { const a = artboard("Story 01 — Claro", PW, SH, "background"); pattern(a, "#FDA333", 0.35, "#F8F9FA", "down"); put(a, wordmark(70), M, 250);
+      putB(a, stack(40, [D("Precisa de um profissional?", 120, "ink"), I("Veja preço e avaliações e chame direto no WhatsApp, sem criar conta.", 44, "textMuted"), pill("Em breve no app", { icon: "seta", after: true, bg: "primary", h: 104, fs: 38 })], PW - 2 * M), M, 380); safe(a); gs.appendChild(a); }
+    { const a = artboard("Story 02 — Escuro", PW, SH, "ink"); pattern(a, "#FDA333", 0.16, "#0B2B2A", "down"); put(a, wordmark(70, "surface"), M, 250);
+      putB(a, stack(36, [K("Sou profissional", 34, "accent"), cursorTitle(["14 dias no ar", "sem custo"], 128, "surface"), I("No primeiro anúncio, contados a partir da aprovação.", 44, ON_DARK_MUTED), pill("Começar a anunciar", { icon: "seta", after: true, bg: "accent", fg: "ink", h: 104, fs: 38 })], PW - 2 * M), M, 380); safe(a); gs.appendChild(a); }
+    { const a = artboard("Story 03 — Foto", PW, SH, "ink"); put(a, photo(PW, SH, "Foto do serviço (1080 × 1920)"), 0, 0);
+      const sh = rect("Sombra para o texto", PW, SH, "ink"); const c = hex("#0B2B2A");
+      sh.fills = [{ type: "GRADIENT_LINEAR", gradientTransform: [[0, 1, 0], [-1, 0, 1]], gradientStops: [{ position: 0, color: { ...c, a: 0.55 } }, { position: 0.28, color: { ...c, a: 0 } }, { position: 0.4, color: { ...c, a: 0 } }, { position: 0.72, color: { ...c, a: 0.92 } }, { position: 1, color: { ...c, a: 1 } }] }];
+      put(a, sh, 0, 0); put(a, wordmark(64, "surface"), M, 250);
+      putB(a, stack(40, [pill("Encanador", { icon: "gota", bg: "surface", fg: "ink", iconColor: "primary" }), D("Vazamento? Tem gente verificada perto de você.", 116, "surface")], PW - 2 * M), M, 380); safe(a); gs.appendChild(a); }
+
+    // Destaques
+    const sd = section(b, "Capas de destaque — 1080 × 1920", "O Instagram mostra só o círculo central: o ícone fica no meio. O nome do destaque é escrito no próprio Instagram.");
+    const gd = wrapGrid(sd, GAP, "Destaques");
+    for (const [k, lab] of [["busca", "Como funciona"], ["selo", "Profissionais"], ["pin", "Cidades"], ["duvida", "Dúvidas"], ["megafone", "Novidades"]]) {
+      const a = artboard("Destaque — " + lab, PW, SH, "ink");
+      const s = AL("VERTICAL", { itemSpacing: 44 }); s.counterAxisAlignItems = "CENTER"; s.appendChild(icon(k, "surface", 360)); s.appendChild(rect("Cursor", 150, 48, "accent"));
+      center(a, s); gd.appendChild(a);
+    }
+  }
+
+  // Ordem das páginas: padrões primeiro, exploração por último.
+  ["Logo", "Favicon e app", "Instagram", "Cores", "Tipografia", "Padrão e ícones", "Logo — exploração"].forEach((n, i) => { const p = figma.root.children.find((x) => x.name === n); if (p) figma.root.insertChild(i, p); });
+
+  const first = figma.root.children[0];
+  await figma.setCurrentPageAsync(first);
+  figma.viewport.scrollAndZoomIntoView(first.children);
+  log("Arquivo de marca montado: " + figma.root.children.map((p) => p.name).join(", "));
 }

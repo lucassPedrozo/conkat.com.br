@@ -1,0 +1,63 @@
+name: Instagram
+
+# Publica o post do dia de brand/instagram/calendario/ no horário da pauta (horário de Brasília).
+# Roda de hora em hora: publica quando chega o horário e não repete se o post já está no perfil.
+# Como configurar: brand/instagram/PUBLICAR.md.
+#
+# Atenção: o GitHub só roda tarefas agendadas que estejam na branch padrão do repositório.
+
+on:
+  schedule:
+    - cron: '7 * * * *'
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: 'teste = só confere, sem publicar'
+        type: choice
+        options: [teste, publicar]
+        default: teste
+      data:
+        description: 'Data do post (AAAA-MM-DD). Vazio = hoje'
+        required: false
+      so:
+        description: 'O que publicar'
+        type: choice
+        options: [tudo, post, story]
+        default: tudo
+
+permissions:
+  contents: read
+
+concurrency:
+  group: instagram
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: Publicar
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_API_HOST: ${{ vars.IG_API_HOST }}
+          IG_API_VERSION: ${{ vars.IG_API_VERSION }}
+          MODO: ${{ inputs.modo }}
+          DATA: ${{ inputs.data }}
+          SO: ${{ inputs.so }}
+        run: |
+          args=()
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            [ "$MODO" = "teste" ] && args+=(--teste)
+            [ "$MODO" = "publicar" ] && args+=(--agora)
+            [ -n "$DATA" ] && args+=(--data "$DATA")
+            args+=(--so "${SO:-tudo}")
+          fi
+          node brand/publicar-instagram.mjs "${args[@]}"
