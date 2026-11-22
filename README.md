@@ -29,10 +29,10 @@ Abra <http://localhost:4321>. Para gerar a versão de produção: `npm run build
 
 ## Página "Apoie o projeto"
 
-Fica em `/apoie` e é separada do resto do site: não tem link na página inicial, não está no
-`sitemap.xml` e tem `noindex` (não aparece no Google). O QR code e o "Pix copia e cola" são gerados no
+Fica em `/apoie`, numa página à parte. O único link para ela é o do rodapé da página inicial; ela não
+está no `sitemap.xml` e tem `noindex` (não aparece no Google). O QR code e o "Pix copia e cola" são gerados no
 build a partir da chave em `SUPPORT` (`src/lib/pix.ts`, padrão BR Code do Banco Central), sem
-JavaScript para o QR. Para divulgar, compartilhe o endereço direto.
+JavaScript para o QR.
 
 ## Marca e design
 

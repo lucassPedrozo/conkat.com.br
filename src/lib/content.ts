@@ -96,6 +96,7 @@ export const FOOTER = {
   region: 'Joinville e região, SC',
   // Os links só aparecem quando houver endereço. Os documentos ainda não existem (ver auditoria).
   links: [
+    { href: '/apoie', label: 'Apoie o projeto' },
     { href: '', label: 'Termos de uso' },
     { href: '', label: 'Política de privacidade' },
   ],
@@ -104,7 +105,7 @@ export const FOOTER = {
   legal: '© 2026 Conkat.',
 };
 
-// Página "Apoie o projeto" (/apoie). Não tem link no site nem entra no sitemap.
+// Página "Apoie o projeto" (/apoie). O link fica no rodapé; a página tem noindex e não entra no sitemap.
 // Nome e cidade vão no código Pix (máx. 25 e 15 caracteres, sem acento); o banco de quem paga
 // mostra o nome do titular da chave na confirmação.
 export const SUPPORT = {
