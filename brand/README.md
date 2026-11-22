@@ -53,9 +53,11 @@ node brand/gerar-calendario.mjs --inicio 2026-11-23 --dias 15
 ```
 
 Sem `--inicio`, começa amanhã. O resultado vai para [`instagram/calendario/`](instagram/calendario/): uma pasta
-por dia com os slides (1080 × 1350), um story avisando do post e a legenda, mais a agenda (`README.md`) e uma
+por dia com os slides em JPEG (1080 × 1350), um story avisando do post e a legenda, mais a agenda (`README.md`) e uma
 prévia de tudo. Os posts usam as telas reais do app, recortadas do site (ficam em `instagram/telas-app/`).
 Modelos de slide: `capa`, `tela`, `foto`, `lista`, `duvida`, `numeros`, `peca` e `final`.
+
+A publicação é automática pelo GitHub Actions: veja [`instagram/PUBLICAR.md`](instagram/PUBLICAR.md).
 
 ## Logo — exploração
 

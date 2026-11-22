@@ -120,7 +120,8 @@ export async function renderHtml(html, w, h, out) {
   await page.setContent(`<!doctype html><html><head><meta charset="utf-8"><style>${BASE_CSS}</style></head><body>${html}</body></html>`);
   await page.evaluate(() => document.fonts.ready);
   mkdir(path.dirname(out));
-  await page.locator('.art').first().screenshot({ path: out, omitBackground: true });
+  const jpeg = /\.jpe?g$/i.test(out); // a API do Instagram só aceita JPEG
+  await page.locator('.art').first().screenshot(jpeg ? { path: out, type: 'jpeg', quality: 92 } : { path: out, omitBackground: true });
   await page.close();
 }
 export const renderSvg = (svg, w, h, out) => renderHtml(`<div class="art" style="width:${w}px;height:${h}px"><img src="${svgUrl(svg)}" style="width:${w}px;height:${h}px;display:block"></div>`, w, h, out);

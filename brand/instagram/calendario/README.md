@@ -3,8 +3,8 @@
 Gerado por `node brand/gerar-calendario.mjs --inicio 2026-11-23 --dias 15`. A pauta fica em
 [`../calendario.mjs`](../calendario.mjs): mude lá e rode o script de novo (esta pasta é apagada e refeita).
 
-Cada pasta tem os slides (`01.png`, `02.png`…), o `story.png` para avisar do post e a `legenda.txt`.
-Horários são sugestões: no meio da semana à noite, no fim de semana de manhã.
+Cada pasta tem os slides (`01.jpg`, `02.jpg`…), o `story.jpg` para avisar do post e a `legenda.txt`.
+O robô do Instagram (.github/workflows/instagram.yml) publica cada dia no horário abaixo. Ver brand/instagram/PUBLICAR.md.
 
 ![Prévia](previa.png)
 

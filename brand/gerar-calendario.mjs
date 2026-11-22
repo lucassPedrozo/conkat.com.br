@@ -5,8 +5,8 @@
 //   node brand/gerar-calendario.mjs --inicio 2026-11-23 --dias 15
 //
 // Para cada dia cria brand/instagram/calendario/AAAA-MM-DD-slug/ com:
-//   01.png, 02.png…  slides do post (1080 × 1350); carrossel quando há mais de um
-//   story.png        story (1080 × 1920) avisando do post novo
+//   01.jpg, 02.jpg…  slides do post (1080 × 1350); carrossel quando há mais de um
+//   story.jpg        story (1080 × 1920) avisando do post novo
 //   legenda.txt      legenda com hashtags, pronta para colar
 // E também calendario/README.md (a agenda) e calendario/previa.png (todos os posts lado a lado).
 //
@@ -226,9 +226,9 @@ for (let i = 0; i < DIAS; i++) {
   const total = post.slides.length;
   for (const [k, s] of post.slides.entries()) {
     if (!T[s.t]) throw new Error(`Modelo desconhecido "${s.t}" em ${post.slug}`);
-    await renderHtml(T[s.t](s, k + 1, total), POST.w, POST.h, path.join(abs, String(k + 1).padStart(2, '0') + '.png'));
+    await renderHtml(T[s.t](s, k + 1, total), POST.w, POST.h, path.join(abs, String(k + 1).padStart(2, '0') + '.jpg'));
   }
-  await renderHtml(storyHtml(dataUrl(path.join(abs, '01.png'), 'image/png'), post.tema), STORY.w, STORY.h, path.join(abs, 'story.png'));
+  await renderHtml(storyHtml(dataUrl(path.join(abs, '01.jpg'), 'image/jpeg'), post.tema), STORY.w, STORY.h, path.join(abs, 'story.jpg'));
   write(path.join(abs, 'legenda.txt'), `${post.legenda.trim()}\n\n${post.hashtags.join(' ')}\n`);
   agenda.push({ d, wd, dir, post, total, hora: HORARIOS[wd] });
   console.log(`${iso(d)} ${SEMANA[wd].padEnd(7)} ${HORARIOS[wd]}  ${total > 1 ? `carrossel (${total})` : 'post'.padEnd(13)}  ${post.tema}`);
@@ -240,8 +240,8 @@ write(path.join(OUT, 'README.md'), `# Instagram — próximos ${DIAS} dias
 Gerado por \`node brand/gerar-calendario.mjs --inicio ${INICIO} --dias ${DIAS}\`. A pauta fica em
 [\`../calendario.mjs\`](../calendario.mjs): mude lá e rode o script de novo (esta pasta é apagada e refeita).
 
-Cada pasta tem os slides (\`01.png\`, \`02.png\`…), o \`story.png\` para avisar do post e a \`legenda.txt\`.
-Horários são sugestões: no meio da semana à noite, no fim de semana de manhã.
+Cada pasta tem os slides (\`01.jpg\`, \`02.jpg\`…), o \`story.jpg\` para avisar do post e a \`legenda.txt\`.
+O robô do Instagram (.github/workflows/instagram.yml) publica cada dia no horário abaixo. Ver brand/instagram/PUBLICAR.md.
 
 ![Prévia](previa.png)
 
@@ -257,7 +257,7 @@ ${agenda.map((a) => `### ${br(a.d)} — ${a.post.tema}\n\n${a.post.legenda.trim(
 {
   const cols = 5, cw = 300;
   const html = `<div class="art" style="width:${cols * cw + (cols + 1) * 24}px;padding:24px;background:${C.background};display:grid;grid-template-columns:repeat(${cols},${cw}px);gap:28px 24px;font-family:Inter">
-    ${agenda.map((a) => `<div><img src="${dataUrl(path.join(OUT, a.dir, '01.png'), 'image/png')}" style="width:${cw}px;display:block;border-radius:8px;box-shadow:0 0 0 1px ${C.border}">
+    ${agenda.map((a) => `<div><img src="${dataUrl(path.join(OUT, a.dir, '01.jpg'), 'image/jpeg')}" style="width:${cw}px;display:block;border-radius:8px;box-shadow:0 0 0 1px ${C.border}">
       <div style="margin-top:10px;font:600 17px Inter;color:${C.ink}">${br(a.d)} · ${SEMANA[a.wd]} · ${a.hora}</div>
       <div style="font:14px Inter;color:${C.textMuted}">${a.total > 1 ? `Carrossel (${a.total}) · ` : ''}${esc(a.post.tema)}</div></div>`).join('')}
   </div>`;
