@@ -24,6 +24,15 @@ Abra <http://localhost:4321>. Para gerar a versão de produção: `npm run build
 | Telas do app dentro dos celulares | `src/components/app/` |
 | Interações (cabeçalho, carrossel, passos) | `src/scripts/site.ts` |
 | Fotos | `src/assets/photos/` (otimizadas no build) |
+| Instagram do app (`@conkat.app`) | `INSTAGRAM` em `src/lib/content.ts` |
+| Página "Apoie o projeto" (`/apoie`) e chave Pix | `src/pages/apoie.astro` e `SUPPORT` em `src/lib/content.ts` |
+
+## Página "Apoie o projeto"
+
+Fica em `/apoie` e é separada do resto do site: não tem link na página inicial, não está no
+`sitemap.xml` e tem `noindex` (não aparece no Google). O QR code e o "Pix copia e cola" são gerados no
+build a partir da chave em `SUPPORT` (`src/lib/pix.ts`, padrão BR Code do Banco Central), sem
+JavaScript para o QR. Para divulgar, compartilhe o endereço direto.
 
 ## Marca e design
 

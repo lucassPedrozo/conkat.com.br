@@ -9,6 +9,12 @@ export const STORE_LINKS = {
   googlePlay: '',
 };
 
+export const INSTAGRAM = {
+  handle: '@conkat.app',
+  url: 'https://www.instagram.com/conkat.app/',
+  label: 'Acompanhe no Instagram',
+};
+
 export const SITE = {
   title: 'Conkat — profissionais verificados de Joinville e região',
   description:
@@ -93,5 +99,19 @@ export const FOOTER = {
     { href: '', label: 'Termos de uso' },
     { href: '', label: 'Política de privacidade' },
   ],
-  legal: '© 2026 Conkat. CNPJ 00.000.000/0001-00',
+  // O CNPJ só aparece quando for preenchido (o anterior era um número de exemplo).
+  cnpj: '',
+  legal: '© 2026 Conkat.',
+};
+
+// Página "Apoie o projeto" (/apoie). Não tem link no site nem entra no sitemap.
+// Nome e cidade vão no código Pix (máx. 25 e 15 caracteres, sem acento); o banco de quem paga
+// mostra o nome do titular da chave na confirmação.
+export const SUPPORT = {
+  pixKey: '128f6a68-a6b4-445a-9b41-6367fa75d959',
+  pixName: 'CONKAT',
+  pixCity: 'JOINVILLE',
+  title: 'Apoie o projeto',
+  text: 'O Conkat está sendo construído em Joinville para aproximar quem precisa de um serviço de quem sabe fazer. Se você acredita na ideia, pode ajudar o projeto a seguir em frente com qualquer valor, pelo Pix.',
+  thanks: 'Obrigado pelo apoio.',
 };

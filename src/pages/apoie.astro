@@ -1,0 +1,246 @@
+---
+// "Apoie o projeto": página à parte, sem link no site, fora do sitemap e com noindex.
+// Mostra o QR code do Pix (gerado no build, sem JavaScript) e a chave para copiar.
+import QRCode from 'qrcode';
+import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
+import Icon from '../components/Icon.astro';
+import { SUPPORT, INSTAGRAM } from '../lib/content';
+import { pixPayload } from '../lib/pix';
+
+const payload = pixPayload({ key: SUPPORT.pixKey, name: SUPPORT.pixName, city: SUPPORT.pixCity });
+const qr = await QRCode.toString(payload, {
+  type: 'svg',
+  errorCorrectionLevel: 'M',
+  margin: 0,
+  color: { dark: '#0B2B2A', light: '#FFFFFF' },
+});
+---
+<Base title={`${SUPPORT.title} — Conkat`} description={SUPPORT.text} noindex>
+  <main id="conteudo" class="support">
+    <a href="/" class="s-logo" aria-label="Conkat, página inicial"><Logo /></a>
+
+    <div class="s-grid">
+      <div class="s-copy">
+        <p class="kicker">{SUPPORT.title}</p>
+        <h1>Ajude o Conkat a crescer<span class="cur" aria-hidden="true"></span></h1>
+        <p class="lead">{SUPPORT.text}</p>
+        <ol class="how" role="list">
+          <li><span>1</span><p>Abra o app do seu banco e escolha <strong>Pix</strong>.</p></li>
+          <li><span>2</span><p>Leia o QR code ou use o <strong>Pix copia e cola</strong>.</p></li>
+          <li><span>3</span><p>Escolha o valor e confirme.</p></li>
+        </ol>
+      </div>
+
+      <section class="card" aria-labelledby="pix-title">
+        <h2 id="pix-title" class="visually-hidden">Pix</h2>
+        <div class="qr" role="img" aria-label="QR code do Pix do Conkat" set:html={qr} />
+
+        <div class="key">
+          <span class="key-label">Chave Pix (aleatória)</span>
+          <code class="key-value">{SUPPORT.pixKey}</code>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn btn-primary" data-copy={payload} data-done="Código copiado">
+            <Icon name="copy" size={18} /><span>Copiar Pix copia e cola</span>
+          </button>
+          <button type="button" class="btn btn-quiet" data-copy={SUPPORT.pixKey} data-done="Chave copiada">
+            <Icon name="copy" size={18} /><span>Copiar só a chave</span>
+          </button>
+        </div>
+        <p class="status" role="status" aria-live="polite" data-status></p>
+      </section>
+    </div>
+
+    <footer class="s-foot">
+      <span>{SUPPORT.thanks}</span>
+      <a href={INSTAGRAM.url} rel="noopener" target="_blank"><Icon name="instagram-logo" size={18} />{INSTAGRAM.handle}</a>
+    </footer>
+  </main>
+</Base>
+
+<script>
+  // Copia o código Pix ou a chave. Sem a API de área de transferência, seleciona o texto.
+  const status = document.querySelector<HTMLElement>('[data-status]');
+  for (const btn of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
+    btn.addEventListener('click', async () => {
+      const text = btn.dataset.copy ?? '';
+      try {
+        await navigator.clipboard.writeText(text);
+        if (status) status.textContent = btn.dataset.done ?? 'Copiado';
+      } catch {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.appendChild(area);
+        area.select();
+        const ok = document.execCommand('copy');
+        area.remove();
+        if (status) status.textContent = ok ? btn.dataset.done ?? 'Copiado' : 'Não deu para copiar. Selecione a chave acima.';
+      }
+    });
+  }
+</script>
+
+<style>
+  .support {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2.5rem, 6vw, 4.5rem);
+    max-width: 68rem;
+    margin-inline: auto;
+    padding: clamp(1.5rem, 4vw, 3rem) var(--gutter) 2rem;
+    background: var(--background);
+  }
+  .s-logo {
+    align-self: flex-start;
+    color: var(--ink);
+    border-radius: 8px;
+  }
+  .s-logo :global(.logo) {
+    height: 1.9rem;
+    width: auto;
+  }
+  .s-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+  }
+  .kicker {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-text);
+    margin-bottom: 1rem;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-h1);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .cur {
+    display: inline-block;
+    width: 0.5em;
+    height: 0.17em;
+    margin-left: 0.06em;
+    background: var(--accent);
+  }
+  .lead {
+    margin-top: 1.25rem;
+    font-size: var(--step-lead);
+    line-height: 1.55;
+    color: var(--text-muted);
+    max-width: 34rem;
+  }
+  .how {
+    display: grid;
+    gap: 0.85rem;
+    margin: 2rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .how li {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+  .how span {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .card {
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    border-radius: var(--radius-media);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: 0 30px 60px -30px rgba(11, 43, 42, 0.25);
+  }
+  .qr {
+    width: min(100%, 17rem);
+    justify-self: center;
+    aspect-ratio: 1;
+  }
+  .qr :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .key {
+    display: grid;
+    gap: 0.35rem;
+    padding: 0.9rem 1rem;
+    border-radius: 14px;
+    background: var(--background);
+    border: 1px solid var(--border);
+  }
+  .key-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+  .key-value {
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 0.92rem;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+    user-select: all;
+  }
+  .actions {
+    display: grid;
+    gap: 0.6rem;
+  }
+  .actions .btn {
+    width: 100%;
+  }
+  .status {
+    min-height: 1.4em;
+    margin-top: -0.75rem;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary);
+  }
+  .s-foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+  .s-foot a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 600;
+    color: var(--primary);
+    border-radius: 6px;
+  }
+  @media (max-width: 860px) {
+    .s-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
