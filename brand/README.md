@@ -7,13 +7,40 @@ Arquivo de marca no Figma: <https://www.figma.com/design/TQKqfbLfbO5jYmMCGuOqtu>
 1. Abra o arquivo de marca no Figma pelo computador.
 2. Rode o plugin **Scripter**, crie um script novo, apague o conteúdo e cole o
    [`figma-brand-plugin/code.js`](figma-brand-plugin/code.js) inteiro (use **Copy raw file** no GitHub).
-3. Clique em **Run**. O script cria quatro páginas:
-   - **Logo — exploração:** 12 variações, em fundo claro e escuro;
+3. Clique em **Run**. O script cria sete páginas:
+   - **Logo:** a logo padrão (2B), versões, símbolo C_, área de proteção, tamanho mínimo e o que não fazer;
+   - **Favicon e app:** favicon e ícones do app nos tamanhos reais;
+   - **Instagram:** foto de perfil, 7 modelos de post (1080 × 1350), 3 de story (1080 × 1920) e 5 capas de
+     destaque, todos editáveis (troque texto e foto);
    - **Cores:** variáveis da coleção "Conkat / Cores" e amostras com o uso de cada cor;
    - **Tipografia:** Unageo e Ahellya (logo, em contornos) e Schibsted Grotesk + Inter (interface);
-   - **Padrão e ícones:** o padrão de ícones do app e os ícones Phosphor.
+   - **Padrão e ícones:** o padrão de ícones do app e os ícones Phosphor;
+   - **Logo — exploração:** as 12 variações, com a 2B marcada como padrão.
 
 Pode ser rodado mais de uma vez. As logos estão em contornos, então não é preciso instalar as fontes.
+
+## Logo padrão: 2B
+
+"Con" em Ahellya itálica + "kat" em Unageo Bold, com o cursor laranja. Letras ink `#0B2B2A` (brancas no
+fundo escuro), cursor `#FDA333`. O **símbolo C_** (o C da logo + o cursor) é usado onde a logo não cabe:
+foto de perfil, favicon e ícone do app.
+
+## Arquivos prontos
+
+Gerados por [`gerar-assets.mjs`](gerar-assets.mjs) (`npm ci` e depois `node brand/gerar-assets.mjs`):
+
+| Pasta | Conteúdo |
+|---|---|
+| [`logo/`](logo/) | Logo positiva, negativa e de uma cor (SVG e PNG), símbolo C_ e ícone de app |
+| [`../public/`](../public/) | `favicon.svg`, `favicon.ico` (16, 32, 48), `apple-touch-icon.png`, `icon-192.png`, `icon-512.png` |
+| [`instagram/perfil/`](instagram/perfil/) | Foto de perfil 1080 × 1080 (escura e clara) |
+| [`instagram/posts/`](instagram/posts/) | 7 posts 1080 × 1350: apresentação, chamada, categoria com foto, carrossel (capa e página), para profissionais, dúvida |
+| [`instagram/stories/`](instagram/stories/) | 3 stories 1080 × 1920: claro, escuro e com foto |
+| [`instagram/destaques/`](instagram/destaques/) | 5 capas de destaque: Como funciona, Profissionais, Cidades, Dúvidas, Novidades |
+| [`instagram/previa-perfil.png`](instagram/previa-perfil.png) | Como o perfil fica com tudo junto |
+
+Regras do Instagram: no post, mantenha texto e logo a 96 px das bordas (o perfil corta em 3:4); no story,
+deixe livres 250 px no topo e 340 px embaixo. Para novos posts, duplique um modelo na página Instagram do Figma.
 
 ## Logo — exploração
 
