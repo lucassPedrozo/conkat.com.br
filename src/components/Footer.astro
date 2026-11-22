@@ -1,7 +1,8 @@
 ---
 import Logo from './Logo.astro';
 import StoreBadges from './StoreBadges.astro';
-import { FOOTER, APP_LIVE, DOWNLOAD } from '../lib/content';
+import Icon from './Icon.astro';
+import { FOOTER, APP_LIVE, DOWNLOAD, INSTAGRAM } from '../lib/content';
 const links = FOOTER.links.filter((l) => l.href);
 ---
 {APP_LIVE && (
@@ -21,10 +22,11 @@ const links = FOOTER.links.filter((l) => l.href);
       <a href="#topo" aria-label="Conkat, voltar ao início" class="f-logo"><Logo /></a>
       <span>{FOOTER.region}</span>
     </div>
-    {links.length > 0 && (
-      <ul class="f-links">{links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
-    )}
-    <p class="f-legal">{FOOTER.legal}</p>
+    <ul class="f-links">
+      <li><a class="f-social" href={INSTAGRAM.url} rel="noopener" target="_blank"><Icon name="instagram-logo" size={20} />{INSTAGRAM.handle}</a></li>
+      {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+    </ul>
+    <p class="f-legal">{FOOTER.legal}{FOOTER.cnpj && ` CNPJ ${FOOTER.cnpj}`}</p>
   </div>
 </footer>
 
@@ -57,13 +59,20 @@ const links = FOOTER.links.filter((l) => l.href);
   }
   .f-links {
     display: flex;
-    gap: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
     margin: 0;
     padding: 0;
     list-style: none;
   }
   .f-links a:hover {
     color: var(--text-on-dark);
+  }
+  .f-social {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 6px;
   }
   .download {
     background: var(--primary);

@@ -11,7 +11,7 @@ import HomeScreen from './app/HomeScreen.astro';
 import DetailScreen from './app/DetailScreen.astro';
 import StoreBadges from './StoreBadges.astro';
 import Icon from './Icon.astro';
-import { HERO, APP_LIVE } from '../lib/content';
+import { HERO, APP_LIVE, INSTAGRAM } from '../lib/content';
 ---
 <section class="hero" id="topo" aria-labelledby="hero-title">
   <div class="hero-bg" aria-hidden="true"></div>
@@ -26,6 +26,7 @@ import { HERO, APP_LIVE } from '../lib/content';
           <>
             <a class="btn btn-primary" href="#profissionais">{HERO.secondary}</a>
             <p class="soon"><Icon name="clock" size={18} />{HERO.soon}</p>
+            <a class="ig" href={INSTAGRAM.url} rel="noopener" target="_blank"><Icon name="instagram-logo" size={18} /><span>{INSTAGRAM.label}: <strong>{INSTAGRAM.handle}</strong></span></a>
           </>
         )}
       </div>
@@ -99,6 +100,25 @@ import { HERO, APP_LIVE } from '../lib/content';
     color: var(--text-muted);
     font-size: 0.95rem;
     font-weight: 500;
+  }
+  .ig {
+    flex-basis: 100%;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 6px;
+  }
+  .ig strong {
+    color: var(--primary);
+    font-weight: 600;
+  }
+  .ig:hover strong {
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   /* Celulares: o grupo faz o fade; cada celular só sobe */
