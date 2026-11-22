@@ -1,0 +1,33 @@
+name: CI
+
+# O site ainda não tem `main`: a branch padrão do repositório é a do trabalho
+# inicial. O CI roda em qualquer push e em pull requests, até a branch principal
+# ser definida.
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Vulnerabilidades em dependências de produção
+        run: npm audit --omit=dev --audit-level=moderate
