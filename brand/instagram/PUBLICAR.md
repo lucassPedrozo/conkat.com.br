@@ -26,30 +26,25 @@ No app do Instagram: **Configurações → Tipo de conta e ferramentas → Mudar
 
 ### 2. App na Meta e token
 
-Os nomes dos menus da Meta mudam com frequência; se algo estiver diferente, procure pelos termos em negrito.
+Caminho usado no Conkat (login unificado, token que não vence). Os nomes dos menus da Meta mudam com
+frequência; se algo estiver diferente, procure pelos termos em negrito.
 
-1. Entre em <https://developers.facebook.com> com o Facebook de quem administra o Instagram e crie um app
-   (tipo **Empresa** / **Business**).
-2. Escolha **um** dos dois caminhos:
-
-**Caminho A — login do Instagram (mais rápido).**
-No app, adicione o produto **Instagram** e abra **API setup with Instagram business login**. Adicione a
-conta do Conkat, autorize e clique em **Generate token**. Copie o token e o **id da conta** (Instagram
-user ID) que aparecem ali.
-O token vale **60 dias**: anote na agenda para gerar outro antes de vencer (e trocar o segredo no
-GitHub). Se vencer, o robô falha e o GitHub manda um e-mail avisando.
-
-**Caminho B — login do Facebook com usuário do sistema (token que não vence).**
-Precisa de uma Página do Facebook ligada ao Instagram e de um portfólio no
-<https://business.facebook.com>. Em **Configurações do negócio → Usuários do sistema**, crie um usuário do
-sistema (admin), dê acesso à Página, ao Instagram e ao app, e gere um token com as permissões
-`instagram_basic`, `instagram_content_publish`, `pages_show_list` e `pages_read_engagement`, sem
-validade. O id da conta do Instagram aparece no **Graph API Explorer** em
-`me/accounts?fields=instagram_business_account`.
-Neste caminho, crie também a variável `IG_API_HOST` = `graph.facebook.com` (passo 3).
+1. Em <https://developers.facebook.com>, **Meus apps → Criar app**, com o caso de uso
+   **Gerenciar mensagens e conteúdo no Instagram**. Pode pular o portfólio empresarial na criação.
+2. No app: **Casos de uso → Personalizar → API setup with Unified login**. Ele exige um **portfólio
+   empresarial** (gratuito, sem verificação): clique em **+ Portfólio empresarial** e crie o "Conkat".
+3. **Criar nova configuração**: token de usuário do sistema (SUAT, não vence) e a conta do Instagram
+   como ativo. A URL de redirecionamento não é necessária.
+4. Em **Funções do app → Funções**, adicione a conta do Instagram como **Testador do Instagram** e aceite
+   o convite no Instagram (**Configurações → Apps e sites → Convites de testador**).
+5. Em **2. Gerar tokens de acesso → Adicionar conta**, escolha o portfólio e a conta. O número embaixo do
+   nome da conta é o `IG_USER_ID`. Clique em **Gerar token** e copie o token.
+6. Token que começa com `EAA` (login do Facebook para Empresas): crie a variável `IG_API_HOST` =
+   `graph.facebook.com` (passo 3). Token que começa com `IG`: não crie a variável, e renove o token a
+   cada 60 dias.
 
 Enquanto o app estiver em modo de desenvolvimento, ele publica normalmente na conta de quem tem função
-no app (administrador ou testador), que é o nosso caso. Não é preciso enviar o app para revisão da Meta.
+no app (administrador ou testador). Não é preciso enviar o app para análise da Meta.
 
 ### 3. Segredos no GitHub
 
@@ -59,7 +54,7 @@ No repositório: **Settings → Secrets and variables → Actions**.
 |---|---|---|
 | Secret | `IG_USER_ID` | id da conta do Instagram |
 | Secret | `IG_ACCESS_TOKEN` | o token |
-| Variable (só caminho B) | `IG_API_HOST` | `graph.facebook.com` |
+| Variable (token `EAA…`) | `IG_API_HOST` | `graph.facebook.com` |
 | Variable (opcional) | `IG_API_VERSION` | versão da API, se a padrão (`v24.0`) for desativada |
 
 Nunca cole o token em arquivo, commit ou mensagem: só no segredo.
@@ -68,7 +63,8 @@ Nunca cole o token em arquivo, commit ou mensagem: só no segredo.
 
 Em **Actions → Instagram → Run workflow**:
 
-- **modo `teste`**: confere a pauta do dia e se as imagens estão acessíveis em JPEG, sem publicar.
+- **modo `teste`**: confere a pauta do dia, se as imagens estão acessíveis em JPEG e se o token funciona
+  (lê o nome da conta), sem publicar.
 - **modo `publicar`**: publica na hora o post da data escolhida (sem esperar o horário). Use para o primeiro
   post e para conferir que o token funciona.
 - **so `story`**: publica só o story, caso ele tenha falhado depois do post.

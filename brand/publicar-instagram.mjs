@@ -128,6 +128,15 @@ if (TESTE) {
   out('\nModo teste: nada foi publicado. Imagens que seriam enviadas:');
   for (const f of files) out(`- ${url(f)}`);
   if (BASE) { await checkUrls(files); out('\nTodas as imagens estão acessíveis e em JPEG.'); }
+  if (USER && TOKEN) {
+    // Só lê o nome da conta: confere token, id e endereço da API sem publicar nada.
+    try {
+      const { username } = await api('GET', USER, { fields: 'username' });
+      out(`Token válido: conta @${username} (${HOST}).`);
+    } catch (e) { fail(`o token não funcionou: ${e.message}`); }
+  } else {
+    out('Segredos IG_USER_ID e IG_ACCESS_TOKEN ainda não configurados: token não conferido.');
+  }
   process.exit(0);
 }
 if (!USER || !TOKEN) fail('faltam IG_USER_ID e IG_ACCESS_TOKEN (segredos do GitHub)');
