@@ -72,8 +72,8 @@ function header() {
   // Quem navega pelo teclado nunca fica com o cabeçalho escondido
   el.addEventListener('focusin', () => el.classList.remove('is-hidden'));
 
-  // Link da seção visível
-  const links = [...el.querySelectorAll<HTMLAnchorElement>('.nav-link')];
+  // Link da seção visível (só os links para seções da página; "/apoie" é outra página)
+  const links = [...el.querySelectorAll<HTMLAnchorElement>('.nav-link[href^="#"]')];
   const sections = links
     .map((a) => document.querySelector<HTMLElement>(a.getAttribute('href') || ''))
     .filter((s): s is HTMLElement => !!s);

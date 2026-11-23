@@ -1,0 +1,223 @@
+---
+// Tela "Desempenho" do profissional, como no app (P05): período, resumo e evolução diária.
+// As linhas do gráfico se desenham quando a seção aparece ([data-chart] em site.ts).
+import Icon from '../Icon.astro';
+const stats: [string, string, string][] = [
+  ['Exibições em buscas', '2.080', '+2%'],
+  ['Visualizações', '329', '+5%'],
+  ['Taxa de abertura', '15,8%', '+0,4 p.p.'],
+];
+// Visualizações por dia: este período e o anterior (mesma escala do app, 0 a 20).
+const now = [13, 15, 10, 11, 14, 12, 10, 9, 6, 6, 9, 10, 12, 13, 14, 11, 10, 15, 14, 12, 11, 10, 9, 6, 6, 9, 10, 11, 13];
+const prev = [11, 13, 14, 14, 11, 10, 12, 13, 11, 9, 9, 7, 6, 8, 10, 12, 13, 14, 15, 12, 11, 10, 9, 8, 7, 8, 9, 10, 11];
+const W = 260, H = 70;
+const path = (d: number[]) => d.map((v, i) => `${i ? 'L' : 'M'}${((i / (d.length - 1)) * W).toFixed(1)} ${(H - (v / 20) * H).toFixed(1)}`).join(' ');
+---
+<div class="perf">
+  <div class="p-top"><Icon name="arrow-left" size={14} /><span>Desempenho</span></div>
+  <div class="seg"><span>7 dias</span><span class="on">30 dias</span><span>90 dias</span></div>
+  <p class="period">Últimos 30 dias · comparado ao período anterior</p>
+
+  <div class="card">
+    <p class="card-title">Resumo</p>
+    {stats.map(([label, value, delta], i) => (
+      <div class="stat stagger" style={`--i:${i}`}>
+        <div><span class="s-label">{label}</span><strong>{value}</strong></div>
+        <span class="delta"><Icon name="chart-line-up" size={10} />{delta}</span>
+      </div>
+    ))}
+  </div>
+
+  <div class="card">
+    <p class="card-title">Evolução diária</p>
+    <div class="c-nums"><span>Total <b>329</b></span><span>Média por dia <b>11</b></span><span>Melhor dia <b>15</b></span></div>
+    <svg class="chart" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" aria-hidden="true">
+      <path d={`M0 ${H / 2}H${W}`} class="grid" />
+      <path d={`M0 ${H - 0.5}H${W}`} class="grid" />
+      <path d={path(prev)} class="line line-prev" pathLength="1" />
+      <path d={path(now)} class="line line-now" pathLength="1" />
+    </svg>
+    <div class="legend"><span class="l-now">Este período</span><span class="l-prev">Período anterior</span></div>
+  </div>
+</div>
+
+<style>
+  .perf {
+    display: grid;
+    gap: 0.7em;
+    align-content: start;
+  }
+  .p-top {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    padding: 0.1em 0.2em 0.2em;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95em;
+    color: var(--ink);
+  }
+  .seg {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0.22em;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-size: 0.64em;
+    text-align: center;
+    color: var(--text-muted);
+  }
+  .seg span {
+    padding: 0.45em 0;
+    border-radius: 999px;
+  }
+  .seg .on {
+    background: var(--ink);
+    color: var(--text-on-dark);
+    font-weight: 600;
+  }
+  .period {
+    font-size: 0.58em;
+    color: var(--text-muted);
+    padding: 0 0.3em;
+  }
+  .card {
+    display: grid;
+    gap: 0.55em;
+    padding: 0.85em 0.9em;
+    border-radius: 1.1em;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+  .card-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.8em;
+    color: var(--ink);
+  }
+  .stat {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-top: 0.5em;
+    border-top: 1px solid var(--border);
+  }
+  .stat:first-of-type {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .stat > div {
+    display: grid;
+    gap: 0.1em;
+  }
+  .s-label {
+    font-size: 0.58em;
+    color: var(--text-muted);
+  }
+  .stat strong {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.15em;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .delta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+    padding: 0.25em 0.5em;
+    border-radius: 999px;
+    background: #e8f5ec;
+    color: #15803d;
+    font-size: 0.54em;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .c-nums {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    font-size: 0.54em;
+    color: var(--text-muted);
+  }
+  .c-nums b {
+    display: block;
+    font-size: 1.25em;
+    color: var(--ink);
+  }
+  .chart {
+    width: 100%;
+    height: 4.6em;
+    overflow: visible;
+  }
+  .grid {
+    stroke: var(--border);
+    stroke-dasharray: 3 3;
+    fill: none;
+    vector-effect: non-scaling-stroke;
+  }
+  .line {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .line-now {
+    stroke: var(--primary);
+    stroke-width: 2;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1400ms var(--ease-in-out);
+  }
+  .line-prev {
+    stroke: #9aa1ab;
+    stroke-width: 1.4;
+    stroke-dasharray: 0.012 0.012;
+    opacity: 0;
+    transition: opacity 600ms var(--ease-out) 300ms;
+  }
+  :global([data-chart].is-on) .line-now {
+    stroke-dashoffset: 0;
+  }
+  :global([data-chart].is-on) .line-prev {
+    opacity: 1;
+  }
+  .legend {
+    display: flex;
+    gap: 1.2em;
+    font-size: 0.54em;
+    color: var(--text-muted);
+  }
+  .legend span::before {
+    content: '';
+    display: inline-block;
+    width: 1.4em;
+    height: 0;
+    margin-right: 0.45em;
+    vertical-align: middle;
+  }
+  .l-now::before {
+    border-top: 2px solid var(--primary);
+  }
+  .l-prev::before {
+    border-top: 1.5px dashed #9aa1ab;
+  }
+  /* Sem JavaScript ou com movimento reduzido, o gráfico aparece pronto */
+  :global(html:not(.js)) .line-now {
+    stroke-dashoffset: 0;
+  }
+  :global(html:not(.js)) .line-prev {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .line-now {
+      stroke-dashoffset: 0;
+      transition: none;
+    }
+    .line-prev {
+      opacity: 1;
+      transition: none;
+    }
+  }
+</style>

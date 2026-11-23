@@ -25,6 +25,7 @@ export const NAV = [
   { href: '#como-funciona', label: 'Como funciona' },
   { href: '#profissionais', label: 'Para profissionais' },
   { href: '#duvidas', label: 'Dúvidas' },
+  { href: '/apoie', label: 'Apoie o projeto' },
 ];
 
 /** Cidades atendidas, na ordem da folha "Onde você procura?" do app. */
@@ -68,10 +69,13 @@ export const PRO = {
   kicker: 'Para quem presta serviço',
   title: 'Anuncie no Conkat. O cliente chama no seu WhatsApp.',
   text: 'Apareça para quem procura o seu serviço em Joinville e região, com o seu preço, as suas fotos e as avaliações de quem já contratou você.',
-  offer: [
-    { value: '14 dias', text: 'no ar sem custo no primeiro anúncio, contados a partir da aprovação' },
-    { value: 'R$ 0', text: 'de taxa por contato e sem comissão: o pagamento é combinado direto com o cliente' },
+  // Condições, lidas como uma tabela: rótulo, valor e detalhe.
+  terms: [
+    { label: 'Primeiro anúncio', value: '14 dias sem custo', text: 'Contados a partir da aprovação.' },
+    { label: 'Contato de cliente', value: 'R$ 0', text: 'Sem taxa por contato e sem comissão.' },
+    { label: 'Pagamento', value: 'Direto com o cliente', text: 'O Conkat não intermedeia o pagamento.' },
   ],
+  caption: 'Tela Desempenho do app: quantas vezes o seu anúncio apareceu nas buscas e quantas pessoas o abriram.',
   stepsTitle: 'Do cadastro ao anúncio no ar',
   steps: [
     { title: 'Cadastro com CPF ou CNPJ', text: 'Confirme seu e-mail e envie o documento. A equipe confere antes do seu primeiro anúncio.' },

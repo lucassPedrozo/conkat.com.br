@@ -1,43 +1,38 @@
 ---
-// "Para profissionais": a oferta em dois números, a foto com o card de desempenho e,
-// abaixo, o caminho do cadastro até o anúncio no ar em quatro passos.
-import { Image } from 'astro:assets';
+// "Para profissionais": a proposta, as condições lidas como uma tabela (sem números
+// decorativos) e a tela real de Desempenho do app no lugar de foto. Abaixo, o caminho do
+// cadastro até o anúncio no ar, em quatro passos.
 import Icon from './Icon.astro';
+import Phone from './app/Phone.astro';
+import PerformanceScreen from './app/PerformanceScreen.astro';
 import { PRO, APP_LIVE } from '../lib/content';
-import eletricista from '../assets/photos/eletricista.jpg';
 ---
-<section class="pros on-dark" id="profissionais" aria-labelledby="pros-title">
+<section class="pros" id="profissionais" aria-labelledby="pros-title">
   <div class="container">
     <div class="pros-top">
       <div class="pros-copy">
         <p class="kicker">{PRO.kicker}</p>
         <h2 id="pros-title" class="pros-title">{PRO.title}</h2>
         <p class="pros-text">{PRO.text}</p>
-        <dl class="offer">
-          {PRO.offer.map((o) => (
-            <div>
-              <dt>{o.value}</dt>
-              <dd>{o.text}</dd>
+
+        <dl class="terms">
+          {PRO.terms.map((t) => (
+            <div class="term">
+              <dt>{t.label}</dt>
+              <dd><strong>{t.value}</strong><span>{t.text}</span></dd>
             </div>
           ))}
         </dl>
-        {APP_LIVE ? <a class="btn btn-accent" href="#">{PRO.cta}</a> : <p class="pros-soon"><Icon name="clock" size={18} />{PRO.soon}</p>}
+
+        {APP_LIVE
+          ? <a class="btn btn-primary" href="#">{PRO.cta}</a>
+          : <p class="pros-soon"><Icon name="clock" size={18} />{PRO.soon}</p>}
       </div>
-      <div class="pros-media" data-chart>
-        <Image src={eletricista} alt="Eletricista instalando uma tomada em um apartamento" widths={[480, 720, 1024]} sizes="(max-width: 1023px) 100vw, 520px" class="pros-photo" />
-        <div class="metrics" aria-hidden="true">
-          <p class="m-label">Últimos 7 dias</p>
-          <div class="m-nums">
-            <p><strong>1.284</strong><span>exibições em buscas</span></p>
-            <p><strong>312</strong><span>visualizações</span></p>
-          </div>
-          <svg class="m-chart" viewBox="0 0 260 56" preserveAspectRatio="none">
-            <path d="M0 55.5H260" stroke="#E5E7EB" fill="none" />
-            <path class="line line-a" pathLength="1" d="M0 42 L37 36 L74 39 L111 27 L148 29 L185 17 L222 13 L260 5" />
-            <path class="line line-b" pathLength="1" d="M0 49 L37 47 L74 48 L111 43 L148 44 L185 40 L222 38 L260 35" />
-          </svg>
-        </div>
-      </div>
+
+      <figure class="pros-media" data-chart>
+        <Phone class="pros-phone" label="Tela de desempenho do anúncio no app Conkat"><PerformanceScreen /></Phone>
+        <figcaption>{PRO.caption}</figcaption>
+      </figure>
     </div>
 
     <div class="journey">
@@ -45,7 +40,7 @@ import eletricista from '../assets/photos/eletricista.jpg';
       <ol class="steps" role="list">
         {PRO.steps.map((s, i) => (
           <li>
-            <span class="step-n" aria-hidden="true">{i + 1}</span>
+            <span class="step-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             <h4>{s.title}</h4>
             <p>{s.text}</p>
           </li>
@@ -58,265 +53,178 @@ import eletricista from '../assets/photos/eletricista.jpg';
 <style>
   .pros {
     padding-block: var(--section-y);
-    background: var(--ink);
-    color: var(--text-on-dark);
+    background: var(--primary-soft);
+    color: var(--ink);
   }
   .pros-top {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
     gap: clamp(3rem, 2rem + 5vw, 7rem);
     align-items: center;
   }
   .pros-copy {
     display: grid;
-    gap: 1.5rem;
     justify-items: start;
   }
   .kicker {
-    color: var(--accent);
-    font-weight: 600;
-    font-size: 0.95rem;
-    letter-spacing: 0.01em;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--primary);
   }
   .pros-title {
-    margin-top: -0.75rem;
+    margin-top: 1rem;
     font-size: var(--step-h1);
-    line-height: 1.1;
+    line-height: 1.08;
     letter-spacing: -0.03em;
-    max-width: 15em;
+    max-width: 14em;
   }
   .pros-text {
+    margin-top: 1.25rem;
     max-width: 32rem;
     font-size: var(--step-lead);
-    color: var(--text-on-dark-muted);
+    line-height: 1.55;
+    color: var(--text-muted);
   }
 
-  /* Oferta */
-  .offer {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
+  /* Condições: tabela com linhas, sem cards */
+  .terms {
     width: 100%;
-    max-width: 34rem;
-    margin: 0.5rem 0 0;
+    max-width: 36rem;
+    margin: 2.25rem 0 0;
+    border-top: 1px solid rgba(11, 43, 42, 0.14);
   }
-  .offer div {
+  .term {
     display: grid;
-    align-content: start;
-    gap: 0.4rem;
-    padding: 1.25rem 1.25rem 1.35rem;
-    border-radius: var(--radius-card);
-    background: var(--ink-soft);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    grid-template-columns: 11rem minmax(0, 1fr);
+    gap: 1rem;
+    padding: 1.05rem 0;
+    border-bottom: 1px solid rgba(11, 43, 42, 0.14);
   }
-  .offer dt {
+  .term dt {
+    padding-top: 0.2rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+  .term dd {
+    display: grid;
+    gap: 0.15rem;
+    margin: 0;
+  }
+  .term strong {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(2rem, 1.6rem + 1.4vw, 2.6rem);
-    line-height: 1;
-    letter-spacing: -0.03em;
-    color: var(--accent);
+    font-size: 1.2rem;
+    letter-spacing: -0.015em;
+    color: var(--ink);
   }
-  .offer dd {
-    margin: 0;
-    color: var(--text-on-dark-muted);
-    font-size: 0.95rem;
-    line-height: 1.45;
+  .term span {
+    font-size: 0.92rem;
+    color: var(--text-muted);
   }
   .pros-soon {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    color: var(--text-on-dark-muted);
+    margin-top: 1.75rem;
+    color: var(--text-muted);
     font-size: 0.95rem;
   }
   .pros-soon :global(.icon) {
     flex: none;
-    color: var(--accent);
+    color: var(--primary);
+  }
+  .pros-copy .btn {
+    margin-top: 1.75rem;
   }
 
-  /* Foto e desempenho */
+  /* Tela real do app */
   .pros-media {
-    position: relative;
-  }
-  .pros-media :global(.pros-photo) {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    border-radius: var(--radius-media);
-  }
-  .metrics {
-    position: absolute;
-    left: 1.5rem;
-    bottom: 1.5rem;
-    width: min(19rem, calc(100% - 3rem));
-    padding: 1.1rem 1.15rem;
-    border-radius: 1rem;
-    background: var(--surface);
-    color: var(--text);
-    box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.5);
-  }
-  .m-label {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    font-weight: 500;
-  }
-  .m-nums {
-    display: flex;
-    gap: 1.5rem;
-    margin: 0.5rem 0 0.75rem;
-  }
-  .m-nums p {
     display: grid;
+    justify-items: center;
+    gap: 1.25rem;
+    margin: 0;
   }
-  .m-nums strong {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.65rem;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
+  .pros-media :global(.pros-phone) {
+    --pw: 300px;
   }
-  .m-nums span {
-    font-size: 0.72rem;
+  figcaption {
+    max-width: 19rem;
+    text-align: center;
+    font-size: 0.85rem;
+    line-height: 1.5;
     color: var(--text-muted);
-  }
-  .m-chart {
-    width: 100%;
-    height: 3.25rem;
-    overflow: visible;
-  }
-  .line {
-    fill: none;
-    stroke-width: 2.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    vector-effect: non-scaling-stroke;
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    transition: stroke-dashoffset 1400ms var(--ease-in-out);
-  }
-  .line-a {
-    stroke: var(--primary);
-  }
-  .line-b {
-    stroke: var(--accent);
-    stroke-width: 2;
-    transition-delay: 200ms;
-  }
-  .pros-media.is-on .line {
-    stroke-dashoffset: 0;
   }
 
   /* Do cadastro ao anúncio no ar */
   .journey {
-    margin-top: clamp(4rem, 3rem + 4vw, 6.5rem);
+    margin-top: clamp(4.5rem, 3rem + 5vw, 7rem);
   }
   .journey-title {
     font-size: var(--step-h3);
     letter-spacing: -0.015em;
-    margin-bottom: 2rem;
+    margin-bottom: 1.75rem;
   }
   .steps {
-    position: relative;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 2rem;
+    gap: 0 2rem;
     margin: 0;
     padding: 0;
     list-style: none;
   }
-  /* Linha que liga os números */
-  .steps::before {
-    content: '';
-    position: absolute;
-    top: 1.25rem;
-    left: 1.25rem;
-    right: 1.25rem;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.14);
-  }
   .steps li {
-    position: relative;
     display: grid;
     align-content: start;
-    gap: 0.5rem;
+    gap: 0.45rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(11, 43, 42, 0.18);
   }
   .step-n {
-    display: grid;
-    place-items: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    margin-bottom: 0.75rem;
-    border-radius: 50%;
-    background: var(--ink);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    color: var(--text-on-dark);
     font-family: var(--font-display);
     font-weight: 600;
-  }
-  .steps li:last-child .step-n {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--ink);
+    font-size: 1.6rem;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
   }
   .steps h4 {
-    font-size: 1.125rem;
+    font-size: 1.1rem;
     line-height: 1.3;
     letter-spacing: -0.01em;
   }
   .steps p {
-    color: var(--text-on-dark-muted);
-    font-size: 1rem;
+    color: var(--text-muted);
+    font-size: 0.97rem;
+    line-height: 1.5;
   }
 
   @media (max-width: 1023px) {
     .pros-top {
       grid-template-columns: 1fr;
     }
-    .pros-media {
-      order: -1;
-    }
-    .pros-media :global(.pros-photo) {
-      aspect-ratio: 1 / 1;
-    }
     .steps {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      row-gap: 2.5rem;
-    }
-    .steps::before {
-      display: none;
+      row-gap: 2.25rem;
     }
   }
   @media (max-width: 560px) {
-    .offer {
+    .term {
       grid-template-columns: 1fr;
+      gap: 0.3rem;
+    }
+    .term dt {
+      padding-top: 0;
+      font-size: 0.82rem;
+    }
+    .pros-media :global(.pros-phone) {
+      --pw: 270px;
     }
     .steps {
       grid-template-columns: 1fr;
-      gap: 0;
-    }
-    .steps li {
-      grid-template-columns: 2.5rem 1fr;
-      column-gap: 1rem;
-      padding-bottom: 1.75rem;
-    }
-    .steps li > :not(.step-n) {
-      grid-column: 2;
-    }
-    .step-n {
-      grid-row: 1 / span 2;
-      margin-bottom: 0;
-    }
-    /* No celular, a linha desce entre os números */
-    .steps li:not(:last-child)::before {
-      content: '';
-      position: absolute;
-      top: 2.5rem;
-      bottom: 0;
-      left: 1.25rem;
-      width: 1px;
-      background: rgba(255, 255, 255, 0.14);
+      row-gap: 1.75rem;
     }
   }
 </style>
