@@ -1,11 +1,12 @@
 ---
-import { FAQ, FAQ_TITLE } from '../lib/content';
+import { FAQ, FAQ_SOON, FAQ_TITLE, APP_LIVE } from '../lib/content';
+const items = APP_LIVE ? [...FAQ] : [...FAQ, FAQ_SOON];
 ---
 <section class="faq" id="duvidas" aria-labelledby="faq-title">
   <div class="container faq-grid">
     <h2 id="faq-title" class="section-title">{FAQ_TITLE}</h2>
     <div class="faq-list">
-      {FAQ.map(([q, a], i) => (
+      {items.map(([q, a], i) => (
         <details class="qa" open={i === 0} name="faq">
           <summary>
             <span>{q}</span>

@@ -12,7 +12,7 @@ export const STORE_LINKS = {
 export const INSTAGRAM = {
   handle: '@conkat.app',
   url: 'https://www.instagram.com/conkat.app/',
-  label: 'Acompanhe no Instagram',
+  follow: 'Seguir @conkat.app',
 };
 
 export const SITE = {
@@ -27,6 +27,9 @@ export const NAV = [
   { href: '#duvidas', label: 'Dúvidas' },
 ];
 
+/** Cidades atendidas, na ordem da folha "Onde você procura?" do app. */
+export const CITIES = ['Joinville', 'Jaraguá do Sul', 'Araquari', 'São Francisco do Sul', 'Guaramirim'];
+
 export const HERO = {
   title: 'Profissionais verificados de Joinville e região.',
   text: 'Manutenção, limpeza, reformas, beleza, aulas, mudanças e outros serviços. Veja preço e avaliações e chame direto no WhatsApp, sem criar conta.',
@@ -37,7 +40,7 @@ export const HERO = {
 export const STEPS = [
   {
     title: 'Escolha a cidade',
-    text: 'O Conkat começa por Joinville e região. O app mostra só as cidades que já têm profissionais anunciando.',
+    text: 'O Conkat começa pelo Norte de Santa Catarina, a partir de Joinville. O app mostra só as cidades que já têm profissionais anunciando.',
   },
   {
     title: 'Busque o serviço',
@@ -45,14 +48,14 @@ export const STEPS = [
   },
   {
     title: 'Chame no WhatsApp',
-    text: 'Todo anúncio tem WhatsApp. A conversa é direto com o profissional: preço, data e horário vocês combinam ali.',
+    text: 'Todo anúncio tem o botão Chamar no WhatsApp. A conversa é direto com o profissional: preço, data e horário vocês combinam ali.',
   },
 ];
 
 // "O que você vê antes de chamar": um anúncio do app com marcadores numerados.
 export const FEATURES = {
   title: 'Antes de chamar, você já sabe.',
-  text: 'Todo anúncio mostra como o profissional cobra, o que outras pessoas acharam do serviço e se o documento dele foi conferido.',
+  text: 'Em vez de pedir indicação em grupo e torcer, você compara os anúncios com o que importa já à vista, antes da primeira mensagem.',
   points: [
     { title: 'Como o profissional cobra', text: 'Valor fixo, a partir de, por hora, por dia ou a combinar.' },
     { title: 'Avaliações', text: 'Nota de 1 a 5 estrelas, com a média e o total. Anúncio sem nota aparece como ainda não avaliado.' },
@@ -64,10 +67,10 @@ export const FEATURES = {
 export const PRO = {
   kicker: 'Para quem presta serviço',
   title: 'Anuncie no Conkat. O cliente chama no seu WhatsApp.',
-  text: 'Apareça para quem procura o seu serviço em Joinville e região. A conversa é direto com você, sem intermediário.',
+  text: 'Apareça para quem procura o seu serviço em Joinville e região, com o seu preço, as suas fotos e as avaliações de quem já contratou você.',
   offer: [
     { value: '14 dias', text: 'no ar sem custo no primeiro anúncio, contados a partir da aprovação' },
-    { value: 'R$ 0', text: 'por contato. Quem procura chama direto no seu WhatsApp' },
+    { value: 'R$ 0', text: 'de taxa por contato e sem comissão: o pagamento é combinado direto com o cliente' },
   ],
   stepsTitle: 'Do cadastro ao anúncio no ar',
   steps: [
@@ -84,25 +87,39 @@ export const FAQ_TITLE = 'Dúvidas frequentes';
 export const FAQ = [
   ['Preciso de conta para contratar?', 'Não. Buscar, salvar e avaliar anúncios não exige cadastro. Só profissionais que anunciam têm conta.'],
   ['O pagamento do serviço passa pelo Conkat?', 'Não. O Conkat não intermedeia pagamentos. Preço e forma de pagamento são combinados direto com o profissional.'],
+  ['O Conkat garante o serviço?', 'Não. O Conkat confere o CPF ou CNPJ de quem anuncia e revisa cada anúncio antes de publicar, mas o serviço é contratado direto com o profissional. Use as avaliações para escolher e combine tudo pelo WhatsApp.'],
   ['Quem pode avaliar um anúncio?', 'Qualquer pessoa com o app, uma vez por aparelho. A avaliação é só a nota, de 1 a 5 estrelas.'],
   ['Quanto custa anunciar?', 'O primeiro anúncio fica 14 dias no ar sem custo, contados a partir da aprovação. Depois, a publicação é paga com o saldo da conta, e os planos aparecem no app. Por enquanto, o saldo é recarregado pela equipe do Conkat.'],
-  ['Por que meu anúncio foi recusado?', 'O motivo aparece no app, junto do anúncio. Corrija o que foi apontado e envie de novo.'],
-  ['Em quais cidades o Conkat funciona?', 'Em Joinville e região: Jaraguá do Sul, Araquari, São Francisco do Sul e outras cidades do Norte de Santa Catarina. O app mostra as que já têm anúncios publicados.'],
 ] as const;
+
+/** Aparece no fim das dúvidas enquanto o app não está nas lojas (APP_LIVE = false). */
+export const FAQ_SOON = ['Quando o app chega?', 'Em breve, na App Store e no Google Play. Siga o @conkat.app no Instagram para saber do lançamento.'] as const;
 
 export const DOWNLOAD = { title: 'Baixe o Conkat', text: 'Disponível para iPhone e Android.' };
 
 export const FOOTER = {
-  region: 'Joinville e região, SC',
-  // Os links só aparecem quando houver endereço. Os documentos ainda não existem (ver auditoria).
+  tagline: 'Profissionais verificados de Joinville e região, com preço, avaliações e contato direto no WhatsApp.',
+  cta: {
+    title: 'O app chega em breve',
+    text: 'Siga o @conkat.app no Instagram para saber quando o Conkat estiver na App Store e no Google Play.',
+  },
+  nav: [
+    { href: '#como-funciona', label: 'Como funciona' },
+    { href: '#anuncio', label: 'O que o anúncio mostra' },
+    { href: '#profissionais', label: 'Para profissionais' },
+    { href: '#duvidas', label: 'Dúvidas frequentes' },
+  ],
+  // Os links sem endereço não aparecem. Os documentos ainda não existem (ver auditoria).
   links: [
     { href: '/apoie', label: 'Apoie o projeto' },
     { href: '', label: 'Termos de uso' },
     { href: '', label: 'Política de privacidade' },
   ],
+  regionTitle: 'Onde funciona',
+  regionNote: 'e outras cidades do Norte de Santa Catarina',
   // O CNPJ só aparece quando for preenchido (o anterior era um número de exemplo).
   cnpj: '',
-  legal: '© 2026 Conkat.',
+  legal: '© 2026 Conkat. Joinville, SC.',
 };
 
 // Página "Apoie o projeto" (/apoie). O link fica no rodapé; a página tem noindex e não entra no sitemap.

@@ -1,98 +1,215 @@
 ---
+// Rodapé: chamada (Instagram enquanto o app não está nas lojas; selos das lojas depois),
+// marca e colunas de navegação, cidades atendidas e a linha legal.
 import Logo from './Logo.astro';
 import StoreBadges from './StoreBadges.astro';
 import Icon from './Icon.astro';
-import { FOOTER, APP_LIVE, DOWNLOAD, INSTAGRAM } from '../lib/content';
+import { FOOTER, APP_LIVE, DOWNLOAD, INSTAGRAM, CITIES } from '../lib/content';
 const links = FOOTER.links.filter((l) => l.href);
 ---
-{APP_LIVE && (
-  <section class="download" aria-labelledby="download-title">
-    <div class="container download-inner">
-      <div>
-        <h2 id="download-title">{DOWNLOAD.title}</h2>
-        <p>{DOWNLOAD.text}</p>
-      </div>
-      <StoreBadges />
-    </div>
-  </section>
-)}
 <footer class="footer on-dark">
-  <div class="container footer-inner">
-    <div class="f-brand">
-      <a href="#topo" aria-label="Conkat, voltar ao início" class="f-logo"><Logo /></a>
-      <span>{FOOTER.region}</span>
+  <div class="container">
+    <section class="f-cta" aria-labelledby="f-cta-title">
+      <div>
+        <h2 id="f-cta-title">{APP_LIVE ? DOWNLOAD.title : FOOTER.cta.title}<span class="cur" aria-hidden="true"></span></h2>
+        <p>{APP_LIVE ? DOWNLOAD.text : FOOTER.cta.text}</p>
+      </div>
+      {APP_LIVE ? (
+        <StoreBadges />
+      ) : (
+        <a class="btn btn-accent" href={INSTAGRAM.url} rel="noopener" target="_blank"><Icon name="instagram-logo" size={20} />{INSTAGRAM.follow}</a>
+      )}
+    </section>
+
+    <div class="f-main">
+      <div class="f-brand">
+        <a href="#topo" aria-label="Conkat, voltar ao início" class="f-logo"><Logo /></a>
+        <p>{FOOTER.tagline}</p>
+      </div>
+
+      <nav class="f-col" aria-labelledby="f-nav-title">
+        <h2 id="f-nav-title">Navegação</h2>
+        <ul>{FOOTER.nav.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+      </nav>
+
+      <div class="f-col">
+        <h2>Conkat</h2>
+        <ul>
+          <li><a href={INSTAGRAM.url} rel="noopener" target="_blank">Instagram {INSTAGRAM.handle}</a></li>
+          {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </div>
+
+      <div class="f-col">
+        <h2>{FOOTER.regionTitle}</h2>
+        <ul class="f-cities">
+          {CITIES.map((c) => <li><Icon name="map-pin" size={15} />{c}</li>)}
+        </ul>
+        <p class="f-note">{FOOTER.regionNote}</p>
+      </div>
     </div>
-    <ul class="f-links">
-      <li><a class="f-social" href={INSTAGRAM.url} rel="noopener" target="_blank"><Icon name="instagram-logo" size={20} />{INSTAGRAM.handle}</a></li>
-      {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
-    </ul>
-    <p class="f-legal">{FOOTER.legal}{FOOTER.cnpj && ` CNPJ ${FOOTER.cnpj}`}</p>
+
+    <div class="f-bottom">
+      <p>{FOOTER.legal}{FOOTER.cnpj && ` CNPJ ${FOOTER.cnpj}.`}</p>
+      <a href="#topo" class="f-top">Voltar ao topo <Icon name="arrow-up" size={16} /></a>
+    </div>
   </div>
 </footer>
 
 <style>
   .footer {
+    position: relative;
+    overflow: hidden;
     background: var(--ink);
     color: var(--text-on-dark-muted);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
-  .footer-inner {
+  /* Padrão de ícones bem discreto no topo do rodapé */
+  .footer::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 22rem;
+    background: url('/pattern.svg') 0 0 / 560px auto repeat;
+    opacity: 0.1;
+    -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
+    mask-image: linear-gradient(to bottom, #000, transparent);
+    pointer-events: none;
+  }
+  .footer > .container {
+    position: relative;
+  }
+
+  /* Chamada */
+  .f-cta {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 1.5rem 2rem;
-    padding-block: 2.75rem;
+    gap: 1.5rem 3rem;
+    padding-block: clamp(3.5rem, 2.5rem + 4vw, 5.5rem) clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
-  .f-brand {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+  .f-cta h2 {
+    font-size: var(--step-h1);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--text-on-dark);
+  }
+  .f-cta p {
+    margin-top: 0.75rem;
+    max-width: 32rem;
+    font-size: var(--step-lead);
+    line-height: 1.5;
+  }
+  .cur {
+    display: inline-block;
+    width: 0.5em;
+    height: 0.17em;
+    margin-left: 0.06em;
+    background: var(--accent);
+  }
+
+  /* Marca e colunas */
+  .f-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+    gap: 2.5rem;
+    padding-block: 3rem;
   }
   .f-logo {
+    display: inline-block;
     color: var(--text-on-dark);
     border-radius: 6px;
   }
   .f-logo :global(.logo) {
-    height: 1.65rem;
+    height: 1.9rem;
     width: auto;
   }
-  .f-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem 2rem;
+  .f-brand p {
+    margin-top: 1rem;
+    max-width: 20rem;
+    line-height: 1.55;
+  }
+  .f-col h2 {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .f-col ul {
+    display: grid;
+    gap: 0.7rem;
     margin: 0;
     padding: 0;
     list-style: none;
   }
-  .f-links a:hover {
+  .f-col a {
+    border-radius: 4px;
+    transition: color var(--t-fast) var(--ease-out);
+  }
+  .f-col a:hover {
     color: var(--text-on-dark);
   }
-  .f-social {
+  .f-cities li {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .f-cities :global(.icon) {
+    flex: none;
+    color: var(--brand-on-dark);
+  }
+  .f-note {
+    margin-top: 0.7rem;
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+
+  /* Linha final */
+  .f-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1.5rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.85rem;
+  }
+  .f-top {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    border-radius: 6px;
-  }
-  .download {
-    background: var(--primary);
+    gap: 0.4rem;
+    font-weight: 600;
     color: var(--text-on-dark);
+    border-radius: 4px;
   }
-  .download-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
-    padding-block: 5rem;
+  .f-top:hover :global(.icon) {
+    transform: translateY(-2px);
   }
-  .download h2 {
-    font-size: var(--step-h1);
-    letter-spacing: -0.03em;
+  .f-top :global(.icon) {
+    transition: transform var(--t-base) var(--ease-out);
   }
-  @media (max-width: 760px) {
-    .footer-inner {
-      flex-direction: column;
-      align-items: flex-start;
+
+  @media (max-width: 960px) {
+    .f-main {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .f-brand {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 600px) {
+    .f-main {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem 1.5rem;
+    }
+    .f-cta .btn {
+      width: 100%;
     }
   }
 </style>
