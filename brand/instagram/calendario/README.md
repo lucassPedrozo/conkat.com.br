@@ -1,6 +1,6 @@
 # Instagram — próximos 15 dias
 
-Gerado por `node brand/gerar-calendario.mjs --inicio 2026-11-23 --dias 15`. A pauta fica em
+Gerado por `node brand/gerar-calendario.mjs --inicio 2026-11-22 --dias 15`. A pauta fica em
 [`../calendario.mjs`](../calendario.mjs): mude lá e rode o script de novo (esta pasta é apagada e refeita).
 
 Cada pasta tem os slides (`01.jpg`, `02.jpg`…), o `story.jpg` para avisar do post e a `legenda.txt`.
@@ -10,25 +10,25 @@ O robô do Instagram (.github/workflows/instagram.yml) publica cada dia no horá
 
 | Data | Dia | Horário | Formato | Tema | Pasta |
 |---|---|---|---|---|---|
-| 23/11 | segunda | 18:30 | Carrossel (3) | Apresentação do Conkat | [`2026-11-23-lancamento`](2026-11-23-lancamento/) |
-| 24/11 | terça | 18:30 | Carrossel (4) | Como funciona, em 3 passos | [`2026-11-24-como-funciona`](2026-11-24-como-funciona/) |
-| 25/11 | quarta | 18:30 | Post | Selo Verificado | [`2026-11-25-selo-verificado`](2026-11-25-selo-verificado/) |
-| 26/11 | quinta | 18:30 | Post | Dúvida: preciso de conta? | [`2026-11-26-duvida-conta`](2026-11-26-duvida-conta/) |
-| 27/11 | sexta | 18:30 | Post | Categoria: eletricista | [`2026-11-27-categoria-eletricista`](2026-11-27-categoria-eletricista/) |
-| 28/11 | sábado | 10:00 | Carrossel (3) | Dica: sinais de problema na parte elétrica | [`2026-11-28-dica-eletrica`](2026-11-28-dica-eletrica/) |
-| 29/11 | domingo | 11:00 | Post | Onde o Conkat funciona | [`2026-11-29-cidades`](2026-11-29-cidades/) |
-| 30/11 | segunda | 18:30 | Post | Para profissionais: anuncie | [`2026-11-30-para-profissionais`](2026-11-30-para-profissionais/) |
-| 01/12 | terça | 18:30 | Carrossel (4) | O que o anúncio mostra | [`2026-12-01-antes-de-chamar`](2026-12-01-antes-de-chamar/) |
-| 02/12 | quarta | 18:30 | Post | Categoria: limpeza | [`2026-12-02-categoria-limpeza`](2026-12-02-categoria-limpeza/) |
-| 03/12 | quinta | 18:30 | Post | Dúvida: o pagamento passa pelo Conkat? | [`2026-12-03-duvida-pagamento`](2026-12-03-duvida-pagamento/) |
-| 04/12 | sexta | 18:30 | Carrossel (3) | Para profissionais: do cadastro ao anúncio | [`2026-12-04-profissionais-passos`](2026-12-04-profissionais-passos/) |
-| 05/12 | sábado | 10:00 | Carrossel (2) | Dica: o que combinar no WhatsApp | [`2026-12-05-dica-whatsapp`](2026-12-05-dica-whatsapp/) |
-| 06/12 | domingo | 11:00 | Post | Categoria: pintura | [`2026-12-06-categoria-pintura`](2026-12-06-categoria-pintura/) |
-| 07/12 | segunda | 18:30 | Post | Avaliações | [`2026-12-07-avalie`](2026-12-07-avalie/) |
+| 22/11 | domingo | 11:00 | Carrossel (3) | Apresentação do Conkat | [`2026-11-22-lancamento`](2026-11-22-lancamento/) |
+| 23/11 | segunda | 18:30 | Carrossel (4) | Como funciona, em 3 passos | [`2026-11-23-como-funciona`](2026-11-23-como-funciona/) |
+| 24/11 | terça | 18:30 | Post | Selo Verificado | [`2026-11-24-selo-verificado`](2026-11-24-selo-verificado/) |
+| 25/11 | quarta | 18:30 | Post | Dúvida: preciso de conta? | [`2026-11-25-duvida-conta`](2026-11-25-duvida-conta/) |
+| 26/11 | quinta | 18:30 | Post | Categoria: eletricista | [`2026-11-26-categoria-eletricista`](2026-11-26-categoria-eletricista/) |
+| 27/11 | sexta | 18:30 | Carrossel (3) | Dica: sinais de problema na parte elétrica | [`2026-11-27-dica-eletrica`](2026-11-27-dica-eletrica/) |
+| 28/11 | sábado | 10:00 | Post | Onde o Conkat funciona | [`2026-11-28-cidades`](2026-11-28-cidades/) |
+| 29/11 | domingo | 11:00 | Post | Para profissionais: anuncie | [`2026-11-29-para-profissionais`](2026-11-29-para-profissionais/) |
+| 30/11 | segunda | 18:30 | Carrossel (4) | O que o anúncio mostra | [`2026-11-30-antes-de-chamar`](2026-11-30-antes-de-chamar/) |
+| 01/12 | terça | 18:30 | Post | Categoria: limpeza | [`2026-12-01-categoria-limpeza`](2026-12-01-categoria-limpeza/) |
+| 02/12 | quarta | 18:30 | Post | Dúvida: o pagamento passa pelo Conkat? | [`2026-12-02-duvida-pagamento`](2026-12-02-duvida-pagamento/) |
+| 03/12 | quinta | 18:30 | Carrossel (3) | Para profissionais: do cadastro ao anúncio | [`2026-12-03-profissionais-passos`](2026-12-03-profissionais-passos/) |
+| 04/12 | sexta | 18:30 | Carrossel (2) | Dica: o que combinar no WhatsApp | [`2026-12-04-dica-whatsapp`](2026-12-04-dica-whatsapp/) |
+| 05/12 | sábado | 10:00 | Post | Categoria: pintura | [`2026-12-05-categoria-pintura`](2026-12-05-categoria-pintura/) |
+| 06/12 | domingo | 11:00 | Post | Avaliações | [`2026-12-06-avalie`](2026-12-06-avalie/) |
 
 ## Legendas
 
-### 23/11 — Apresentação do Conkat
+### 22/11 — Apresentação do Conkat
 
 Encontrar um bom profissional não precisa ser no boca a boca.
 
@@ -38,7 +38,7 @@ O app chega em breve à App Store e ao Google Play. Siga o perfil para saber qua
 
 #Conkat #Joinville #JoinvilleSC #NorteCatarinense #ServicosJoinville #JaraguaDoSul
 
-### 24/11 — Como funciona, em 3 passos
+### 23/11 — Como funciona, em 3 passos
 
 Como funciona o Conkat:
 
@@ -50,7 +50,7 @@ Sem cadastro para quem contrata. Salve este post para lembrar depois.
 
 #Conkat #Joinville #JoinvilleSC #NorteCatarinense #Servicos #DicaDeCasa
 
-### 25/11 — Selo Verificado
+### 24/11 — Selo Verificado
 
 Viu o selo Verificado no anúncio? Ele quer dizer que a equipe do Conkat conferiu o CPF ou o CNPJ do profissional antes de publicar.
 
@@ -58,7 +58,7 @@ E tem mais: nenhum anúncio vai ao ar sem passar pela revisão da equipe.
 
 #Conkat #Joinville #JoinvilleSC #NorteCatarinense #Seguranca #ProfissionaisVerificados
 
-### 26/11 — Dúvida: preciso de conta?
+### 25/11 — Dúvida: preciso de conta?
 
 Não precisa de conta para contratar pelo Conkat.
 
@@ -68,13 +68,13 @@ Tem outra dúvida? Manda aqui nos comentários.
 
 #Conkat #Joinville #JoinvilleSC #NorteCatarinense #Duvidas
 
-### 27/11 — Categoria: eletricista
+### 26/11 — Categoria: eletricista
 
 Tomada, disjuntor, chuveiro, instalação nova: no Conkat você encontra eletricistas da sua cidade, vê como cada um cobra e chama direto no WhatsApp.
 
 #Conkat #Joinville #JoinvilleSC #NorteCatarinense #Eletricista #EletricistaJoinville #Manutencao
 
-### 28/11 — Dica: sinais de problema na parte elétrica
+### 27/11 — Dica: sinais de problema na parte elétrica
 
 Problema elétrico não espera. Se aparecer algum destes sinais em casa, chame um eletricista:
 
@@ -88,7 +88,7 @@ Com cheiro de queimado, desligue o circuito no quadro antes de qualquer coisa. S
 
 #Conkat #Joinville #JoinvilleSC #NorteCatarinense #DicaDeCasa #Eletricista #SegurancaEmCasa
 
-### 29/11 — Onde o Conkat funciona
+### 28/11 — Onde o Conkat funciona
 
 O Conkat começa pelo Norte de Santa Catarina: Joinville, Jaraguá do Sul, Araquari, São Francisco do Sul e outras cidades da região.
 
@@ -96,7 +96,7 @@ O app mostra só as cidades que já têm profissionais anunciando. Sua cidade ai
 
 #Conkat #Joinville #JoinvilleSC #NorteCatarinense #JaraguaDoSul #Araquari #SaoFranciscoDoSul
 
-### 30/11 — Para profissionais: anuncie
+### 29/11 — Para profissionais: anuncie
 
 Presta serviço em Joinville e região? Anuncie no Conkat.
 
@@ -106,7 +106,7 @@ O cadastro é feito pelo app, que chega em breve.
 
 #Conkat #Joinville #JoinvilleSC #NorteCatarinense #Autonomo #PrestadorDeServico #Empreender
 
-### 01/12 — O que o anúncio mostra
+### 30/11 — O que o anúncio mostra
 
 Antes de chamar, você já sabe:
 
@@ -118,13 +118,13 @@ Sem surpresa na hora de conversar.
 
 #Conkat #Joinville #JoinvilleSC #NorteCatarinense #Servicos #Avaliacoes
 
-### 02/12 — Categoria: limpeza
+### 01/12 — Categoria: limpeza
 
 Casa em ordem para o fim de ano? No Conkat você encontra diaristas e serviços de limpeza da sua cidade, vê o preço e as avaliações e chama direto no WhatsApp.
 
 #Conkat #Joinville #JoinvilleSC #NorteCatarinense #Diarista #Faxina #Limpeza
 
-### 03/12 — Dúvida: o pagamento passa pelo Conkat?
+### 02/12 — Dúvida: o pagamento passa pelo Conkat?
 
 O Conkat não intermedeia pagamentos.
 
@@ -132,7 +132,7 @@ Preço e forma de pagamento você combina direto com o profissional, na conversa
 
 #Conkat #Joinville #JoinvilleSC #NorteCatarinense #Duvidas
 
-### 04/12 — Para profissionais: do cadastro ao anúncio
+### 03/12 — Para profissionais: do cadastro ao anúncio
 
 Do cadastro ao anúncio no ar:
 
@@ -145,7 +145,7 @@ O primeiro anúncio fica 14 dias no ar sem custo, contados a partir da aprovaç�
 
 #Conkat #Joinville #JoinvilleSC #NorteCatarinense #Autonomo #PrestadorDeServico
 
-### 05/12 — Dica: o que combinar no WhatsApp
+### 04/12 — Dica: o que combinar no WhatsApp
 
 No Conkat a conversa é direto com o profissional. Antes de fechar, combine:
 
@@ -158,13 +158,13 @@ Fica tudo registrado no WhatsApp. Salve para usar na próxima vez.
 
 #Conkat #Joinville #JoinvilleSC #NorteCatarinense #DicaDeCasa #Servicos
 
-### 06/12 — Categoria: pintura
+### 05/12 — Categoria: pintura
 
 Dezembro chegou e a casa pede uma pintura nova? No Conkat você encontra pintores de Joinville e região, vê como cada um cobra e chama direto no WhatsApp.
 
 #Conkat #Joinville #JoinvilleSC #NorteCatarinense #Pintura #Pintor #Reforma
 
-### 07/12 — Avaliações
+### 06/12 — Avaliações
 
 Contratou alguém pelo Conkat? Deixe sua nota.
 
