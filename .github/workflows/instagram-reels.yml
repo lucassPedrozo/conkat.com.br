@@ -1,0 +1,48 @@
+name: Instagram Reels
+
+# Publica um reels de brand/instagram/reels/<pasta>/ (reel.mp4, capa.jpg, legenda.txt).
+# Só roda quando acionado à mão: Actions → Instagram Reels → Run workflow.
+# Usa os mesmos segredos do robô de posts (brand/instagram/PUBLICAR.md).
+
+on:
+  workflow_dispatch:
+    inputs:
+      pasta:
+        description: 'Pasta em brand/instagram/reels (ex.: 2026-11-24-qual-servico)'
+        required: true
+      modo:
+        description: 'teste = só confere, sem publicar'
+        type: choice
+        options: [teste, publicar]
+        default: teste
+
+permissions:
+  contents: read
+
+concurrency:
+  group: instagram
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: Publicar reels
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_API_HOST: ${{ vars.IG_API_HOST }}
+          IG_API_VERSION: ${{ vars.IG_API_VERSION }}
+          PASTA: ${{ inputs.pasta }}
+          MODO: ${{ inputs.modo }}
+        run: |
+          args=(--pasta "$PASTA")
+          [ "$MODO" = "teste" ] && args+=(--teste)
+          node brand/publicar-reels.mjs "${args[@]}"
