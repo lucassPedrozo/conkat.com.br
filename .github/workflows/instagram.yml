@@ -1,14 +1,16 @@
 name: Instagram
 
 # Publica o post do dia de brand/instagram/calendario/ no horário da pauta (horário de Brasília).
-# Roda de hora em hora: publica quando chega o horário e não repete se o post já está no perfil.
+# Roda três vezes por hora, das 10h às 22h: publica quando chega o horário e não repete se o post já está no perfil.
 # Como configurar: brand/instagram/PUBLICAR.md.
 #
 # Atenção: o GitHub só roda tarefas agendadas que estejam na branch padrão do repositório.
 
 on:
   schedule:
-    - cron: '7 * * * *'
+    # Três tentativas por hora, das 10h às 22h de Brasília (13h–01h UTC): o GitHub costuma pular
+    # execuções agendadas, e assim uma pulada não atrasa o post por horas.
+    - cron: '7,27,47 13-23,0-1 * * *'
   workflow_dispatch:
     inputs:
       modo:
