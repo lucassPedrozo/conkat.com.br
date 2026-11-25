@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://conkat.pedrozo.dev.br/sitemap.xml
+Sitemap: https://conkat.app/sitemap.xml

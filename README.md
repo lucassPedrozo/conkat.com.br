@@ -1,4 +1,4 @@
-# conkat.com.br
+# conkat.app
 
 Site institucional do Conkat. Feito com [Astro](https://astro.build) (site estático), sem framework de
 interface no cliente: as animações usam CSS e um script pequeno (`src/scripts/site.ts`).
