@@ -385,7 +385,7 @@ async function main() {
     // Posts
     const spo = section(b, "Posts — 1080 × 1350 (4:5)", "No perfil, o post aparece cortado em 3:4 (some ~34 px de cada lado): mantenha texto e logo dentro das margens de 96 px. Carrossel: numere as páginas no canto superior direito.");
     const gpo = wrapGrid(spo, GAP, "Posts");
-    const footer = (a, left, dark) => { if (left) putB(a, left, M, M + (left.type === "FRAME" && left.name.startsWith("Logo") ? 4 : 0)); const s = I("conkat.com.br", 28, dark ? ON_DARK_MUTED : "textMuted", "Medium"); putB(a, s, a.width - M - s.width, M); };
+    const footer = (a, left, dark) => { if (left) putB(a, left, M, M + (left.type === "FRAME" && left.name.startsWith("Logo") ? 4 : 0)); const s = I("conkat.app", 28, dark ? ON_DARK_MUTED : "textMuted", "Medium"); putB(a, s, a.width - M - s.width, M); };
     const counter = (a, t, dark) => { const n = I(t, 26, dark ? ON_DARK_MUTED : "textMuted", "Semi Bold"); n.letterSpacing = { unit: "PERCENT", value: 4 }; putR(a, n, M, M); };
 
     { // 01 Apresentação

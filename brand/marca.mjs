@@ -140,5 +140,5 @@ export const logoImg = (h, opts) => `<img src="${svgUrl(logoSvg(opts))}" style="
 export const symImg = (h, opts) => `<img src="${svgUrl(symbolBareSvg(opts))}" style="height:${h}px;display:block">`;
 export const icon = (key, color, size) => `<img src="${svgUrl(iconSvg(key, color, size))}" style="width:${size}px;height:${size}px;display:block">`;
 export const counter = (txt, dark) => `<div class="abs" style="top:${M}px;right:${M}px;font:600 26px Inter;letter-spacing:.04em;color:${dark ? C.onDarkMuted : C.textMuted}">${txt}</div>`;
-export const site = (dark) => `<div style="font:500 28px Inter;color:${dark ? C.onDarkMuted : C.textMuted}">conkat.com.br</div>`;
+export const site = (dark) => `<div style="font:500 28px Inter;color:${dark ? C.onDarkMuted : C.textMuted}">conkat.app</div>`;
 export const footer = (dark, left) => `<div class="abs" style="left:${M}px;right:${M}px;bottom:${M}px;display:flex;align-items:center;justify-content:space-between">${left}${site(dark)}</div>`;

@@ -201,7 +201,7 @@ for (const [k, ic] of HIGHLIGHTS) await save(`${IG}/destaques/${k}.png`, (f) => 
       <img src="${img(`${IG}/perfil/conkat-perfil.png`)}" style="width:220px;height:220px;border-radius:50%">
       <div style="display:flex;gap:64px;font-size:30px;color:#000">${[['7', 'posts'], ['—', 'seguidores'], ['—', 'seguindo']].map(([n, l]) => `<div style="text-align:center"><b style="font-size:38px;display:block">${n}</b>${l}</div>`).join('')}</div>
     </div>
-    <div style="padding:28px 16px 0;font-size:30px;line-height:1.4;color:#000"><b>Conkat</b><br>Profissionais verificados de Joinville e região.<br>Preço, avaliações e contato direto no WhatsApp.<br><span style="color:#00376b">conkat.com.br</span></div>
+    <div style="padding:28px 16px 0;font-size:30px;line-height:1.4;color:#000"><b>Conkat</b><br>Profissionais verificados de Joinville e região.<br>Preço, avaliações e contato direto no WhatsApp.<br><span style="color:#00376b">conkat.app</span></div>
     <div style="display:flex;gap:40px;padding:44px 16px 36px">${HIGHLIGHTS.map(([k, , label]) => `<div style="text-align:center;font-size:24px;color:#000"><div style="width:140px;height:140px;border-radius:50%;padding:6px;border:2px solid #dbdbdb"><div style="width:100%;height:100%;border-radius:50%;background:url(${img(`${IG}/destaques/${k}.png`)}) center/cover"></div></div><div style="margin-top:12px">${label}</div></div>`).join('')}</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:0 -40px">${grid.map((k) => `<div style="aspect-ratio:3/4;background:url(${img(`${IG}/posts/${k}.png`)}) center/cover"></div>`).join('')}</div>
   </div>`;

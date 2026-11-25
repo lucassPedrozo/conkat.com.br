@@ -49,7 +49,7 @@ $env:EXPO_PUBLIC_USE_MOCK = 'true'
 npx expo export --platform web --dev --max-workers 1 --output-dir <pasta>/app-web
 git checkout -- app.json
 
-# no conkat.com.br
+# no conkat.app
 node figma/app-atual/captura/servidor.mjs <pasta>/app-web      # serve em localhost:8090
 node figma/app-atual/captura/capture.mjs <pasta>/shots          # tira os prints
 node figma/app-atual/build.mjs <pasta>/shots                    # copia para prints/ e gera organizar.js

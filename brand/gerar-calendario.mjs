@@ -108,7 +108,7 @@ const kicker = (s, color) => s ? `<p style="font:700 30px Inter;letter-spacing:.
 const para = (s, color, size = 36) => s ? `<p style="margin-top:32px;font-size:${size}px;line-height:1.42;color:${color}">${esc(s)}</p>` : '';
 const counterEl = (n, total, e) => total > 1 ? `<div class="abs" style="top:${M}px;right:${M}px;font:600 26px Inter;letter-spacing:.04em;color:${e.muted}">${n}/${total}</div>` : '';
 const brandTop = (e, simbolo) => `<div class="abs" style="left:${M}px;top:${M + 6}px">${simbolo ? symImg(58, { letter: e.dark ? C.white : C.ink }) : logoImg(70, { letters: e.dark ? C.white : C.ink })}</div>`;
-const siteEl = (e) => `<div style="font:500 28px Inter;color:${e.muted}">conkat.com.br</div>`;
+const siteEl = (e) => `<div style="font:500 28px Inter;color:${e.muted}">conkat.app</div>`;
 const foot = (e, { left = true, right = true } = {}) => `<div class="abs" style="left:${M}px;right:${M}px;bottom:${M}px;display:flex;align-items:center;justify-content:space-between">${left ? symImg(50, { letter: e.dark ? C.white : C.ink }) : '<span></span>'}${right ? siteEl(e) : ''}</div>`;
 const bg = (e) => art(POST, e.bg, e.pat ? pattern(POST, { color: e.pat[0], opacity: e.pat[1] }) : '');
 const wrap = (e, inner) => bg(e).replace(/<\/div>$/, inner + '</div>');
