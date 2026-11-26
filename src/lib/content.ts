@@ -55,6 +55,7 @@ export const STEPS = [
 
 // "O que você vê antes de chamar": um anúncio do app com marcadores numerados.
 export const FEATURES = {
+  kicker: 'O que o anúncio mostra',
   title: 'Antes de chamar, você já sabe.',
   text: 'Em vez de pedir indicação em grupo e torcer, você compara os anúncios com o que importa já à vista, antes da primeira mensagem.',
   points: [
