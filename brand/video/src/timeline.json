@@ -1,0 +1,16 @@
+{
+  "words": [0.15, 2.0, 3.9, 6.1],
+  "cards": [0.5, 2.15, 4.05, 6.25],
+  "headerOut": 8.9,
+  "wipe": 9.15,
+  "wipeDur": 0.8,
+  "morph": 9.55,
+  "morphDur": 0.7,
+  "logo": 9.75,
+  "slide": 10.2,
+  "slideDur": 0.42,
+  "ding": 10.5,
+  "storeLine": 10.75,
+  "pro": 11.0,
+  "end": 15
+}
