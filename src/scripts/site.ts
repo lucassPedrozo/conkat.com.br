@@ -141,26 +141,69 @@ function howItWorks() {
 }
 
 // ---------------------------------------------------------------------------
-// "Antes de chamar": cada item da lista acende a parte do anúncio com o mesmo número
+// "Antes de chamar": cada item da lista acende a parte do anúncio com o mesmo número.
+// Na tela, os itens se acendem em sequência; o mouse sobre um item fixa o destaque nele.
 // ---------------------------------------------------------------------------
 function anatomy() {
   const root = document.querySelector<HTMLElement>('[data-anatomy]');
   if (!root) return;
   const points = [...root.querySelectorAll<HTMLElement>('[data-point]')];
   const parts = [...root.querySelectorAll<HTMLElement>('[data-part]')];
-  const set = (n: string | null) => {
-    points.forEach((p) => p.classList.toggle('is-active', p.dataset.point === n));
-    parts.forEach((p) => p.classList.toggle('is-active', p.dataset.part === n));
+  const grid = root.querySelector<HTMLElement>('.features-grid') ?? root;
+  const total = points.length;
+  const delay = 2600;
+  let current = 0;
+  let inside = false; // mouse em qualquer parte da seção (itens, celular ou o espaço entre eles)
+  let visible = false;
+  let timer = 0;
+  const set = (n: number) => {
+    if (n === current) return;
+    current = n;
+    points.forEach((p) => p.classList.toggle('is-active', Number(p.dataset.point) === n));
+    parts.forEach((p) => p.classList.toggle('is-active', Number(p.dataset.part) === n));
   };
-  points.forEach((p) => {
-    p.addEventListener('pointerenter', () => set(p.dataset.point!));
-    p.addEventListener('pointerleave', () => set(null));
+  set(1);
+
+  // Ciclo automático: só anda com a seção na tela e o mouse fora dela. Cada retomada
+  // espera o intervalo inteiro, para o destaque nunca pular logo depois do mouse sair.
+  const auto = !reduceMotion && 'IntersectionObserver' in window;
+  const stop = () => window.clearTimeout(timer);
+  const schedule = () => {
+    stop();
+    if (!auto || !visible || inside) return;
+    timer = window.setTimeout(() => {
+      if (!document.hidden) set((current % total) + 1);
+      schedule();
+    }, delay);
+  };
+
+  // O destaque segue o mouse e fica no último item apontado (sem apagar nos espaços entre eles)
+  for (const el of [...points, ...parts]) {
+    el.addEventListener('pointerenter', (e) => {
+      if (e.pointerType === 'mouse') set(Number(el.dataset.point ?? el.dataset.part));
+    });
+    // Toque: o item tocado acende e o ciclo recomeça a contar a partir dele
+    el.addEventListener('click', () => {
+      set(Number(el.dataset.point ?? el.dataset.part));
+      schedule();
+    });
+  }
+  grid.addEventListener('pointerenter', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    inside = true;
+    stop();
   });
-  parts.forEach((p) => {
-    p.addEventListener('pointerenter', () => set(p.dataset.part!));
-    p.addEventListener('pointerleave', () => set(null));
+  grid.addEventListener('pointerleave', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    inside = false;
+    schedule();
   });
-  once(root, () => root.classList.add('is-on'), 0.35);
+
+  if (!auto) return;
+  new IntersectionObserver((entries) => {
+    visible = entries[0].isIntersecting;
+    schedule();
+  }, { threshold: 0.4 }).observe(root);
 }
 
 // ---------------------------------------------------------------------------

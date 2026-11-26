@@ -243,4 +243,31 @@ const qr = await QRCode.toString(payload, {
       grid-template-columns: 1fr;
     }
   }
+  /* Desktop: a página ocupa exatamente a altura da janela. Espaços e QR code encolhem com
+     a altura; em janelas muito baixas (menos de 40rem), volta a rolar em vez de cortar. */
+  @media (min-width: 861px) {
+    .support {
+      height: 100svh;
+      min-height: 40rem;
+      gap: clamp(1rem, 4vh, 4.5rem);
+      padding-top: clamp(1.25rem, 4vh, 3rem);
+      padding-bottom: clamp(1rem, 3vh, 2rem);
+    }
+    .s-grid {
+      min-height: 0;
+    }
+    .card {
+      gap: clamp(0.9rem, 2.2vh, 1.5rem);
+      padding: clamp(1.25rem, 3.2vh, 2.25rem);
+    }
+    .qr {
+      width: min(100%, 17rem, 30vh);
+    }
+    .how {
+      margin-top: clamp(1.25rem, 3.5vh, 2rem);
+    }
+    .s-foot {
+      padding-top: clamp(1rem, 2.5vh, 1.5rem);
+    }
+  }
 </style>
