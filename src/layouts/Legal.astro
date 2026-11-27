@@ -1,0 +1,28 @@
+---
+// Página de texto legal (termos, privacidade, exclusão de conta). O conteúdo vem de um .md em src/pages.
+// Enquanto o texto não for revisado e publicado de verdade, a página fica com noindex e fora do rodapé.
+import Base from './Base.astro';
+import Logo from '../components/Logo.astro';
+interface Props { frontmatter: { title: string; description: string; noindex?: boolean } }
+const { frontmatter } = Astro.props;
+---
+<Base title={`${frontmatter.title} — Conkat`} description={frontmatter.description} noindex={frontmatter.noindex ?? true}>
+  <main id="conteudo" class="legal">
+    <a href="/" class="legal-logo" aria-label="Conkat, página inicial"><Logo /></a>
+    <article class="legal-body">
+      <slot />
+    </article>
+  </main>
+</Base>
+
+<style>
+  .legal { max-width: 46rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  .legal-logo { display: inline-block; margin-bottom: 2rem; }
+  .legal-body :global(h1) { font-size: clamp(1.75rem, 4vw, 2.25rem); line-height: 1.15; margin: 0 0 0.5rem; }
+  .legal-body :global(h2) { font-size: 1.25rem; margin: 2rem 0 0.5rem; }
+  .legal-body :global(p), .legal-body :global(li) { line-height: 1.65; }
+  .legal-body :global(ul), .legal-body :global(ol) { padding-left: 1.25rem; }
+  .legal-body :global(table) { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.95rem; }
+  .legal-body :global(th), .legal-body :global(td) { border: 1px solid #d9dde1; padding: 0.5rem 0.6rem; text-align: left; vertical-align: top; }
+  .legal-body :global(a) { color: #0f766e; }
+</style>
