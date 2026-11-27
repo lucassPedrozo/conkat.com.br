@@ -24,10 +24,11 @@ Envie um e-mail para **[E-MAIL DE CONTATO]**, do endereço cadastrado na conta, 
 - Todos os seus anúncios saem do ar, e as **fotos, os contatos e o texto** deles são apagados.
 - Suas sessões em todos os aparelhos são encerradas.
 - Seus vínculos de login com Google, Apple ou GitHub são removidos.
+- **O crédito de uso que sobrar é perdido** e **não é devolvido nem pago em dinheiro**. Se tiver crédito, gaste-o antes de excluir.
 
 ## O que fica
 
-- **Pedidos e extrato do saldo**, apenas como registro financeiro e contábil, **sem seus dados pessoais**.
+- **Pedidos e extrato do crédito**, apenas como registro financeiro e contábil, **sem seus dados pessoais**.
 - Um **código irreversível (hash)** do seu documento, só para impedir que o benefício de primeiro anúncio gratuito seja usado de novo. Ele não permite identificar você.
 - Avaliações (com o motivo, se houver) e denúncias que você fez como visitante são anônimas e não ficam ligadas a você, então continuam.
 
