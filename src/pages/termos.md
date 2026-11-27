@@ -49,7 +49,9 @@ A avaliação é uma nota de 1 a 5, anônima, uma por aparelho e por anúncio. *
 - O **primeiro anúncio** de cada pessoa ou empresa fica 14 dias no ar sem custo, **uma única vez por CPF ou CNPJ**, mesmo que a conta seja excluída e recriada.
 - Depois, a publicação e o impulsionamento (destaque) são vendidos **por período**, como compras avulsas, **sem renovação automática**. O preço é o exibido na loja do seu aparelho, no momento da compra.
 - A compra é processada pela **App Store ou pelo Google Play**, que seguem as próprias regras de cobrança e reembolso. O Conkat não recebe dados de cartão.
-- O período de publicação **começa a contar na aprovação** do anúncio, não na compra. Se o anúncio for recusado, a publicação paga **continua disponível** para você corrigir e reenviar. Se você arquivar o anúncio **antes** de ele ir ao ar, o valor volta para o seu saldo no Conkat.
+- O período de publicação **começa a contar na aprovação** do anúncio, não na compra. Se o anúncio for recusado, a publicação paga **continua disponível** para você corrigir e reenviar. Se você arquivar o anúncio **antes** de ele ir ao ar, o valor volta para o seu crédito de uso.
+- **Crédito de uso:** o Conkat usa um saldo em crédito, que você **compra no app** (pela loja do seu aparelho) e gasta em publicação e impulsionamento. O crédito é **apenas crédito de uso dentro do Conkat**: não é dinheiro, **não pode ser sacado, transferido nem trocado**, e **não tem prazo de validade**.
+- **Exclusão da conta e crédito:** se você excluir a conta, o crédito que sobrar **é perdido e não é devolvido nem pago em dinheiro**. Use ou confira o seu crédito antes de excluir.
 - O impulsionamento só vale enquanto o anúncio estiver no ar e termina junto com a publicação.
 - [CONFIRMAR COM O JURÍDICO] Direito de arrependimento (art. 49 do CDC) e política de reembolso para compras feitas fora das regras da loja.
 

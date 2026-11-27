@@ -40,7 +40,7 @@ O Conkat é um aplicativo que ajuda pessoas a encontrar prestadores de serviço 
 | Senha | Entrar na conta | Execução de contrato. Guardada apenas como hash |
 | Login com Google, Apple ou GitHub | Entrar sem senha | Execução de contrato. Recebemos o identificador e o e-mail confirmado do provedor |
 | Anúncios: título, descrição, bairro, preço, fotos, contatos (WhatsApp, telefone) | Publicar o serviço, que é **público** | Execução de contrato |
-| Pedidos, saldo e extrato | Registro financeiro e contábil | Execução de contrato e obrigação legal (art. 7º, II) |
+| Pedidos, crédito de uso (saldo) e extrato | Registro financeiro e contábil | Execução de contrato e obrigação legal (art. 7º, II) |
 | Aceite de termos e política (data e versão) | Comprovar o aceite | Legítimo interesse e exercício regular de direitos |
 | Endereço IP e navegador das sessões | Segurança da conta | Legítimo interesse |
 
@@ -80,7 +80,7 @@ Alguns operadores ficam fora do Brasil; a transferência segue o art. 33 da LGPD
 Você pode pedir: confirmação do tratamento, acesso, correção, anonimização ou eliminação, portabilidade, informação sobre compartilhamento e revogação de consentimento (art. 18).
 
 - **Corrigir seus dados:** na tela *Conta > Meus dados*.
-- **Excluir a conta:** no app, em *Conta > Excluir minha conta*, ou pela página [LINK DA PÁGINA DE EXCLUSÃO]. A exclusão apaga o nome, e-mail, telefone, documento, foto de perfil e bio, apaga as fotos, os contatos e o texto dos seus anúncios, tira os anúncios do ar e encerra suas sessões. Para evitar que o benefício de primeiro anúncio gratuito seja usado de novo, guardamos um **código irreversível (hash)** do documento, que não permite identificar você.
+- **Excluir a conta:** no app, em *Conta > Excluir minha conta*, ou pela página [LINK DA PÁGINA DE EXCLUSÃO]. A exclusão apaga o nome, e-mail, telefone, documento, foto de perfil e bio, apaga as fotos, os contatos e o texto dos seus anúncios, tira os anúncios do ar e encerra suas sessões. O crédito de uso que sobrar é perdido. Para evitar que o benefício de primeiro anúncio gratuito seja usado de novo, guardamos um **código irreversível (hash)** do documento, que não permite identificar você.
 - **Outros pedidos:** [E-MAIL DE CONTATO]. Respondemos em até [PRAZO] dias.
 
 ## 7. Segurança
