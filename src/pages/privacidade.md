@@ -11,7 +11,7 @@ noindex: true
 O Conkat é um aplicativo que ajuda pessoas a encontrar prestadores de serviço no Norte de Santa Catarina e no Vale do Itapocu. Esta política explica quais dados tratamos, para quê, com quem compartilhamos e como você exerce seus direitos, conforme a Lei Geral de Proteção de Dados (Lei 13.709/2018, LGPD).
 
 **Controlador:** [RAZÃO SOCIAL], CNPJ [CNPJ], [ENDEREÇO], Joinville/SC.
-**Contato sobre privacidade:** [E-MAIL DE CONTATO]. **Encarregado (DPO):** [NOME E CONTATO].
+**Contato sobre privacidade:** contato@conkat.app. **Encarregado (DPO):** [NOME E CONTATO].
 
 ## 1. Quem usa o Conkat
 
@@ -81,7 +81,7 @@ Você pode pedir: confirmação do tratamento, acesso, correção, anonimizaçã
 
 - **Corrigir seus dados:** na tela *Conta > Meus dados*.
 - **Excluir a conta:** no app, em *Conta > Excluir minha conta*, ou pela página [LINK DA PÁGINA DE EXCLUSÃO]. A exclusão apaga o nome, e-mail, telefone, documento, foto de perfil e bio, apaga as fotos, os contatos e o texto dos seus anúncios, tira os anúncios do ar e encerra suas sessões. O crédito de uso que sobrar é perdido. Para evitar que o benefício de primeiro anúncio gratuito seja usado de novo, guardamos um **código irreversível (hash)** do documento, que não permite identificar você.
-- **Outros pedidos:** [E-MAIL DE CONTATO]. Respondemos em até [PRAZO] dias.
+- **Outros pedidos:** contato@conkat.app. Respondemos em até [PRAZO] dias.
 
 ## 7. Segurança
 
@@ -97,4 +97,4 @@ Podemos atualizar esta política. Mudanças relevantes serão avisadas no app. A
 
 ## 10. Contato e reclamações
 
-[E-MAIL DE CONTATO] · Você também pode reclamar à Autoridade Nacional de Proteção de Dados (ANPD).
+contato@conkat.app · Você também pode reclamar à Autoridade Nacional de Proteção de Dados (ANPD).

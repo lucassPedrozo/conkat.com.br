@@ -10,7 +10,7 @@ noindex: true
 
 Ao usar o Conkat você concorda com estes termos. Leia também a [Política de Privacidade]([LINK DA POLÍTICA]).
 
-**Quem somos:** [RAZÃO SOCIAL], CNPJ [CNPJ], Joinville/SC. **Contato:** [E-MAIL DE CONTATO].
+**Quem somos:** [RAZÃO SOCIAL], CNPJ [CNPJ], Joinville/SC. **Contato:** contato@conkat.app.
 
 ## 1. O que é o Conkat
 
