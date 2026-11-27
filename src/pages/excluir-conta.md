@@ -16,7 +16,7 @@ noindex: true
 
 ## Sem acesso ao aplicativo
 
-Envie um e-mail para **[E-MAIL DE CONTATO]**, do endereço cadastrado na conta, com o assunto "Excluir minha conta". Confirmamos que o pedido veio de você e excluímos em até [PRAZO] dias.
+Envie um e-mail para **contato@conkat.app**, do endereço cadastrado na conta, com o assunto "Excluir minha conta". Confirmamos que o pedido veio de você e excluímos em até [PRAZO] dias.
 
 ## O que é apagado
 
