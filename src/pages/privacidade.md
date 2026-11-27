@@ -25,11 +25,11 @@ O Conkat é um aplicativo que ajuda pessoas a encontrar prestadores de serviço 
 | Dado | Para quê | Onde fica |
 |---|---|---|
 | Identificador de instalação (gerado pelo app) | Impedir avaliação repetida e contar exibições de anúncios | Só o **hash** (código irreversível) no servidor; o original fica no aparelho |
-| Nota (1 a 5) dada a um anúncio | Mostrar a nota média | Servidor, sem ligação com sua identidade |
+| Nota (1 a 5) dada a um anúncio e, para nota **abaixo de 3**, o **motivo** (texto livre, de 5 a 500 caracteres, obrigatório) | Mostrar a nota média e permitir que a equipe analise avaliações abusivas | Servidor, ligados ao hash da instalação e não a você. O motivo só a equipe vê, nunca o público, e fica enquanto o anúncio existir. Não escreva dados pessoais nele |
 | Denúncia de anúncio (motivo e texto opcional) | Moderação | Servidor, ligada ao hash da instalação |
 | Cidade escolhida, favoritos, buscas e anúncios vistos | Seu uso do app | **Só no seu aparelho** |
-| Localização aproximada | Sugerir sua cidade | **Só no aparelho**, se você permitir. O Conkat não recebe suas coordenadas |
-| Eventos de uso (exibição e abertura de anúncio) | Métricas para o prestador | Servidor, por 90 dias, depois só os totais por dia |
+| Localização aproximada | Sugerir sua cidade | Só se você permitir. O Conkat **não recebe** suas coordenadas. Para descobrir a cidade, o sistema do celular consulta o serviço de localização da Apple (iPhone) ou do Google (Android), que recebe a posição |
+| Eventos de uso (exibição do anúncio na lista, abertura do anúncio e toque em WhatsApp ou telefone) | Métricas para o prestador | Servidor, ligados ao hash da instalação, por 90 dias; depois só os totais por dia |
 
 ### Prestadores (com conta)
 
@@ -58,10 +58,11 @@ Usamos prestadores para operar o serviço. Eles tratam os dados só para isso:
 |---|---|
 | Render | Hospedagem da API |
 | Aiven | Banco de dados |
-| Cloudflare | Armazenamento das fotos (R2), rede e proteção |
+| Cloudflare | Armazenamento das fotos (R2), rede e proteção, e acesso restrito ao painel da equipe |
 | Resend | Envio de e-mails (códigos de confirmação e redefinição de senha) |
 | Google, Apple, GitHub | Login social, se você escolher |
 | Apple e Google (lojas) | Compras e distribuição do app |
+| Apple (iPhone) e Google (Android), serviço de localização | Descobrir a cidade a partir da posição do aparelho, se você usar "usar minha localização" |
 
 Alguns operadores ficam fora do Brasil; a transferência segue o art. 33 da LGPD. Não vendemos dados.
 
@@ -69,6 +70,7 @@ Alguns operadores ficam fora do Brasil; a transferência segue o art. 33 da LGPD
 
 - **Conta e anúncios:** até você excluir a conta.
 - **Eventos brutos de uso:** 90 dias; depois, só os totais por dia, sem identificador.
+- **Avaliações (com o motivo, se houver) e denúncias:** enquanto o anúncio existir. Elas são ligadas ao hash da instalação, e não à conta de quem anuncia, então a exclusão da conta não as apaga.
 - **Sessões:** até 30 dias sem uso; tokens vencidos são apagados todo dia.
 - **Códigos de confirmação:** 1 a 24 horas.
 - **Pedidos e extrato:** mantidos como registro contábil, **sem seus dados pessoais**, após a exclusão da conta.
@@ -78,7 +80,7 @@ Alguns operadores ficam fora do Brasil; a transferência segue o art. 33 da LGPD
 Você pode pedir: confirmação do tratamento, acesso, correção, anonimização ou eliminação, portabilidade, informação sobre compartilhamento e revogação de consentimento (art. 18).
 
 - **Corrigir seus dados:** na tela *Conta > Meus dados*.
-- **Excluir a conta:** no app, em *Conta > Excluir minha conta*, ou pela página [LINK DA PÁGINA DE EXCLUSÃO]. A exclusão apaga o nome, e-mail, telefone, documento e fotos, tira os anúncios do ar e encerra suas sessões. Para evitar que o benefício de primeiro anúncio gratuito seja usado de novo, guardamos um **código irreversível (hash)** do documento, que não permite identificar você.
+- **Excluir a conta:** no app, em *Conta > Excluir minha conta*, ou pela página [LINK DA PÁGINA DE EXCLUSÃO]. A exclusão apaga o nome, e-mail, telefone, documento, foto de perfil e bio, apaga as fotos, os contatos e o texto dos seus anúncios, tira os anúncios do ar e encerra suas sessões. Para evitar que o benefício de primeiro anúncio gratuito seja usado de novo, guardamos um **código irreversível (hash)** do documento, que não permite identificar você.
 - **Outros pedidos:** [E-MAIL DE CONTATO]. Respondemos em até [PRAZO] dias.
 
 ## 7. Segurança

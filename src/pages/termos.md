@@ -42,7 +42,7 @@ Você é o único responsável pelo conteúdo que publica (texto, fotos, preços
 
 ## 5. Avaliações e denúncias
 
-A avaliação é uma nota de 1 a 5, anônima, uma por aparelho e por anúncio. A equipe pode invalidar avaliações abusivas ou em massa. Qualquer visitante pode **denunciar** um anúncio; a equipe analisa e decide.
+A avaliação é uma nota de 1 a 5, anônima, uma por aparelho e por anúncio. **Para dar nota abaixo de 3, é preciso escrever um motivo.** O motivo só a equipe vê, não aparece no anúncio e não deve conter dados pessoais de ninguém. A equipe pode invalidar avaliações abusivas, em massa ou com motivo ofensivo, e uma avaliação invalidada deixa de contar na nota média, mesmo que você a envie de novo. Qualquer visitante pode **denunciar** um anúncio; a equipe analisa e decide.
 
 ## 6. Planos, preços e pagamento
 
